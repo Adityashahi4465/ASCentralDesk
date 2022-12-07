@@ -94,7 +94,7 @@ class _LoginUIState extends State<LoginUI> {
       if (record.exists) {
         // If the record available
         // record exists
-        if (record.data()!["status"] == "approved") {
+        if (record.data()!["isApproved"] == true) {
           // status is approved
           await sharedPreferences!.setString(
               "uid", currentUser.uid); // getting data this from authentication
