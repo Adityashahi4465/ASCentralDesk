@@ -1,12 +1,12 @@
 # E-ASComplaint
 
-App link can be found by [clicking here](https://drive.google.com/file/d/1SN5V_c4d26h9QWtSSKGuLWQjqY4GjNKG/view?usp=share_link)  (**NOTE**: user can login or register only with DSEU email id after registration user have to verify their email via link will be provided on email).
+App link can be found by [clicking here📱📱](https://drive.google.com/file/d/1SN5V_c4d26h9QWtSSKGuLWQjqY4GjNKG/view?usp=share_link)  (**NOTE**: user can login or register only with DSEU email id after registration user have to verify their email via link will be provided on email).
 
-###### Promo Video :- https://www.youtube.com/watch?v=yJDTbuAsESw
+###### Promo Video📽️📽️ :- https://www.youtube.com/watch?v=yJDTbuAsESw
 
 The “Online Complaint Management System” software is an independent application, for digital storage and management of complaints implemented uising Flutter and Firebase
 
-## Inroduction 
+## Inroduction 🔥🔥👋👋
 
 In this fast-moving world with intensive coursework, students find very less time to share their problems to overcome with this problem E-ASComplaints is here it is  a system designed to handle complaints, suggestions, and feedback from university 
 students and faculty. It allows individuals to submit their complaints online, using a unique complaint ID, 
@@ -42,7 +42,7 @@ The screen formats and menu structure should be in such a way that even have stu
 use.
 
 
-## OBJECTIVES
+## OBJECTIVES🎯🎯
 _Resolving student problems_ : The aim of this objective is to address any issues or problems that students 
 may be experiencing, and to find ways to resolve those problems in a timely and effective manner. This 
 could include problems related to academic matters, such as coursework or exams, or non-academic issues, 
