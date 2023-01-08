@@ -95,10 +95,10 @@ experience for users.
 
 ## FUTURE GOALS 
 
-**Enhanced functionality: ** The E-ASComplaint system could be expanded to include additional 
+**Enhanced functionality:** The E-ASComplaint system could be expanded to include additional 
 features, such as ability to submit 
 anonymous complaints.
 
-** Improved integration: ** The E-ASComplaint box system could be integrated with other university 
+**Improved integration:** The E-ASComplaint box system could be integrated with other university 
 systems, such as student records or course management systems, to provide a more comprehensive view of 
 student concerns.
