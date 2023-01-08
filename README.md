@@ -1,6 +1,6 @@
 # E-ASComplaint
 
-App link can be found by [cliking here](https://drive.google.com/file/d/1SN5V_c4d26h9QWtSSKGuLWQjqY4GjNKG/view?usp=share_link)  (**NOTE**: user can login or register only with DSEU email id after registration user have to verify their email via link will be provided on email).
+App link can be found by [clicking here](https://drive.google.com/file/d/1SN5V_c4d26h9QWtSSKGuLWQjqY4GjNKG/view?usp=share_link)  (**NOTE**: user can login or register only with DSEU email id after registration user have to verify their email via link will be provided on email).
 
 ###### Promo Video :- https://www.youtube.com/watch?v=yJDTbuAsESw
 
