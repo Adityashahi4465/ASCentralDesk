@@ -7,7 +7,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.0-250.0.dev <3.0.0'
+  sdk: '>=2.19.0-428.0.dev <3.0.0'
 
 dependencies:
   flutter:
@@ -20,20 +20,20 @@ dependencies:
   connectivity_plus: ^3.0.2
   http: ^0.13.5
   provider: ^6.0.4
-  font_awesome_flutter: ^10.3.0
-  google_fonts: ^3.0.1
+  font_awesome_flutter: ^10.4.0
   animated_splash_screen: ^1.3.0
-  firebase_core: any
-  firebase_auth: ^4.1.5
-  firebase_storage: ^11.0.6
-  cloud_firestore: ^4.1.0
+  firebase_core: ^2.7.0
+  firebase_auth: ^4.2.9
+  firebase_storage: ^11.0.14
+  cloud_firestore: ^4.4.3
   image_picker: ^0.8.6
-  fluttertoast: ^8.1.1
+  fluttertoast: ^8.2.1
   shared_preferences: ^2.0.15
   flutter_zoom_drawer: ^3.0.3
   device_preview: any
   flutter_launcher_icons: ^0.11.0
   quickalert: ^1.0.1
+  google_fonts: ^4.0.3
 
 flutter_icons:
   android : true
