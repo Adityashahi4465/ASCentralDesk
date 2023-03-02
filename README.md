@@ -7,7 +7,7 @@ See the web version by [clicking here](https://github.com/Adityashahi4465/E-ASCo
 
 The “Online Complaint Management System” software is an independent application, for digital storage and management of complaints implemented uising Flutter and Firebase
 
-## Inroduction 🔥🔥👋👋
+## Introduction 🔥🔥👋👋
 
 In this fast-moving world with intensive coursework, students find very less time to share their problems to overcome with this problem E-ASComplaints is here it is  a system designed to handle complaints, suggestions, and feedback from university 
 students and faculty. It allows individuals to submit their complaints online, using a unique complaint ID, 
