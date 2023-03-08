@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:e_complaint_box/global/global.dart';
 import 'package:e_complaint_box/global_widgets/loding_dialog.dart';
 import 'package:e_complaint_box/screens/authantication/verify_email.dart';
+import 'package:e_complaint_box/services/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:e_complaint_box/palatte.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,11 +14,11 @@ import '../../services/connectivity_provider.dart';
 import '../../widgets/widgets.dart';
 import 'No_internet.dart';
 import 'students_login_Screen.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:file_picker/file_picker.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -54,17 +56,97 @@ class _UiState extends State<Ui> {
 
   String downloadUrlImage = "";
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  final ImagePicker imagePicker = ImagePicker();
-  XFile? imgXFile;
+  File? imgFile;
+  Uint8List? imgWebFile;
   getImageFromGallery() async {
-    imgXFile = await imagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      imgXFile;
-    });
+    final res = await pickImage();
+    if (res != null) {
+      if (kIsWeb) {
+        setState(() {
+          imgWebFile = res.files.first.bytes;
+        });
+      } else {
+        setState(() {
+          imgFile = File(res.files.first.path!);
+        });
+      }
+    }
   }
 
   formValidation() async {
-    if (imgXFile == null) {
+    if (kIsWeb) {
+      if (imgWebFile == null) {
+        Fluttertoast.showToast(msg: "Please select an image");
+      } else {
+        {
+          // password id equal to confirm password
+          if (passwordTextEditingController.text ==
+              confirmPasswordTextEditingController.text) {
+            // check email , password , confirm Password& name text fields
+            if (nameTextEditingController.text.isNotEmpty &&
+                emailTextEditingController.text.isNotEmpty &&
+                passwordTextEditingController.text.isNotEmpty &&
+                confirmPasswordTextEditingController.text.isNotEmpty) {
+              if (emailTextEditingController.text.substring(
+                      emailTextEditingController.text.length - 11,
+                      emailTextEditingController.text.length) ==
+                  '@dseu.ac.in') {
+                showDialog(
+                    context: context,
+                    builder: (c) {
+                      return const LoadingDialogWidget(
+                        message: "Registering your account",
+                      );
+                    });
+
+                // TODO 1. upload image to storage (DONE)
+                // using time as a unique name for image Since Time whenever is pass is never can be recalled
+
+                String fileName =
+                    DateTime.now().millisecondsSinceEpoch.toString();
+                fStorage.Reference storeRef = fStorage.FirebaseStorage.instance
+                    .ref()
+                    .child("userImages") // This folder will be created
+                    .child(fileName); // save in the folder with this fileName
+
+                fStorage.UploadTask uploadImageTask;
+                if (kIsWeb) {
+                  uploadImageTask = storeRef.putData(imgWebFile!);
+                } else {
+                  uploadImageTask =
+                      storeRef.putFile(File(imgFile!.path)); // Uploading image
+                }
+                fStorage.TaskSnapshot taskSnapshot =
+                    await uploadImageTask.whenComplete(() {});
+                await taskSnapshot.ref.getDownloadURL().then((imageUrl) {
+                  // taskSnapshot we got the imageUrl
+                  downloadUrlImage = imageUrl;
+                });
+
+                // TODO 2. save the user info to firestore database (DONE)
+                saveUserInformationToDatabase();
+              } else {
+                Fluttertoast.showToast(
+                    msg:
+                        "Must include organization domain in you email address i.e.\n. @dseu.ac.in",
+                    toastLength: Toast.LENGTH_LONG);
+              }
+            } else {
+              // Navigator.pop(context);
+              Fluttertoast.showToast(
+                  msg: "Please fill all mandatory fields",
+                  toastLength: Toast.LENGTH_LONG);
+            }
+          } else //password is NOT equal to confirm password
+          {
+            Fluttertoast.showToast(
+                msg: "Password dose not matched",
+                toastLength: Toast.LENGTH_LONG);
+          }
+        }
+      }
+    } else
+     if (imgFile == null) {
       // If image not selected
       Fluttertoast.showToast(msg: "Please select an image");
     } else // If image already selected
@@ -98,7 +180,7 @@ class _UiState extends State<Ui> {
                 .child("userImages") // This folder will be created
                 .child(fileName); // save in the folder with this fileName
             fStorage.UploadTask uploadImageTask =
-                storeRef.putFile(File(imgXFile!.path)); // Uploading image
+                storeRef.putFile(File(imgFile!.path)); // Uploading image
             fStorage.TaskSnapshot taskSnapshot =
                 await uploadImageTask.whenComplete(() {});
             await taskSnapshot.ref.getDownloadURL().then((imageUrl) {
@@ -134,7 +216,7 @@ class _UiState extends State<Ui> {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(
             email: emailTextEditingController.text.trim(),
-            password: passwordTextEditingController.text.trim())
+            password: passwordTextEditingController.text.trim(),)
         .then((auth) {
       currentUser = auth.user;
     }).catchError((errorMassage) {
@@ -213,23 +295,31 @@ class _UiState extends State<Ui> {
                     onTap: () {
                       getImageFromGallery();
                     },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white70,
-                      radius: MediaQuery.of(context).size.width * 0.18,
-                      backgroundImage: imgXFile == null
-                          ? null
-                          : FileImage(
-                              File(imgXFile!.path),
-                            ),
-                      child: imgXFile == null
-                          ? Icon(
-                              Icons.add_photo_alternate,
-                              color: Colors.black54,
-                              size: MediaQuery.of(context).size.width * 0.15,
-                            )
-                          : null,
-                    ),
+                    child: imgWebFile != null
+                        ? CircleAvatar(
+                            backgroundImage: MemoryImage(imgWebFile!),
+                            backgroundColor: Colors.white70,
+                            radius: MediaQuery.of(context).size.width * 0.18,
+                          )
+                        : imgFile != null
+                            ? CircleAvatar(
+                                backgroundImage: FileImage(imgFile!),
+                                backgroundColor: Colors.white70,
+                                radius:
+                                    MediaQuery.of(context).size.width * 0.18,
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.white70,
+                                radius:
+                                    MediaQuery.of(context).size.width * 0.18,
+                                child: Icon(
+                                  Icons.add_photo_alternate,
+                                  color: Colors.black54,
+                                  size:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                )),
                   ),
+
                   const SizedBox(
                     height: 15,
                   ),

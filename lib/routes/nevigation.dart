@@ -1,6 +1,6 @@
 import 'package:e_complaint_box/global_widgets/loding_dialog.dart';
-import 'package:e_complaint_box/widgets/students_drawer.dart';
-import 'package:e_complaint_box/widgets/teachers_drawer.dart';
+import 'package:e_complaint_box/widgets/drawer/students_drawer.dart';
+import 'package:e_complaint_box/widgets/drawer/teachers_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

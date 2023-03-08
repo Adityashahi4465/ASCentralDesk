@@ -31,12 +31,12 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'ASComplaint',
+          title: 'CMS - Campus Management System',
           theme: ThemeData.dark().copyWith(
               useMaterial3: true,
               scaffoldBackgroundColor: Colors.white,
               primaryColor: const Color.fromRGBO(21, 30, 61, 1)),
-          home: const SplashScreen() // user User will face Splash Screen then o the splash screen we will check if user is already_logged-In or not
+          home: const SplashScreen() // user is not already_logged-In
           ),
     );
   }
