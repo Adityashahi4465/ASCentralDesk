@@ -9,7 +9,7 @@ The “Online Complaint Management System” software is an independent applicat
 
 ## Introduction 🔥🔥👋👋
 
-In this fast-moving world with intensive coursework, students find very less time to share their problems to overcome with this problem E-ASComplaints is here it is  a system designed to handle complaints, suggestions, and feedback from university 
+In this fast-moving world with intensive coursework, students find very less time to share their problems to overcome with this problem E-ASComplaints is here it is  a system designed to handle complaints, suggestions, and feedback from university, Notices, Events. 
 students and faculty. It allows individuals to submit their complaints online, using a unique complaint ID, 
 which is then forwarded to the relevant department for resolution. The complaint ID is used to track the 
 progress of the complaint and ensure that it is properly addressed and resolved.
