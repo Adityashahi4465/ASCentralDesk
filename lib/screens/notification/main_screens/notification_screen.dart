@@ -1,7 +1,7 @@
+import 'package:e_complaint_box/palatte.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
-
-import '../../../palatte.dart';
 
 class NotificationDetailsScreen extends StatelessWidget {
   final String postedBy;
@@ -17,7 +17,8 @@ class NotificationDetailsScreen extends StatelessWidget {
   final String type;
   final String venueType;
 
-  NotificationDetailsScreen({
+  const NotificationDetailsScreen({
+    super.key,
     required this.postedBy,
     required this.campus,
     required this.eligibilityCriteria,
@@ -31,15 +32,14 @@ class NotificationDetailsScreen extends StatelessWidget {
     required this.type,
     required this.venueType,
   });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 198, 198, 213),
+      backgroundColor: const Color.fromARGB(248, 255, 255, 255),
       appBar: AppBar(
         backgroundColor: violet,
         title: const Text(
-          'Notification Details',
+          'Event Details',
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -56,33 +56,34 @@ class NotificationDetailsScreen extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                    color: blackText),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Text(
                 subtitle,
                 style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.grey[700],
-                ),
+                    fontSize: 16.0,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.w600),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.person,
                     size: 18.0,
                     color: Colors.blue,
                   ),
-                  SizedBox(width: 10.0),
-                  Text(
+                  const SizedBox(width: 10.0),
+                  const Text(
                     'Posted by: ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16.0,
+                      color: lightBlackText,
                     ),
                   ),
                   Text(
@@ -94,73 +95,58 @@ class NotificationDetailsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10.0),
-              Row(
+              const SizedBox(height: 10.0),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.school,
                     size: 18.0,
                     color: Colors.blue,
                   ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'Campus: ',
+                  const SizedBox(width: 10.0),
+                  const Text(
+                    'Eligible Campuses: ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16.0,
+                      color: lightBlackText,
                     ),
                   ),
-                  Text(
-                    campus,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey[700],
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Text(
+                          campus,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10.0),
-              Row(
-                children: [
-                  Icon(
-                    Icons.check_circle_outline,
-                    size: 18.0,
-                    color: Colors.blue,
-                  ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'Eligibility Criteria: ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                  Text(
-                    eligibilityCriteria,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.0),
-              Text(
+              const SizedBox(height: 20.0),
+              const Text(
                 'Description:',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
-                  color: Colors.white,
+                  color: lightBlackText,
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Container(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: Text(
+                child: SelectableText(
                   description,
                   style: TextStyle(
                     fontSize: 16.0,
@@ -168,25 +154,52 @@ class NotificationDetailsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
+              const Text(
+                'Eligibility Criteria: ',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                  color: lightBlackText,
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              Container(
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: SelectableText(
+                  eligibilityCriteria,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Start Date:',
+                        const Text(
+                          'Valid From:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
-                            color: Colors.white,
+                            color: lightBlackText,
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         Text(
-                          '${DateFormat.yMMMMd().format(startDate)}',
-                          style: TextStyle(fontSize: 16.0),
+                          DateFormat.yMMMMd().format(startDate),
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: lightBlackText,
+                          ),
                         ),
                       ],
                     ),
@@ -195,43 +208,49 @@ class NotificationDetailsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'End Date:',
+                        const Text(
+                          'Valid Till:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
-                            color: Colors.white,
+                            color: lightBlackText,
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         Text(
-                          '${DateFormat.yMMMMd().format(endDate)}',
-                          style: TextStyle(fontSize: 16.0),
+                          DateFormat.yMMMMd().format(endDate),
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: lightBlackText,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Priority:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
-                            color: Colors.white,
+                            color: lightBlackText,
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         Text(
                           priority,
-                          style: TextStyle(fontSize: 16.0),
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: lightBlackText,
+                          ),
                         ),
                       ],
                     ),
@@ -240,63 +259,49 @@ class NotificationDetailsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Posted At:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
-                            color: Colors.white,
+                            color: lightBlackText,
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         Text(
-                          '${DateFormat.yMMMMd().format(postedAt)}',
-                          style: TextStyle(fontSize: 16.0),
+                          DateFormat.yMMMMd().format(postedAt),
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: lightBlackText,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Type:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
-                            color: Colors.white,
+                            color: lightBlackText,
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         Text(
                           type,
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Venue Type:',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.white,
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: lightBlackText,
                           ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Text(
-                          venueType,
-                          style: TextStyle(fontSize: 16.0),
                         ),
                       ],
                     ),

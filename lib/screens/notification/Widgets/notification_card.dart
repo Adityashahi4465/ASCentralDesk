@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_complaint_box/global_widgets/loding_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -243,7 +244,7 @@ class NotificationOverviewCard extends StatelessWidget {
           );
         }
 
-        return Text("loading");
+        return const LoadingDialogWidget(message: 'Loading Data',);
       },
     );
   }

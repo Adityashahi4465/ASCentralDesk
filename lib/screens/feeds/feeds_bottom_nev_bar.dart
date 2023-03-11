@@ -28,7 +28,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
           color: const Color(0xFF181D3D),
         ),
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
-        unselectedItemColor: Color.fromARGB(255, 25, 59, 96),
+        unselectedItemColor: const Color.fromARGB(255, 25, 59, 96),
         elevation: 0,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,

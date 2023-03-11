@@ -6,7 +6,7 @@ class CustomDateRangePicker extends StatefulWidget {
   final DateTime lastDate;
   final Color backgroundColor;
 
-  CustomDateRangePicker({
+  const CustomDateRangePicker({super.key, 
     required this.initialDateRange,
     required this.firstDate,
     required this.lastDate,
@@ -64,7 +64,7 @@ class _CustomDateRangePickerState extends State<CustomDateRangePicker> {
               child: Center(
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(_selectedDateRange),
-                  child: Text(
+                  child: const Text(
                     'OK',
                     style: TextStyle(color: Colors.white),
                   ),

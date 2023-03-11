@@ -8,13 +8,9 @@ import 'package:e_complaint_box/screens/notification/form/my_radio_button.dart';
 import 'package:e_complaint_box/screens/profile/teacher_profile.dart';
 import 'package:e_complaint_box/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
-import '../../../widgets/dialogs/complaintDialog.dart';
-import '../../../widgets/cards/feedCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../main_screens/notification_screen.dart';
 
 GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
 ValueNotifier<Map<String, bool>> _filter =

@@ -39,14 +39,9 @@ class EventsFeedScreen extends StatelessWidget {
               priority: document['priority'],
               venueType: document['venueType'],
               postedAt: document['postedAt'].toDate(),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>const  EventDetailsScreen(),
-                  ),
-                );
-              },
+              startDate: document['startDate'].toDate(),
+              endDate: document['endDate'].toDate(),
+              postedByUid: document['SubmittedBy'],
             );
           } else {
             return Container(

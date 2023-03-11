@@ -25,7 +25,7 @@ class FormFieldHintToolTip extends StatelessWidget {
           children: [
             Text(
               tipText,
-              style: TextStyle(color: Color.fromARGB(255, 4, 111, 211)),
+              style: const TextStyle(color: Color.fromARGB(255, 4, 111, 211)),
             ),
             const SizedBox(
               width: 10,
@@ -34,7 +34,7 @@ class FormFieldHintToolTip extends StatelessWidget {
               message: toolTipMessage,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(66, 178, 197, 255),
+                  color: const Color.fromARGB(66, 178, 197, 255),
                   borderRadius: BorderRadius.circular(100),
                   border: Border.all(
                     color: Colors.grey.shade600,
