@@ -26,7 +26,7 @@ class MyRadioButton extends StatelessWidget {
         ),
         value: value,
         groupValue: notificationTypeEnum,
-        tileColor:Color.fromARGB(194, 194, 180, 248),
+        tileColor:const Color.fromARGB(194, 194, 180, 248),
       
         dense: true,
         title: Text(title),

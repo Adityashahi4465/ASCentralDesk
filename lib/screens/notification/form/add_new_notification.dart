@@ -58,14 +58,46 @@ class _AddNewNotificationScreenState extends State<AddNewNotificationScreen> {
   String priority = prioritiesList[0];
   String venueType = venueList[0];
 
-  Future<void> submitForm() async {
+  // picking dateTime Range
+  DateTimeRange dateRange = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime.now().add(const Duration(days: 5)),
+  );
+
+  Future pickDateRange() async {
+    DateTimeRange? newDateRange = await showDateRangePicker(
+      context: context,
+      initialDateRange: dateRange,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFF181D3D),
+              secondary: Color.fromARGB(110, 24, 29, 61),
+              surface: Color.fromARGB(198, 189, 197, 220),
+            ),
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (newDateRange == null) return;
+    setState(() => dateRange = newDateRange);
+  }
+
+// Saving data into firestore
+
+  submitForm() async {
     if (_formKey.currentState!.validate()) {
       showDialog(
           context: context,
           builder: (c) {
             return LoadingDialogWidget(
               message:
-                  'submitting new ${_notificationType == NotificationTypeEnum.Event ? "Event" : 'Notification'}\n',
+                  'submitting new ${_notificationType == NotificationTypeEnum.Event ? "Event" : 'Notification'}',
             );
           });
       try {
@@ -82,6 +114,8 @@ class _AddNewNotificationScreenState extends State<AddNewNotificationScreen> {
           'postedAt': DateTime.now(),
           'priority': priority,
           'venueType': venueType,
+          'startDate': Timestamp.fromDate(dateRange.start),
+          'endDate': Timestamp.fromDate(dateRange.end),
         });
         titleController.text = '';
         subtitleController.text = '';
@@ -92,7 +126,7 @@ class _AddNewNotificationScreenState extends State<AddNewNotificationScreen> {
         QuickAlert.show(
           context: context,
           type: QuickAlertType.success,
-          text: 'Complaint Filed Successfully!',
+          text: 'Successful!',
         );
       } catch (e) {
         SnackBar(content: Text('Some Unknown Error Occurred $e'));
@@ -107,6 +141,8 @@ class _AddNewNotificationScreenState extends State<AddNewNotificationScreen> {
   @override
   Widget build(BuildContext context) {
     var query = MediaQuery.of(context);
+    final start = dateRange.start;
+    final end = dateRange.end;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -269,8 +305,8 @@ class _AddNewNotificationScreenState extends State<AddNewNotificationScreen> {
                                           'Please select the priority for this ${_notificationType == NotificationTypeEnum.Event ? "Event" : "Notification"}',
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          color:
-                                              Color.fromARGB(66, 178, 197, 255),
+                                          color: const Color.fromARGB(
+                                              66, 178, 197, 255),
                                           borderRadius:
                                               BorderRadius.circular(100),
                                           border: Border.all(
@@ -478,6 +514,141 @@ class _AddNewNotificationScreenState extends State<AddNewNotificationScreen> {
                                   ),
                                 )
                               : const SizedBox(),
+                        ],
+                      ),
+                      const SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Start Date',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 4, 111, 211)),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Tooltip(
+                                      message:
+                                          'Please choose the start date for this occasion',
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              66, 178, 197, 255),
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          border: Border.all(
+                                            color: Colors.grey.shade600,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.question_mark,
+                                          size: 14,
+                                          color: Color.fromARGB(
+                                              255, 157, 190, 248),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                InkWell(
+                                  onTap: pickDateRange,
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16.0),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          194, 194, 180, 248),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                          '${start.year}/${start.month}/${start.day}',
+                                          style: const TextStyle(
+                                              color: Colors.white)),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Select End Date',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 4, 111, 211)),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Tooltip(
+                                      message:
+                                          'Please choose the end date for this occasion',
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              66, 178, 197, 255),
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          border: Border.all(
+                                            color: Colors.grey.shade600,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.question_mark,
+                                          size: 14,
+                                          color: Color.fromARGB(
+                                              255, 157, 190, 248),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                InkWell(
+                                  onTap: pickDateRange,
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16.0),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          194, 194, 180, 248),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        '${end.year}/${end.month}/${end.day}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 16.0),

@@ -14,6 +14,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../main_screens/notification_screen.dart';
+
 GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
 ValueNotifier<Map<String, bool>> _filter =
     ValueNotifier<Map<String, bool>>(campusesSwitch);
@@ -113,18 +115,22 @@ class _NotificationFeedScreenState extends State<NotificationFeedScreen>
                                       NotificationTypeEnum.Notification.name) {
                                     if (value[document['campus']] == true ||
                                         document['campus'] == 'All Campuses') {
-                                      return  NotificationOverviewCard(
-                                          title: document['title'],
-                                          subtitle: document['subtitle'],
-                                          description: document['description'],
-                                          eligibilityCriteria:
-                                              document['criteria'],
-                                          campus: document['campus'],
-                                          priority: document['priority'],
-                                          venueType: document['venueType'],
-                                          postedAt:
-                                              document['postedAt'].toDate(),
-                                          onTap: () {});
+                                      return NotificationOverviewCard(
+                                        title: document['title'],
+                                        subtitle: document['subtitle'],
+                                        description: document['description'],
+                                        eligibilityCriteria:
+                                            document['criteria'],
+                                        campus: document['campus'],
+                                        priority: document['priority'],
+                                        venueType: document['venueType'],
+                                        postedAt: document['postedAt'].toDate(),
+                                        startDate:
+                                            document['startDate'].toDate(),
+                                        endDate: document['endDate'].toDate(),
+                                        postedByUid: document['SubmittedBy'],
+                                     
+                                      );
                                     } else {
                                       return Container(
                                         height: 0,

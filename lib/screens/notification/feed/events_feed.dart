@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_complaint_box/screens/notification/main_screens/event_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../global_widgets/loding_dialog.dart';
@@ -38,7 +39,14 @@ class EventsFeedScreen extends StatelessWidget {
               priority: document['priority'],
               venueType: document['venueType'],
               postedAt: document['postedAt'].toDate(),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>const  EventDetailsScreen(),
+                  ),
+                );
+              },
             );
           } else {
             return Container(

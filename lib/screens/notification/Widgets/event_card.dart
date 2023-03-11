@@ -38,6 +38,7 @@ class _EventOverviewCardnState extends State<EventOverviewCard> {
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(11)),
         child: InkWell(
+          
           splashColor: Colors.blue.withAlpha(300),
           onTap: widget.onTap,
           child: Container(
