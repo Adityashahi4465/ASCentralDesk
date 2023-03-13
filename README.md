@@ -21,8 +21,8 @@ member via email, using the system's built-in messaging feature. This allows for
 communication, ensuring that all parties are kept up-to-date on the status of the complaint.
 
 Overall, the E-ASComplaint box aims to provide a convenient and easy-to-use platform for students and 
-faculty to voice their concerns and have them addressed in a timely and effective manner.
- 
+faculty to voice their concerns and have them addressed in a timely and effective manner and recive importent event notfications and notices from admins.
+  
  **ER-Diagram**
  
  <img width="673" alt="image" src="https://user-images.githubusercontent.com/97585273/211216505-5a087d6b-4e90-4160-be8c-b65c8adcad3a.png">
