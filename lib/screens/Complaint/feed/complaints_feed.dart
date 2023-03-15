@@ -1,15 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:e_complaint_box/global/global.dart';
 import 'package:e_complaint_box/global_widgets/loding_dialog.dart';
 import 'package:e_complaint_box/screens/profile/teacher_profile.dart';
 import 'package:e_complaint_box/screens/profile/user_profile.dart';
-import 'package:flutter/material.dart';
-import '../../../widgets/dialogs/complaintDialog.dart';
 import '../../../widgets/cards/feedCard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../widgets/dialogs/complaintDialog.dart';
 
 GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
 ValueNotifier<Map<String, bool>> _filter =
@@ -60,223 +60,234 @@ class _FeedState extends State<ComplaintFeedScreen>
     return Scaffold(
       key: _scaffoldState,
       drawer: const NavDrawer(),
-      body: Stack(
-        children: [
-          Padding(
-              padding: const EdgeInsets.only(
-                  right: 20, left: 20, top: 150, bottom: 0),
-              child: ValueListenableBuilder(
-                valueListenable: _filter,
-                builder:
-                    (BuildContext context, Map<String, bool> value, Widget) {
-                  return Column(
-                    children: [
-                      Flexible(
-                        child: StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('complaints')
-                              .orderBy('filing time', descending: true)
-                              .snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.hasError) {
-                              return const Text('Something went wrong');
-                            }
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                child: LoadingDialogWidget(
-                                  message: 'Loading,',
-                                ),
-                              );
-                            }
-                            var feedcomplaints = snapshot.data!.docs
-                                .map((DocumentSnapshot document) {
-                              if (value[document['category']] == true) {
-                                return ComplaintOverviewCard(
-                                  title: document['title'],
-                                  onTap: ComplaintDialog(document.id),
-                                  email: document['email'],
-                                  filingTime: document['filing time'],
-                                  category: document['category'],
-                                  description: document['description'],
-                                  status: document['status'],
-                                  upvotes: document['upvotes'],
-                                  id: document.id,
-                                );
-                              } else {
-                                return Container(
-                                  height: 0,
-                                );
-                              }
-                            }).toList();
-                            feedcomplaints.add(Container(
-                                padding: const EdgeInsets.all(10),
-                                child: const Column(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      size: 40,
-                                      color: Color(0xFF36497E),
-                                    ),
-                                    Text("You're All Caught Up",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black54))
-                                  ],
-                                )));
-                            return ListView(
-                              children: feedcomplaints,
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              )),
-          Padding(
-            padding:
-                const EdgeInsets.only(right: 20, left: 20, top: 150, bottom: 0),
-            child: Container(
-                // add contents of the bookmark page
-                // child: Bookmarks(),
-                ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 500,
           ),
-          Stack(
-            children: <Widget>[
-              Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.035,
-                    color: const Color(0xFF181D3D),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: (Responsive.isSmallScreen(context))
-                        ? MediaQuery.of(context).size.height * 0.8
-                        : MediaQuery.of(context).size.height * 0.2,
-                    child: ClipPath(
-                        clipper: CurveClipper(),
-                        child: Container(
-                          color: const Color(0xFF181D3D),
-                        )),
-                  ),
-                ],
+          child: Stack(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(
+                      right: 20, left: 20, top: 150, bottom: 0),
+                  child: ValueListenableBuilder(
+                    valueListenable: _filter,
+                    builder: (BuildContext context, Map<String, bool> value,
+                        Widget) {
+                      return Column(
+                        children: [
+                          Flexible(
+                            child: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('complaints')
+                                  .orderBy('filing time', descending: true)
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.hasError) {
+                                  return const Text('Something went wrong');
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child: LoadingDialogWidget(
+                                      message: 'Loading,',
+                                    ),
+                                  );
+                                }
+                                var feedcomplaints = snapshot.data!.docs
+                                    .map((DocumentSnapshot document) {
+                                  if (value[document['category']] == true) {
+                                    return ComplaintOverviewCard(
+                                      title: document['title'],
+                                      onTap: ComplaintDialog(document.id),
+                                      email: document['email'],
+                                      filingTime: document['filing time'],
+                                      fund: document['fund'],
+                                      consults: document['consults'],
+                                      category: document['category'],
+                                      description: document['description'],
+                                      status: document['status'],
+                                      upvotes: document['upvotes'],
+                                      id: document.id,
+                                    );
+                                  } else {
+                                    return Container(
+                                      height: 0,
+                                    );
+                                  }
+                                }).toList();
+                                feedcomplaints.add(Container(
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Column(
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle,
+                                          size: 40,
+                                          color: Color(0xFF36497E),
+                                        ),
+                                        Text("You're All Caught Up",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black54))
+                                      ],
+                                    )));
+                                return ListView(
+                                  children: feedcomplaints,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  )),
+              Padding(
+                padding: const EdgeInsets.only(
+                    right: 20, left: 20, top: 150, bottom: 0),
+                child: Container(
+                    // add contents of the bookmark page
+                    // child: Bookmarks(),
+                    ),
               ),
-              Column(
-                children: [
-                  const SizedBox(height: 25.0),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+              Stack(
+                children: <Widget>[
+                  Column(
                     children: [
-                      //implementation of sidebar
-                      IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_sharp,
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.035,
+                        color: const Color(0xFF181D3D),
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                        onPressed: () {
-                          _scaffoldState.currentState!.openDrawer();
-                        },
-                      ),
-                      const SizedBox(
-                        width: 35.0,
-                      ),
-                      const Text(
-                        'ASComplaints',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.white,
-                          fontFamily: 'Amaranth',
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 40.0,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: (Responsive.isSmallScreen(context))
+                            ? MediaQuery.of(context).size.height * 0.8
+                            : MediaQuery.of(context).size.height * 0.2,
+                        child: ClipPath(
+                            clipper: CurveClipper(),
+                            child: Container(
+                              color: const Color(0xFF181D3D),
+                            )),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10.0),
-                  // Implementation of tabbar
-                  Center(
-                    child: SizedBox(
-                      width: 300.0,
-                      height: 60,
-                      child: TabBar(
-                        controller: _tabController,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        indicator: const BoxDecoration(
-                          color: Color(0xFF606fad),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                            bottomRight: Radius.circular(15),
-                            bottomLeft: Radius.circular(15),
+                  Column(
+                    children: [
+                      const SizedBox(height: 25.0),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //implementation of sidebar
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_sharp,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                        ),
-                        tabs: const [
-                          Tab(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(42.0, 0, 42.0, 0),
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.mode_comment,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                  Text(
-                                    'Feed',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.white),
-                                  ),
-                                ],
-                              ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                            onPressed: () {
+                              _scaffoldState.currentState!.openDrawer();
+                            },
+                          ),
+                          const SizedBox(
+                            width: 35.0,
+                          ),
+                          const Text(
+                            'ASComplaints',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              color: Colors.white,
+                              fontFamily: 'Amaranth',
                             ),
                           ),
-                          Tab(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.bookmark,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                  Text(
-                                    'Bookmarks',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.white,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
+                          const SizedBox(
+                            width: 40.0,
+                          ),
                         ],
                       ),
-                    ),
+                      const SizedBox(height: 10.0),
+                      // Implementation of tabbar
+                      Center(
+                        child: SizedBox(
+                          width: 300.0,
+                          height: 60,
+                          child: TabBar(
+                            controller: _tabController,
+                            indicatorSize: TabBarIndicatorSize.label,
+                            indicator: const BoxDecoration(
+                              color: Color(0xFF606fad),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                                bottomLeft: Radius.circular(15),
+                              ),
+                            ),
+                            tabs: const [
+                              Tab(
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(42.0, 0, 42.0, 0),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.mode_comment,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                      Text(
+                                        'Feed',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Tab(
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.bookmark,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                      Text(
+                                        'Bookmarks',
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              ),
+              )
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

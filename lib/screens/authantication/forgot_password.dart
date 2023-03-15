@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../palatte.dart';
 import '../../global_widgets/background-image.dart';
-import '../../global_widgets/password-input.dart';
 import '../../global_widgets/text-input.dart';
 import 'students_login_Screen.dart';
 

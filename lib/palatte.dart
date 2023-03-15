@@ -10,3 +10,6 @@ const TextStyle kBodyText = TextStyle(
   fontSize: 14,
   color: Colors.white,
 );
+const Color violet = Color(0xFF181D3D);
+const Color lightBlackText = Color.fromARGB(255, 54, 54, 56);
+const Color blackText = Color.fromARGB(255, 54, 54, 56);

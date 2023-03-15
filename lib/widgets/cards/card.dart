@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils.dart';
+
 var user = FirebaseAuth.instance.currentUser;
 
 class Category {
@@ -71,7 +72,7 @@ class _CardCategoryState extends State<CardCategory> {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return LoadingDialogWidget(
+              return const LoadingDialogWidget(
                 message: "",
               );
             case ConnectionState.done:
@@ -172,8 +173,8 @@ class _CardCategoryState extends State<CardCategory> {
 }
 
 class EditCampus extends StatefulWidget {
-  String campusName;
-  EditCampus({super.key, required this.campusName});
+ final  String campusName;
+  const EditCampus({super.key, required this.campusName});
   @override
   _EditCampusState createState() => _EditCampusState(campusName);
 }
@@ -186,12 +187,12 @@ class _EditCampusState extends State<EditCampus> {
     return AlertDialog(
         title: Row(
           children: [
-            Text('Edit '),
+            const Text('Edit '),
             Text(categories[1].name),
           ],
         ),
         content: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
                 width: double.infinity,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -217,7 +218,7 @@ class _EditCampusState extends State<EditCampus> {
               Navigator.of(context).pop();
             },
             elevation: 5.0,
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           MaterialButton(
             onPressed: () async {
@@ -229,15 +230,15 @@ class _EditCampusState extends State<EditCampus> {
               Navigator.of(context).pop();
             },
             elevation: 5.0,
-            child: Text('Save'),
+            child: const Text('Save'),
           )
         ]);
   }
 }
 
 class EditSemester extends StatefulWidget {
-  String semesterName;
-  EditSemester({super.key, required this.semesterName});
+  final String semesterName;
+  const EditSemester({super.key, required this.semesterName});
 
   @override
   State<EditSemester> createState() => _EditSemesterState(semesterName);
@@ -249,56 +250,56 @@ class _EditSemesterState extends State<EditSemester> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: Row(
-          children: [
-            const Text('Edit '),
-            Text(categories[0].name),
-          ],
+      title: Row(
+        children: [
+          const Text('Edit '),
+          Text(categories[0].name),
+        ],
+      ),
+      content: SingleChildScrollView(
+          child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: semesters
+                    .map((e) => RadioListTile(
+                          title: Text(e),
+                          value: e,
+                          groupValue: semesterName,
+                          onChanged: (value) {
+                            if (value != semesterName) {
+                              setState(() {
+                                semesterName = value!;
+                              });
+                            }
+                          },
+                          selected: semesterName == e,
+                        ))
+                    .toList(),
+              ))),
+      actions: <Widget>[
+        MaterialButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          elevation: 5.0,
+          child: const Text('Cancel'),
         ),
-        content: SingleChildScrollView(
-            child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: semesters
-                      .map((e) => RadioListTile(
-                            title: Text(e),
-                            value: e,
-                            groupValue: semesterName,
-                            onChanged: (value) {
-                              if (value != semesterName) {
-                                setState(() {
-                                  semesterName = value!;
-                                });
-                              }
-                            },
-                            selected: semesterName == e,
-                          ))
-                      .toList(),
-                ))),
-        actions: <Widget>[
-          MaterialButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            elevation: 5.0,
-            child: Text('Cancel'),
-          ),
 
-          ///                        update semester in database
-          MaterialButton(
-            onPressed: () async {
-              await FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(user?.uid)
-                  .update({'semester': semesterName});
+        ///                        update semester in database
+        MaterialButton(
+          onPressed: () async {
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user?.uid)
+                .update({'semester': semesterName});
 
-              Navigator.of(context).pop();
-            },
-            elevation: 5.0,
-            child: const Text('Save'),
-          )
-        ]);
-    ;
+            Navigator.of(context).pop();
+          },
+          elevation: 5.0,
+          child: const Text('Save'),
+        )
+      ],
+    );
   }
 }

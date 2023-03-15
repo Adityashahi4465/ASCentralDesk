@@ -23,7 +23,7 @@ class EventsFeedScreen extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: LoadingDialogWidget(
-              message: 'Loading, ',
+              message: 'Loading,',
             ),
           );
         }

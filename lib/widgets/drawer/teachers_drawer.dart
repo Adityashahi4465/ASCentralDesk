@@ -62,7 +62,7 @@ class _TeachersDrawerState extends State<TeachersDrawer> {
       case TeachersMenuItems.contect_us:
         return const ContactUs();
       case TeachersMenuItems.about_us:
-        return AboutPage();
+        return const AboutPage();
     }
     return const HomePage();
   }

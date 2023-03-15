@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_prefixes
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -425,6 +425,8 @@ class _ComposeState extends State<Compose> {
                         complaint!.title,
                         complaint!.category,
                         complaint!.description,
+                        0,
+                        '',
                         complaint!.images,
                         complaint!.filingTime,
                         complaint!.status,

@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
       splashIconSize: 220.0,
       // let me add a condition to navigate to home screen if user is logged in
       nextScreen: (FirebaseAuth.instance.currentUser != null)
-          ? User1()
+          ? const User1()
           : const StudentLoginPage(),
     );
   }

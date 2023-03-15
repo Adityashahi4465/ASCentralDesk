@@ -32,7 +32,7 @@ class _AboutPageState extends State<AboutPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Color(0xFF181D3D),
+        backgroundColor: const Color(0xFF181D3D),
         title: Text(
           'About Us',
           style: Theme.of(context)
@@ -47,7 +47,7 @@ class _AboutPageState extends State<AboutPage> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: const EdgeInsets.all(30),
         child: ListView(children: [
           Text('The Why Behind Us?',
               style: Theme.of(context).textTheme.titleLarge),
@@ -58,11 +58,11 @@ class _AboutPageState extends State<AboutPage> {
             'In this fast-moving world with intensive coursework, students find very less time to share their problems. At almost every university, the students reside on CRs ,Proctors etc, and most of those have offline complaint registration opening only 2-3 hours a day which some students miss. This is the reason why ASComplaints is here.',
             style: TextStyle(color: Colors.white38),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text('Team', style: Theme.of(context).textTheme.titleLarge),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Center(
@@ -95,7 +95,7 @@ class _AboutPageState extends State<AboutPage> {
                                     ),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   height: 60,
                                   width:
                                       MediaQuery.of(context).size.width - 200,
@@ -124,7 +124,7 @@ class _AboutPageState extends State<AboutPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(width: 10)
+                                const SizedBox(width: 10)
                               ],
                             ),
                           ),

@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -11,6 +12,8 @@ class ComplaintFiling {
       String title,
       String category,
       String description,
+      int fund,
+      String consults,
       List<String> images,
       DateTime filingTime,
       String status,
@@ -28,6 +31,8 @@ class ComplaintFiling {
       'title': title,
       'category': category,
       'description': description,
+      'fund' : fund,
+      'consults': consults,
       'list of Images': images,
       'filing time': filingTime,
       'status': status,

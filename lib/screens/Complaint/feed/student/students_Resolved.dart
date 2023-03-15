@@ -42,7 +42,7 @@ class _ResolvedState extends State<Resolved>
                   children: [
                     Container(
                       height: MediaQuery.of(context).size.height * 0.035,
-                      color: Color(0xFF181D3D),
+                      color: const Color(0xFF181D3D),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
@@ -53,7 +53,7 @@ class _ResolvedState extends State<Resolved>
                           clipper: CurveClipper(),
                           child: Container(
                             //constraints: BoxConstraints.expand(),
-                            color: Color(0xFF181D3D),
+                            color: const Color(0xFF181D3D),
                           )),
                     ),
                   ],
@@ -76,15 +76,15 @@ class _ResolvedState extends State<Resolved>
                           },
                           icon: const Icon(Icons.menu, color: Colors.white),
                         ),
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundImage:
                               AssetImage('assets/images/splash.png'),
                           radius: 25.0,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 35.0,
                         ),
-                        Text(
+                        const Text(
                           'ASComplaints',
                           style: TextStyle(
                             fontSize: 25.0,
@@ -94,7 +94,7 @@ class _ResolvedState extends State<Resolved>
                         ),
                       ],
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Text('Complaints Resolved',
                         style: TextStyle(
                             color: Colors.white,
@@ -146,7 +146,7 @@ class ResolvedList extends StatelessWidget {
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> user) {
           if (user.connectionState == ConnectionState.waiting)
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
 
           final List<String> resolved =
               List<String>.from(user.data!['list of my filed Complaints']);
@@ -171,6 +171,8 @@ class ResolvedList extends StatelessWidget {
                       onTap: ComplaintDialog(doc.id),
                       email: doc['email'],
                       filingTime: doc['filing time'],
+                      fund: doc['fund'],
+                      consults: doc['consults'],
                       category: doc["category"],
                       description: doc["description"],
                       status: doc["status"],
@@ -180,10 +182,10 @@ class ResolvedList extends StatelessWidget {
                   }
                 });
                 currentresolved.add(Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.check_circle,
                           size: 40,
                           color: Color(0xFF36497E),

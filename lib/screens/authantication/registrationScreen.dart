@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, file_names
 import 'dart:io';
 import 'package:e_complaint_box/global/global.dart';
 import 'package:e_complaint_box/global_widgets/loding_dialog.dart';

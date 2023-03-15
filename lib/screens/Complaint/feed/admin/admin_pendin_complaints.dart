@@ -1,12 +1,11 @@
-import 'package:e_complaint_box/global_widgets/loding_dialog.dart';
-import 'package:e_complaint_box/widgets/dialogs/admin_dialog.dart';
-import 'package:e_complaint_box/widgets/dialogs/complaintDialog.dart';
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:e_complaint_box/global_widgets/loding_dialog.dart';
+import 'package:e_complaint_box/widgets/dialogs/admin/admin_dialog.dart';
 import '../../../../global/global.dart';
 import '../../../../widgets/cards/feedCard.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 var user = FirebaseAuth.instance.currentUser;
 
@@ -29,75 +28,74 @@ class _AdminPendingState extends State<AdminPending>
       key: _scaffoldState,
       body: Stack(
         children: [
-          Container(
-            child: Padding(
-                padding: const EdgeInsets.only(
-                    right: 20, left: 20, top: 150, bottom: 0),
-                child: Container(
-                    child: StreamBuilder<QuerySnapshot>(
-                  stream: complaints.snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    }
+          Padding(
+              padding: const EdgeInsets.only(
+                  right: 20, left: 20, top: 150, bottom: 0),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: complaints.snapshots(),
+                builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return const Text('Something went wrong');
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              }
 
-                    return StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user!.uid)
-                            .snapshots(),
-                        builder: (context, user) {
-                          if (user.connectionState == ConnectionState.waiting) {
-                            return const LoadingDialogWidget(
-                              message: "Loading...\n",
-                            );
-                          }
-                          List<Widget> list = snapshot.data!.docs
-                              .map((DocumentSnapshot document) {
-                            if ((document['category'] ==
-                                    user.data!['category']) &&
-                                (document['status'] == 'Pending' ||
-                                    document['status'] == 'In Progress')) {
-                              return ComplaintOverviewCard(
-                                title: document['title'],
-                                onTap: AdminDialog(document.id),
-                                email: document['email'],
-                                filingTime: document['filing time'],
-                                category: document['category'],
-                                description: document['description'],
-                                status: document['status'],
-                                upvotes: document['upvotes'],
-                                id: document.id,
-                              );
-                            }
-                            return SizedBox(width: 0.0, height: 0.0);
-                          }).toList();
-                          list.add(Container(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                children: const [
-                                  Icon(
-                                    Icons.check_circle,
-                                    size: 40,
-                                    color: Color(0xFF36497E),
-                                  ),
-                                  Text("You're All Caught Up",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black54))
-                                ],
-                              )));
+              return StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user!.uid)
+                      .snapshots(),
+                  builder: (context, user) {
+                    if (user.connectionState == ConnectionState.waiting) {
+                      return const LoadingDialogWidget(
+                        message: "Loading...\n",
+                      );
+                    }
+                    List<Widget> list = snapshot.data!.docs
+                        .map((DocumentSnapshot document) {
+                      if ((document['category'] ==
+                              user.data!['category']) &&
+                          (document['status'] == 'Pending' ||
+                              document['status'] == 'In Progress')) {
+                        return ComplaintOverviewCard(
+                          title: document['title'],
+                          onTap: AdminDialog(document.id),
+                          email: document['email'],
+                          filingTime: document['filing time'],
+                            fund: document['fund'],
+                                  consults: document['consults'],
+                          category: document['category'],
+                          description: document['description'],
+                          status: document['status'],
+                          upvotes: document['upvotes'],
+                          id: document.id,
+                        );
+                      }
+                      return const SizedBox(width: 0.0, height: 0.0);
+                    }).toList();
+                    list.add(Container(
+                        padding: const EdgeInsets.all(10),
+                        child: const Column(
+                          children: [
+                            Icon(
+                              Icons.check_circle,
+                              size: 40,
+                              color: Color(0xFF36497E),
+                            ),
+                            Text("You're All Caught Up",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black54))
+                          ],
+                        )));
 
-                          return ListView(children: list);
-                        });
-                  },
-                ))),
-          ),
+                    return ListView(children: list);
+                  });
+                },
+              )),
           Stack(
             children: <Widget>[
               Column(
@@ -115,7 +113,7 @@ class _AdminPendingState extends State<AdminPending>
                         clipper: CurveClipper(),
                         child: Container(
                           //constraints: BoxConstraints.expand(),
-                          color: Color(0xFF181D3D),
+                          color: const Color(0xFF181D3D),
                         )),
                   ),
                 ],
@@ -123,11 +121,11 @@ class _AdminPendingState extends State<AdminPending>
               Column(
                 children: [
                   const SizedBox(height: 25.0),
-                  Row(
+                  const Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       CircleAvatar(
                         backgroundImage: AssetImage('assets/images/splash.png'),
                         radius: 25.0,

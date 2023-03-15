@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_complaint_box/palatte.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +10,8 @@ class ComplaintOverviewCard extends StatefulWidget {
   final String email;
   final String category;
   final String description;
+  final int fund;
+  final String consults;
   final String status;
   final filingTime;
   final upvotes;
@@ -21,6 +24,8 @@ class ComplaintOverviewCard extends StatefulWidget {
       required this.email,
       this.filingTime,
       required this.category,
+      required this.fund,
+      required this.consults,
       required this.description,
       required this.status,
       this.upvotes,
@@ -127,7 +132,33 @@ class _ComplaintOverviewCardState extends State<ComplaintOverviewCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
+                  children: [
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.fund.toString(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          const Text(
+                            'Fund Allocated',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 13,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
                     Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -209,7 +240,7 @@ class _ComplaintOverviewCardState extends State<ComplaintOverviewCard> {
                       ],
                     )
                   ],
-                )
+                ),
               ],
             ),
           ),

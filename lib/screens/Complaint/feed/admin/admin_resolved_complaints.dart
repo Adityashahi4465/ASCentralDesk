@@ -61,6 +61,8 @@ class _AdminResolvedState extends State<AdminResolved>
                               title: document['title'],
                               onTap: ComplaintDialog(document.id),
                               email: document['email'],
+                              fund: document['fund'],
+                              consults: document['consults'],
                               filingTime: document['filing time'],
                               category: document['category'],
                               description: document['description'],

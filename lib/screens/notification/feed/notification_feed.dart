@@ -125,7 +125,6 @@ class _NotificationFeedScreenState extends State<NotificationFeedScreen>
                                             document['startDate'].toDate(),
                                         endDate: document['endDate'].toDate(),
                                         postedByUid: document['SubmittedBy'],
-                                     
                                       );
                                     } else {
                                       return Container(

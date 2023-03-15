@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:e_complaint_box/palatte.dart';
 
 class TextInput extends StatefulWidget {
-  TextInput({
+  const TextInput({
     super.key,
     required this.textEditingController,
     required this.icon,

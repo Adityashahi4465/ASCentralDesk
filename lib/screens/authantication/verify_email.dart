@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../global_widgets/background-image.dart';
 import '../../palatte.dart';
 import '../splash.dart';
-import 'students_login_Screen.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);

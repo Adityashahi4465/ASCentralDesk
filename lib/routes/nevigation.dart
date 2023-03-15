@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 var user = FirebaseAuth.instance.currentUser;
 
 class User1 extends StatefulWidget {
+  const User1({super.key});
+
   @override
   _User1State createState() => _User1State();
 }

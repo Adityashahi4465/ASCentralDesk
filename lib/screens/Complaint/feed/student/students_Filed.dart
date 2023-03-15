@@ -211,6 +211,8 @@ class _ComplaintTile1State extends State<ComplaintTile1> {
                       onTap: ComplaintDialog(doc.id),
                       email: doc['email'],
                       filingTime: doc['filing time'],
+                      fund: doc['fund'],
+                      consults: doc['consults'],
                       category: doc["category"],
                       description: doc["description"],
                       status: doc["status"],

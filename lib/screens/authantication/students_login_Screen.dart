@@ -1,18 +1,19 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_complaint_box/screens/authantication/registrationScreen.dart';
-import 'package:e_complaint_box/screens/authantication/verify_email.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:e_complaint_box/palatte.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
 import 'package:e_complaint_box/global/global.dart';
+import 'package:e_complaint_box/global_widgets/loding_dialog.dart';
+import 'package:e_complaint_box/palatte.dart';
+import 'package:e_complaint_box/screens/authantication/registrationScreen.dart';
+import 'package:e_complaint_box/screens/authantication/verify_email.dart';
+
 import '../../services/connectivity_provider.dart';
 import '../../widgets/widgets.dart';
-import 'package:e_complaint_box/global_widgets/loding_dialog.dart';
-
 import 'No_internet.dart';
 import 'forgot_password.dart';
 
