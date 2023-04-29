@@ -58,6 +58,7 @@ class _TeachersDrawerItemsState extends State<TeachersDrawerItems> {
                 );
                 try {
                   await FirebaseAuth.instance.signOut();
+                
                   Fluttertoast.showToast(msg: "Signed Out successfully");
                   Navigator.push(
                     context,

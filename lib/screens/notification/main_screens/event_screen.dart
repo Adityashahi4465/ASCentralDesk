@@ -1,6 +1,5 @@
 import 'package:e_complaint_box/palatte.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class EventDetailsScreen extends StatelessWidget {

@@ -1,14 +1,12 @@
-// ignore: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ComplaintFiling {
   final CollectionReference complaints =
       FirebaseFirestore.instance.collection('complaints');
-  String complaintID =
-      FirebaseFirestore.instance.collection('complaints').doc().id;
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('users');
 
-  Future fileComplaint(
+  Future<void> fileComplaint(
       String title,
       String category,
       String description,
@@ -20,18 +18,29 @@ class ComplaintFiling {
       List<String> upvotes,
       String uid,
       String? email) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .update({
-      'list of my filed Complaints': FieldValue.arrayUnion([complaintID])
-    });
+    // Check if user has exceeded the monthly quota
+    DateTime now = DateTime.now();
+    int year = now.year;
+    int month = now.month;
+    String monthKey = "$year-$month";
+    DocumentSnapshot userSnapshot =
+        await users.doc(uid).get(); // Get user's document
+    Map<String, dynamic>? monthlyData =
+        userSnapshot.data()?['monthlyData']; // Get user's monthly data
+    if (monthlyData != null &&
+        monthlyData.containsKey(monthKey) &&
+        monthlyData[monthKey]['complaintsFiled'] >= 3) {
+      throw Exception('You have already filed 3 complaints this month.');
+    }
 
-    return await complaints.doc(complaintID).set({
+    // File complaint and update user's monthly data
+    String complaintID =
+        FirebaseFirestore.instance.collection('complaints').doc().id;
+    await complaints.doc(complaintID).set({
       'title': title,
       'category': category,
       'description': description,
-      'fund' : fund,
+      'fund': fund,
       'consults': consults,
       'list of Images': images,
       'filing time': filingTime,
@@ -40,11 +49,14 @@ class ComplaintFiling {
       'uid': uid,
       'email': email
     });
-  }
-
-/*Future AddComplaintUID(String complaintID) async {
-    return await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).update({
-      'list of my filled Complaints': FieldValue.arrayUnion([complaintID])
+    await users.doc(uid).update({
+      'list of my filed Complaints': FieldValue.arrayUnion(
+          [complaintID]), // Add complaint ID to user's filed complaints list
+      'monthlyData.$monthKey': {
+        // Update user's monthly data
+        'complaintsFiled':
+            FieldValue.increment(1) // Increment complaints filed count
+      }
     });
-  }*/
+  }
 }

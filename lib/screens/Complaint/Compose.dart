@@ -168,8 +168,9 @@ class _ComposeState extends State<Compose> {
   late XFile _image;
   late String _uploadedFileURL;
   final ImagePicker imagePicker = ImagePicker();
-
   List<String> imagesInComplaint = [];
+  String title = '';
+  String description = '';
 
   pickImage(ImageSource source) async {
     _image = (await imagePicker.pickImage(source: source))!;
@@ -196,8 +197,64 @@ class _ComposeState extends State<Compose> {
     });
   }
 
-  String title = '';
-  String description = '';
+  Future<void> composeComplaint() async {
+    if (formKey1.currentState!.validate()) {
+      print(formKey1.currentState!.validate().toString());
+      showDialog(
+          context: context,
+          builder: (c) {
+            return const LoadingDialogWidget(
+              message: "Submitting your Complaint",
+            );
+          });
+      complaint = MailContent(
+        title: title,
+        category: selectedCategory,
+        description: description,
+        images: imagesInComplaint,
+        filingTime: DateTime.now(),
+        status: status[0],
+        upvotes: [],
+        uid: FirebaseAuth.instance.currentUser!.uid,
+        email: FirebaseAuth.instance.currentUser!.email,
+      );
+      /*await Future.delayed(Duration(seconds: 2),(){
+
+                        });*/
+      //TODO: Add mail to database.
+      title = '';
+      description = '';
+      selectedCategory = "";
+
+      await ComplaintFiling().fileComplaint(
+        complaint!.title,
+        complaint!.category,
+        complaint!.description,
+        0,
+        '',
+        complaint!.images,
+        complaint!.filingTime,
+        complaint!.status,
+        complaint!.upvotes,
+        complaint!.uid,
+        complaint!.email,
+      );
+      imagesInComplaint.clear();
+
+      /*showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AdminDialog('SCvnnfBP66JpkhBK12do')
+                            );*/
+      Navigator.pop(context);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.success,
+        text: 'Complaint Filed Successfully!',
+      );
+    } else {
+      print('yes');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -392,64 +449,7 @@ class _ComposeState extends State<Compose> {
               ),
               Center(
                 child: ElevatedButton(
-                  onPressed: () async {
-                    if (formKey1.currentState!.validate()) {
-                      print(formKey1.currentState!.validate().toString());
-                      showDialog(
-                          context: context,
-                          builder: (c) {
-                            return const LoadingDialogWidget(
-                              message: "Submitting your Complaint",
-                            );
-                          });
-                      complaint = MailContent(
-                        title: title,
-                        category: selectedCategory,
-                        description: description,
-                        images: imagesInComplaint,
-                        filingTime: DateTime.now(),
-                        status: status[0],
-                        upvotes: [],
-                        uid: FirebaseAuth.instance.currentUser!.uid,
-                        email: FirebaseAuth.instance.currentUser!.email,
-                      );
-                      /*await Future.delayed(Duration(seconds: 2),(){
-
-                        });*/
-                      //TODO: Add mail to database.
-                      title = '';
-                      description = '';
-                      selectedCategory = "";
-
-                      await ComplaintFiling().fileComplaint(
-                        complaint!.title,
-                        complaint!.category,
-                        complaint!.description,
-                        0,
-                        '',
-                        complaint!.images,
-                        complaint!.filingTime,
-                        complaint!.status,
-                        complaint!.upvotes,
-                        complaint!.uid,
-                        complaint!.email,
-                      );
-                      imagesInComplaint.clear();
-
-                      /*showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AdminDialog('SCvnnfBP66JpkhBK12do')
-                            );*/
-                      Navigator.pop(context);
-                      QuickAlert.show(
-                        context: context,
-                        type: QuickAlertType.success,
-                        text: 'Complaint Filed Successfully!',
-                      );
-                    } else {
-                      print('yes');
-                    }
-                  },
+                  onPressed: composeComplaint,
                   child: const Text(
                     'Submit',
                     textAlign: TextAlign.center,

@@ -1,6 +1,5 @@
 import 'package:e_complaint_box/palatte.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class NotificationDetailsScreen extends StatelessWidget {
@@ -39,7 +38,7 @@ class NotificationDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: violet,
         title: const Text(
-          'Event Details',
+          'Notification Details',
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,

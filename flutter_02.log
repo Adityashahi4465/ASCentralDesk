@@ -1,0 +1,69 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run -d chrome --web-renderer html
+
+## exception
+
+StateError: Bad state: No running isolate (inspector is not set).
+
+```
+#0      ChromeProxyService.inspector (package:dwds/src/services/chrome_proxy_service.dart:79:7)
+#1      ChromeProxyService._prewarmExpressionCompilerCache (package:dwds/src/services/chrome_proxy_service.dart:222:34)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[32m[✓][39m Flutter (Channel master, 3.8.0-12.0.pre.11, on Microsoft Windows [Version 10.0.22621.1265], locale en-US)
+    [32m•[39m Flutter version 3.8.0-12.0.pre.11 on channel master at C:\src\flutter\flutter
+    [32m•[39m Upstream repository https://github.com/flutter/flutter.git
+    [32m•[39m Framework revision 61e059f44f (4 weeks ago), 2023-02-11 01:36:39 -0500
+    [32m•[39m Engine revision 363355af51
+    [32m•[39m Dart version 3.0.0 (build 3.0.0-228.0.dev)
+    [32m•[39m DevTools version 2.21.1
+
+[32m[✓][39m Windows Version (Installed version of Windows is version 10 or higher)
+
+[33m[!][39m Android toolchain - develop for Android devices (Android SDK version 33.0.0)
+    [32m•[39m Android SDK at C:\Users\INDERJIT\AppData\Local\Android\sdk
+    [32m•[39m Platform android-33, build-tools 33.0.0
+    [32m•[39m Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    [32m•[39m Java version OpenJDK Runtime Environment (build 11.0.12+7-b1504.28-7817840)
+    [31m✗[39m Android license status unknown.
+      Run `flutter doctor --android-licenses` to accept the SDK licenses.
+      See https://flutter.dev/docs/get-started/install/windows#android-setup for more details.
+
+[32m[✓][39m Chrome - develop for the web
+    [32m•[39m Chrome at C:\Program Files\Google\Chrome\Application\chrome.exe
+
+[31m[✗][39m Visual Studio - develop for Windows
+    [31m✗[39m Visual Studio not installed; this is necessary for Windows development.
+      Download at https://visualstudio.microsoft.com/downloads/.
+      Please install the "Desktop development with C++" workload, including all of its default components
+
+[32m[✓][39m Android Studio (version 2021.2)
+    [32m•[39m Android Studio at C:\Program Files\Android\Android Studio
+    [32m•[39m Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    [32m•[39m Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    [32m•[39m Java version OpenJDK Runtime Environment (build 11.0.12+7-b1504.28-7817840)
+
+[32m[✓][39m VS Code (version 1.76.0)
+    [32m•[39m VS Code at C:\Users\INDERJIT\AppData\Local\Programs\Microsoft VS Code
+    [32m•[39m Flutter extension version 3.60.0
+
+[32m[✓][39m Connected device (3 available)
+    [32m•[39m Windows (desktop) • windows • windows-x64    • Microsoft Windows [Version 10.0.22621.1265]
+    [32m•[39m Chrome (web)      • chrome  • web-javascript • Google Chrome 110.0.5481.178
+    [32m•[39m Edge (web)        • edge    • web-javascript • Microsoft Edge 110.0.1587.63
+
+[32m[✓][39m HTTP Host Availability
+    [32m•[39m All required HTTP hosts are available
+
+[33m![39m Doctor found issues in 2 categories.
+```
