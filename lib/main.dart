@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'CMS - Campus Management System',
+        title: 'ASCentralDesk',
         theme: ThemeData.dark().copyWith(
             useMaterial3: true,
             scaffoldBackgroundColor: Colors.white,
