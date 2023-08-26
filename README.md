@@ -1,5 +1,5 @@
 # E-ASComplaint (Working on version v3.0)
- **Download⬇️⬇️** the App [click here📱](https://drive.google.com/file/d/1SN5V_c4d26h9QWtSSKGuLWQjqY4GjNKG/view?usp=share_link)    (**NOTE**: user can login or register only with official DSEU email id after registration user have to verify their email via link will be provided on their email).
+ **Download⬇️⬇️** the App [click here📱](https://drive.google.com/file/d/1SN5V_c4d26h9QWtSSKGuLWQjqY4GjNKG/view?usp=share_link)    (**NOTE**: User can login or register only with official DSEU email id after registration user have to verify their email via link will be provided on their email).
 The “Online Complaint Management System” software is an independent application. It is a self-contained complain. The system interfaces, user interfaces and hardware interfaces related with this software are defined as follows.
 
 check out the web version by [clicking here](https://github.com/Adityashahi4465/E-ASComplaint-Web)
