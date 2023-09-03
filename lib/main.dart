@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'ui/onboarding/onboarding_page.dart';
+import 'features/auth/views/auth_screen.dart';
 
 void main() => run();
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const OnboardingPage(),
+      home: const AuthScreen(),
     );
   }
 }

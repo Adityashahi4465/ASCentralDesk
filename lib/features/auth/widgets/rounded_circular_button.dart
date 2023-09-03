@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../ui/onboarding/tabs/signup_tab.dart';
+import 'sign_up/signup_tab.dart';
 
 class RoundedCircularButton extends StatelessWidget {
   final VoidCallback onPressed;
