@@ -1,10 +1,21 @@
+// ignore_for_file: constant_identifier_names
+
 const EMAIL_AUTH_HINT = "Email";
-const EMAIL_AUTH_VALIDATION_EMPTY = "Your email can\'t be empty!";
+const EMAIL_AUTH_VALIDATION_EMPTY = "Your email can't be empty!";
 const EMAIL_AUTH_VALIDATION_INVALID = 'This email is invalid!';
+
+const NAME_AUTH_HINT = "Full name";
+const NAME_AUTH_VALIDATION_EMPTY = "Your name can't be empty!";
+const NAME_AUTH_VALIDATION_INVALID = 'This name is invalid!';
+
+const SELECT_CAMPUS_HINT = "Select campus";
+const SELECT_COURSE_HINT = "Select course";
+const SELECT_COURSE_ERROR = 'Select campus first';
+
 
 const PASSWORD_AUTH_HINT = "Password";
 const CONFIRM_PASSWORD_AUTH_HINT = "Confirm password";
-const PASSWORD_AUTH_VALIDATION_EMPTY = "Your password number can\'t be empty!";
+const PASSWORD_AUTH_VALIDATION_EMPTY = "Your password number can't be empty!";
 const PASSWORD_AUTH_VALIDATION_INVALID = 'This password number is invalid!';
 
 const COLOR_WELCOME = "#FFD201";
@@ -28,3 +39,6 @@ const IMAGE_PATH_FACEBOOK = 'login/facebook.png';
 
 const BUTTON_LOGIN = "Login";
 const BUTTON_SIGNUP = "Signup";
+
+
+

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../component/logo_text.dart';
 import '../../../../component/rounded_button.dart';
 import '../../../../constants/app_constant.dart';
+import '../../../../constants/campus_data.dart';
+import '../../../../core/common/dropdown_button.dart';
 import '../../../../core/utils/color_utility.dart';
 import '../form_text_field.dart';
 
@@ -11,11 +13,16 @@ class SignUpForm extends StatefulWidget {
   final Function() onPressed;
   final Size size;
   final TextTheme textTheme;
+  String? selectedCampus;
+  String? selectedCourse;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
+  final TextEditingController
+      rollNumberController; // Add roll number controller
+  final TextEditingController nameController; // Add additional email controller
 
-  const SignUpForm({
+  SignUpForm({
     super.key,
     required this.formKey,
     required this.onPressed,
@@ -24,6 +31,10 @@ class SignUpForm extends StatefulWidget {
     required this.emailController,
     required this.passwordController,
     required this.confirmPasswordController,
+    required this.rollNumberController, // Initialize the roll number controller
+    required this.nameController,
+    required this.selectedCampus,
+    required this.selectedCourse, // Initialize the additional email controller
   });
 
   @override
@@ -69,17 +80,86 @@ class _SignUpFormState extends State<SignUpForm> {
                 height: 24,
               ),
               Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: widget.size.width * 0.1),
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.size.width * 0.1,
+                ),
                 child: CustomFormTextField(
-                  controller: widget.passwordController,
+                  controller: widget.emailController,
                   textTheme: widget.textTheme,
                   validator: (val) {
                     return '';
                   },
-                  hint: PASSWORD_AUTH_HINT,
-                  suffixIcon: Icons.lock,
-                  isPassword: true,
+                  hint: NAME_AUTH_HINT,
+                  suffixIcon: Icons.person,
+                  isPassword: false,
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.size.width * 0.1,
+                ),
+                child: SizedBox(
+                  width: 200,
+                  height: 56,
+                  child: CustomDropdown<String>(
+                    labelText: '',
+                    items: campusList,
+                    value: widget.selectedCampus,
+                    onChanged: (newValue) {
+                      setState(() {
+                        widget.selectedCampus = newValue!;
+                      });
+                    },
+                    hintText: SELECT_CAMPUS_HINT,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.size.width * 0.1,
+                ),
+                child: SizedBox(
+                  width: 200,
+                  height: 56,
+                  child: CustomDropdown<String>(
+                    labelText: '',
+                    items: (widget.selectedCampus != null)
+                        ? campusCourses[widget.selectedCampus]!
+                        : [],
+                    value: widget.selectedCourse,
+                    onChanged: (newValue) {
+                      setState(() {
+                        widget.selectedCampus = newValue!;
+                      });
+                    },
+                    hintText: SELECT_COURSE_HINT,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.size.width * 0.1,
+                ),
+                child: SizedBox(
+                  child: CustomFormTextField(
+                    controller: widget.passwordController,
+                    textTheme: widget.textTheme,
+                    validator: (val) {
+                      return '';
+                    },
+                    hint: PASSWORD_AUTH_HINT,
+                    suffixIcon: Icons.lock,
+                    isPassword: true,
+                  ),
                 ),
               ),
               const SizedBox(

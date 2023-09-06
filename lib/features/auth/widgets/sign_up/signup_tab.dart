@@ -20,6 +20,11 @@ class _SignUpTabState extends State<SignUpTab> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final rollNumberController = TextEditingController();
+  final nameController = TextEditingController();
+  String? selectedCampus;
+  String? selectedCourse;
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -50,6 +55,8 @@ class _SignUpTabState extends State<SignUpTab> {
                       emailController: emailController,
                       passwordController: passwordController,
                       confirmPasswordController: confirmPasswordController,
+                      rollNumberController: rollNumberController,
+                      nameController: nameController, selectedCampus: selectedCampus, selectedCourse: selectedCourse,
                     ),
                   ),
                 ),
