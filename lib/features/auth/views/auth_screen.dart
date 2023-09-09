@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import '../../../core/utils/color_utility.dart';
 import '../../../core/utils/snakbar.dart';
 import '../animations/auth_animations.dart';
+import '../widgets/social_media_button.dart';
+import '../widgets/top_bubbles.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -171,25 +173,27 @@ class AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     onPageChanged: (int index) {},
                     children: <Widget>[
                       SignInTab(
-                        onPressed: () {
+                        onFormSubmit: () {
                           showCustomSnackbar(
                             context,
                             'Please select a campus first',
                           );
-                          _pageController.animateToPage(1,
-                              duration: const Duration(milliseconds: 1000),
-                              curve: Curves.fastOutSlowIn);
+                        },
+                        onPageDownButtonPressed: () {
+                          _pageController.animateToPage(
+                            1,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.fastOutSlowIn,
+                          );
                         },
                       ),
                       SignUpTab(
-                        onPressed: () {
-                          showCustomSnackbar(
-                            context,
-                            'Please select a campus first',
+                        onPageUpButtonPressed: () {
+                          _pageController.animateToPage(
+                            0,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.fastOutSlowIn,
                           );
-                          // _pageController.animateToPage(0,
-                          //     duration: const Duration(milliseconds: 1000),
-                          //     curve: Curves.fastOutSlowIn);
                         },
                       ),
                     ],
@@ -289,87 +293,6 @@ class AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
             ],
           );
         },
-      ),
-    );
-  }
-}
-
-class SocialMediaAppButton extends StatelessWidget {
-  const SocialMediaAppButton({
-    super.key,
-    required this.onBoardingEnterAnimation,
-    required this.context,
-    required this.color,
-    required this.image,
-    required this.size,
-    required this.animatedValue,
-  });
-
-  final OnBoardingEnterAnimation onBoardingEnterAnimation;
-  final BuildContext context;
-  final String color;
-  final String image;
-  final double size;
-  final double animatedValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: onBoardingEnterAnimation.fadeTranslation,
-      child: Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.translationValues(
-            animatedValue * MediaQuery.of(context).size.height, 0, 0.0),
-        child: Container(
-          height: size,
-          width: size,
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(25),
-            color: Color(getColorHexFromStr(color)),
-          ),
-          child: Text('Google'),
-        ),
-      ),
-    );
-  }
-}
-
-class TopBubble extends StatelessWidget {
-  const TopBubble({
-    super.key,
-    required this.onBoardingEnterAnimation,
-    required this.diameter,
-    required this.top,
-    required this.right,
-    required this.linearGradient,
-  });
-
-  final OnBoardingEnterAnimation onBoardingEnterAnimation;
-  final double diameter;
-  final double top;
-  final double right;
-  final LinearGradient linearGradient;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: top,
-      right: right,
-      child: Transform(
-        transform: Matrix4.diagonal3Values(
-            onBoardingEnterAnimation.scaleTranslation.value,
-            onBoardingEnterAnimation.scaleTranslation.value,
-            1.0),
-        child: Container(
-          height: diameter,
-          width: diameter,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(diameter / 2),
-            gradient: linearGradient,
-          ),
-        ),
       ),
     );
   }

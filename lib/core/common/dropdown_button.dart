@@ -7,6 +7,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final List<T> items;
   final T? value;
   final ValueChanged<T?> onChanged;
+  final   String? Function(T?)? validator;
 
   const CustomDropdown({
     super.key,
@@ -15,21 +16,23 @@ class CustomDropdown<T> extends StatelessWidget {
     required this.items,
     required this.value,
     required this.onChanged,
+    required this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<T>(
+    return DropdownButtonFormField<T>(
       elevation: 2,
       isExpanded: true,
       iconSize: 40,
       iconEnabledColor: Colors.grey,
       iconDisabledColor: Colors.grey,
+      validator: validator,
       menuMaxHeight: 400,
-      underline: Container(
-        height: 1,
-        color: Colors.grey,
-      ),
+      // underline: Container(
+      //   height: 1,
+      //   color: Colors.grey,
+      // ),
       value: value,
       hint: Text(
         hintText,

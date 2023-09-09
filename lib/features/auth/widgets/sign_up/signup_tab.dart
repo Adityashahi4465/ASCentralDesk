@@ -4,11 +4,11 @@ import '../rounded_circular_button.dart';
 import 'sign_up_form.dart';
 
 class SignUpTab extends StatefulWidget {
-  final Function() onPressed;
+  final Function() onPageUpButtonPressed;
 
   const SignUpTab({
     super.key,
-    required this.onPressed,
+    required this.onPageUpButtonPressed,
   });
 
   @override
@@ -50,7 +50,9 @@ class _SignUpTabState extends State<SignUpTab> {
                     color: Colors.white,
                     child: SignUpForm(
                       formKey: formKey,
-                      onPressed: widget.onPressed,
+                      onPressed: () {
+                        formKey.currentState!.validate();
+                      },
                       size: size,
                       textTheme: textTheme,
                       emailController: emailController,
@@ -67,11 +69,12 @@ class _SignUpTabState extends State<SignUpTab> {
               ],
             ),
           ),
+          /* TOP ARROW BUTTON TO MOVE TO SIGN IN PAGE */
           Positioned(
             top: 24,
             left: 12,
             child: RoundedCircularButton(
-              onPressed: widget.onPressed,
+              onPressed: widget.onPageUpButtonPressed,
               color: Colors.pinkAccent,
               icon: Icons.arrow_upward,
             ),

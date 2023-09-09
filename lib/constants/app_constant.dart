@@ -1,27 +1,39 @@
 // ignore_for_file: constant_identifier_names
 
+// Form Validations
+
 const EMAIL_AUTH_HINT = "Email";
-const EMAIL_AUTH_VALIDATION_EMPTY = "Your email can't be empty!";
-const EMAIL_AUTH_VALIDATION_INVALID = 'This email is invalid!';
-
-const NAME_AUTH_HINT = "Full name";
-const NAME_AUTH_VALIDATION_EMPTY = "Your name can't be empty!";
-const NAME_AUTH_VALIDATION_INVALID = 'This name is invalid!';
-
-const ROLL_NUMBER_AUTH_HINT = "Roll number";
-const ROLL_NUMBER_AUTH_VALIDATION_EMPTY = "Your roll no. can't be empty!";
-const ROLL_NUMBER_AUTH_VALIDATION_INVALID = 'This roll no. is invalid!';
-
-
-const SELECT_CAMPUS_HINT = "Select campus";
-const SELECT_COURSE_HINT = "Select course";
-const SELECT_COURSE_ERROR = 'Select campus first';
-
+const EMAIL_AUTH_VALIDATION_EMPTY = "Your email can't be left empty!";
+const EMAIL_AUTH_VALIDATION_INVALID = 'Please enter a valid email!';
 
 const PASSWORD_AUTH_HINT = "Password";
+const PASSWORD_AUTH_VALIDATION_EMPTY = "Password is required!";
+const PASSWORD_AUTH_VALIDATION_INVALID = 'Please enter an strong password';
+const PASSWORD_AUTH_VALIDATION_TOO_SHORT = 'Please enter an strong password';
+
 const CONFIRM_PASSWORD_AUTH_HINT = "Confirm password";
-const PASSWORD_AUTH_VALIDATION_EMPTY = "Your password number can't be empty!";
-const PASSWORD_AUTH_VALIDATION_INVALID = 'This password number is invalid!';
+const CONFIRM_PASSWORD_AUTH_VALIDATION_EMPTY = "Please confirm your password.";
+const CONFIRM_PASSWORD_AUTH_VALIDATION_NOT_MATCHED =
+    'Passwords mismatch. Retry.';
+
+const NAME_AUTH_HINT = "Full name";
+const NAME_AUTH_VALIDATION_EMPTY = "Your name can't be left empty!";
+const NAME_AUTH_VALIDATION_INVALID = 'Please enter a valid name!';
+
+const ROLL_NUMBER_AUTH_HINT = "Roll number";
+const ROLL_NUMBER_AUTH_VALIDATION_EMPTY = "Your roll no. can't be left empty!";
+const ROLL_NUMBER_AUTH_VALIDATION_INVALID = 'Please enter a valid roll no.!';
+
+const SELECT_CAMPUS_HINT = "Select campus";
+const SELECT_CAMPUS_ERROR = 'Select campus first';
+const SELECT_CAMPUS_EMPTY = "Please select your campus";
+
+const SELECT_COURSE_HINT = "Select course";
+const SELECT_COURSE_ERROR = 'Select campus first';
+const SELECT_COURSE_EMPTY = "Please select  your course";
+
+const SELECT_SEMESTER_HINT = "Select campus";
+const SELECT_SEMESTER_EMPTY = "Please select your semester";
 
 const COLOR_WELCOME = "#FFD201";
 const COLOR_LOGIN = "#2C3949";
@@ -44,6 +56,3 @@ const IMAGE_PATH_FACEBOOK = 'login/facebook.png';
 
 const BUTTON_LOGIN = "Login";
 const BUTTON_SIGNUP = "Signup";
-
-
-

@@ -7,7 +7,7 @@ import '../../../../constants/app_constant.dart';
 import '../../../../constants/campus_data.dart';
 import '../../../../core/common/dropdown_button.dart';
 import '../../../../core/utils/color_utility.dart';
-import '../../../../core/utils/form_validators.dart';
+import '../../../../core/utils/form_validation.dart';
 import '../../../../core/utils/snakbar.dart';
 import '../form_text_field.dart';
 
@@ -68,7 +68,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
 
     return Padding(
       padding:
-          EdgeInsets.only(top: widget.size.height * 0.15, left: 24, right: 24),
+          EdgeInsets.only(top: widget.size.height * 0.15, left: 18, right: 18),
       child: SingleChildScrollView(
         child: Form(
           key: widget.formKey,
@@ -144,6 +144,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                     onChanged: (newCampus) =>
                         updateAvailableCourses(newCampus!),
                     hintText: SELECT_CAMPUS_HINT,
+                    validator: (value) =>
+                        validationService.validateSelectCampus(value),
                   ),
                 ),
               ),
@@ -181,6 +183,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                                 });
                               },
                               hintText: SELECT_COURSE_HINT,
+                              validator: (value) =>
+                                  validationService.validateSelectCourse(value),
                             ),
                           ),
                         ),
@@ -209,6 +213,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                                     });
                                   },
                                   hintText: 'Select Semester',
+                                  validator: (value) => validationService
+                                      .validateSelectSemester(value),
                                 ),
                               )
                             : Container(), // If no course is selected, show an empty container
@@ -269,10 +275,14 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                         end: FractionalOffset.topRight,
                         colors: <Color>[
                           Color(
-                            getColorHexFromStr("#FF7539"),
+                            getColorHexFromStr(
+                              "#FF7539",
+                            ),
                           ),
                           Color(
-                            getColorHexFromStr("#FE6763"),
+                            getColorHexFromStr(
+                              "#FE6763",
+                            ),
                           ),
                         ],
                       ),
