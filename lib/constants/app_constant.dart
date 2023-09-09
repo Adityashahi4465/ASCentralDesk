@@ -8,6 +8,11 @@ const NAME_AUTH_HINT = "Full name";
 const NAME_AUTH_VALIDATION_EMPTY = "Your name can't be empty!";
 const NAME_AUTH_VALIDATION_INVALID = 'This name is invalid!';
 
+const ROLL_NUMBER_AUTH_HINT = "Roll number";
+const ROLL_NUMBER_AUTH_VALIDATION_EMPTY = "Your roll no. can't be empty!";
+const ROLL_NUMBER_AUTH_VALIDATION_INVALID = 'This roll no. is invalid!';
+
+
 const SELECT_CAMPUS_HINT = "Select campus";
 const SELECT_COURSE_HINT = "Select course";
 const SELECT_COURSE_ERROR = 'Select campus first';

@@ -4,6 +4,7 @@ import 'package:as_central_desk/constants/app_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/color_utility.dart';
+import '../../../core/utils/snakbar.dart';
 import '../animations/auth_animations.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -171,6 +172,10 @@ class AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     children: <Widget>[
                       SignInTab(
                         onPressed: () {
+                          showCustomSnackbar(
+                            context,
+                            'Please select a campus first',
+                          );
                           _pageController.animateToPage(1,
                               duration: const Duration(milliseconds: 1000),
                               curve: Curves.fastOutSlowIn);
@@ -178,9 +183,13 @@ class AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       ),
                       SignUpTab(
                         onPressed: () {
-                          _pageController.animateToPage(0,
-                              duration: const Duration(milliseconds: 1000),
-                              curve: Curves.fastOutSlowIn);
+                          showCustomSnackbar(
+                            context,
+                            'Please select a campus first',
+                          );
+                          // _pageController.animateToPage(0,
+                          //     duration: const Duration(milliseconds: 1000),
+                          //     curve: Curves.fastOutSlowIn);
                         },
                       ),
                     ],

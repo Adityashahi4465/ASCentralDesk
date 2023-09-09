@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CustomFormTextField extends StatefulWidget {
@@ -29,8 +28,11 @@ class _CustomFormTextFieldState extends State<CustomFormTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: widget.textTheme.titleLarge!
-          .copyWith(color: Colors.black87, letterSpacing: 1.2),
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        color: Colors.black.withOpacity(0.6),
+      ),
       decoration: InputDecoration(
         hintText: widget.hint,
         hintStyle: widget.textTheme.titleMedium!.copyWith(

@@ -24,6 +24,7 @@ class _SignUpTabState extends State<SignUpTab> {
   final nameController = TextEditingController();
   String? selectedCampus;
   String? selectedCourse;
+  String? selectedSem;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,10 @@ class _SignUpTabState extends State<SignUpTab> {
                       passwordController: passwordController,
                       confirmPasswordController: confirmPasswordController,
                       rollNumberController: rollNumberController,
-                      nameController: nameController, selectedCampus: selectedCampus, selectedCourse: selectedCourse,
+                      nameController: nameController,
+                      selectedCampus: selectedCampus,
+                      selectedCourse: selectedCourse,
+                      selectedSem: selectedSem,
                     ),
                   ),
                 ),

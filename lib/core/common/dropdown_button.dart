@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class CustomDropdown<T> extends StatelessWidget {
   final String labelText;
   final String hintText;
-
   final List<T> items;
   final T? value;
   final ValueChanged<T?> onChanged;
@@ -21,16 +20,12 @@ class CustomDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<T>(
+      elevation: 2,
       isExpanded: true,
       iconSize: 40,
       iconEnabledColor: Colors.grey,
       iconDisabledColor: Colors.grey,
       menuMaxHeight: 400,
-      style: const TextStyle(
-        color: Colors.black,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-      ),
       underline: Container(
         height: 1,
         color: Colors.grey,
@@ -48,7 +43,14 @@ class CustomDropdown<T> extends StatelessWidget {
       items: items.map((item) {
         return DropdownMenuItem<T>(
           value: item,
-          child: Text(item.toString()),
+          child: Text(
+            item.toString(),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.black.withOpacity(0.6),
+            ),
+          ),
         );
       }).toList(),
     );
