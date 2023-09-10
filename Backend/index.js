@@ -36,23 +36,6 @@ app.use('/api/v1/auth', authRouter);
 //Error handler middleware, must be after Routers Mount,so that errors returned from routes can be handled
 app.use(errorHandler);
 
-
-app.get('/heel', (req, res) => {
-  //express automatically sets content-type like: application/json; charset=utf-8 or text/html for simple string
-
-  // res.send("Hello From Express");
-
-  // res.send({
-  //   name: "aditya",
-  // })
-  // or res.json({name:"inderjit"})
-
-  res.sendStatus(400);
-  // or res.status(400).send({success:false})
-  // or res.status(200).send({success:true,data:{id:123}})
-});
-
-
 // Start the server
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);

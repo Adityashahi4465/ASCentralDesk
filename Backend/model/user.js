@@ -38,9 +38,17 @@ const UserSchema = new mongoose.Schema({
   semester: {
     type: String,
   },
-  section: String,
-  photoUrl: String,
-  linkedInProfileUrl: String,
+  section: {
+    type: String,
+  },
+  photoUrl: {
+    type: String,
+    default: "",
+  },
+  linkedInProfileUrl: {
+    type: String,
+    default: "",
+  },
   isAccountActive: {
     type: Boolean,
     default: true,

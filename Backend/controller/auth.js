@@ -50,6 +50,7 @@ const sendTokenResponse = async (user, statusCode, res) => {
     //sending both token and cookie, depend on client, whether to store token in local storage or use cookie
     res.status(statusCode).cookie('token', token, options).json({
         success: true,
-        token
+        token,
+        user
     })
 }
