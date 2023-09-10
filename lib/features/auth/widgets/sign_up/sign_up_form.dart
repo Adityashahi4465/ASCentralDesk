@@ -1,3 +1,5 @@
+import 'package:as_central_desk/core/common/loader.dart';
+import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,39 +10,17 @@ import '../../../../constants/campus_data.dart';
 import '../../../../core/common/dropdown_button.dart';
 import '../../../../core/utils/color_utility.dart';
 import '../../../../core/utils/form_validation.dart';
-import '../../../../core/utils/snakbar.dart';
+import '../../../../core/utils/snackbar.dart';
 import '../form_text_field.dart';
 
-// ignore: must_be_immutable
 class SignUpForm extends ConsumerStatefulWidget {
-  final GlobalKey<FormState> formKey;
-  final Function() onPressed;
   final Size size;
   final TextTheme textTheme;
-  String? selectedCampus;
-  String? selectedCourse;
-  String? selectedSem;
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final TextEditingController confirmPasswordController;
-  final TextEditingController
-      rollNumberController; // Add roll number controller
-  final TextEditingController nameController; // Add additional email controller
 
-  SignUpForm({
+  const SignUpForm({
     super.key,
-    required this.formKey,
-    required this.onPressed,
     required this.size,
     required this.textTheme,
-    required this.emailController,
-    required this.passwordController,
-    required this.confirmPasswordController,
-    required this.rollNumberController, // Initialize the roll number controller
-    required this.nameController,
-    this.selectedCampus,
-    this.selectedCourse,
-    this.selectedSem,
   });
 
   @override
@@ -48,34 +28,66 @@ class SignUpForm extends ConsumerStatefulWidget {
 }
 
 class _SignUpFormState extends ConsumerState<SignUpForm> {
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final rollNumberController = TextEditingController();
+  final nameController = TextEditingController();
+  String? selectedCampus;
+  String? selectedCourse;
+  String? selectedSem;
+
   void updateAvailableCourses(String newCampus) {
-    if (newCampus != widget.selectedCampus) {
+    if (newCampus != selectedCampus) {
       setState(() {
-        widget.selectedCampus = newCampus;
-        widget.selectedCourse =
-            null; // Reset selected course only when campus changes
+        selectedCampus = newCampus;
+        selectedCourse = null; // Reset selected course only when campus changes
       });
     } else {
       setState(() {
-        widget.selectedCampus = newCampus;
+        selectedCampus = newCampus;
       });
     }
+  }
+
+  void registerWithEmailAndPassword() {
+    ref.read(authControllerProvider.notifier).registerWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text,
+          name: nameController.text.trim(),
+          rollNo: rollNumberController.text.trim(),
+          campus: selectedCampus!,
+          course: selectedCourse!,
+          semester: selectedSem!,
+          context: context,
+        );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    confirmPasswordController.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    rollNumberController.dispose();
+    passwordController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final validationService = ref.watch(validationServiceProvider);
-
+    final loading = ref.watch(authControllerProvider);
     return Padding(
       padding:
           EdgeInsets.only(top: widget.size.height * 0.15, left: 18, right: 18),
       child: SingleChildScrollView(
         child: Form(
-          key: widget.formKey,
+          key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.1),
@@ -88,9 +100,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.1),
                 child: CustomFormTextField(
-                  controller: widget.emailController,
+                  controller: emailController,
                   textTheme: widget.textTheme,
-                  validator: (val) => validationService.validateEmail(val)!,
+                  validator: (val) =>
+                      validationService.validateEmail(val) ??
+                      'Enter valid email',
                   hint: EMAIL_AUTH_HINT,
                   suffixIcon: Icons.person,
                   isPassword: false,
@@ -104,9 +118,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                   horizontal: widget.size.width * 0.1,
                 ),
                 child: CustomFormTextField(
-                  controller: widget.nameController,
+                  controller: nameController,
                   textTheme: widget.textTheme,
-                  validator: (val) => validationService.validateName(val)!,
+                  validator: (val) =>
+                      validationService.validateName(val) ?? 'enter valid name',
                   hint: NAME_AUTH_HINT,
                   suffixIcon: Icons.person,
                   isPassword: false,
@@ -120,9 +135,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                   horizontal: widget.size.width * 0.1,
                 ),
                 child: CustomFormTextField(
-                  controller: widget.rollNumberController,
+                  controller: rollNumberController,
                   textTheme: widget.textTheme,
-                  validator: (val) => validationService.validateEmail(val)!,
+                  validator: (val) =>
+                      validationService.validateRollNumber(val)!,
                   hint: ROLL_NUMBER_AUTH_HINT,
                   suffixIcon: Icons.person,
                   isPassword: false,
@@ -140,7 +156,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                   child: CustomDropdown<String>(
                     labelText: '',
                     items: campusList,
-                    value: widget.selectedCampus,
+                    value: selectedCampus,
                     onChanged: (newCampus) =>
                         updateAvailableCourses(newCampus!),
                     hintText: SELECT_CAMPUS_HINT,
@@ -163,7 +179,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                         padding: const EdgeInsets.only(
                             right: 8), // Add spacing between the dropdowns
                         child: GestureDetector(
-                          onTap: () => widget.selectedCampus == null
+                          onTap: () => selectedCampus == null
                               ? showCustomSnackbar(
                                   context,
                                   'Please select a campus first',
@@ -173,13 +189,13 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                             height: 63,
                             child: CustomDropdown<String>(
                               labelText: '',
-                              items: (widget.selectedCampus != null)
-                                  ? campusCourses[widget.selectedCampus]!
+                              items: (selectedCampus != null)
+                                  ? campusCourses[selectedCampus]!
                                   : [],
-                              value: widget.selectedCourse,
+                              value: selectedCourse,
                               onChanged: (newValue) {
                                 setState(() {
-                                  widget.selectedCourse = newValue!;
+                                  selectedCourse = newValue!;
                                 });
                               },
                               hintText: SELECT_COURSE_HINT,
@@ -193,23 +209,23 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8),
-                        child: widget.selectedCourse != null
+                        child: selectedCourse != null
                             ? SizedBox(
                                 height: 63,
                                 child: CustomDropdown<String>(
                                   labelText: '',
                                   items: List.generate(
-                                    (widget.selectedCourse == 'DCE' ||
-                                            widget.selectedCourse == 'BCA' ||
-                                            widget.selectedCourse == 'MLT')
+                                    (selectedCourse == 'DCE' ||
+                                            selectedCourse == 'BCA' ||
+                                            selectedCourse == 'MLT')
                                         ? 6
                                         : 8,
                                     (index) => 'Semester ${index + 1}',
                                   ),
-                                  value: widget.selectedSem,
+                                  value: selectedSem,
                                   onChanged: (newValue) {
                                     setState(() {
-                                      widget.selectedSem = newValue!;
+                                      selectedSem = newValue!;
                                     });
                                   },
                                   hintText: 'Select Semester',
@@ -230,16 +246,15 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                 padding: EdgeInsets.symmetric(
                   horizontal: widget.size.width * 0.1,
                 ),
-                child: SizedBox(
-                  child: CustomFormTextField(
-                    controller: widget.passwordController,
-                    textTheme: widget.textTheme,
-                    validator: (val) =>
-                        validationService.validatePassword(val)!,
-                    hint: PASSWORD_AUTH_HINT,
-                    suffixIcon: Icons.lock,
-                    isPassword: true,
-                  ),
+                child: CustomFormTextField(
+                  controller: passwordController,
+                  textTheme: widget.textTheme,
+                  validator: (val) =>
+                      validationService.validatePassword(val) ??
+                      'provide a password',
+                  hint: PASSWORD_AUTH_HINT,
+                  suffixIcon: Icons.lock,
+                  isPassword: true,
                 ),
               ),
               const SizedBox(
@@ -249,10 +264,14 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.1),
                 child: CustomFormTextField(
-                  controller: widget.confirmPasswordController,
+                  controller: confirmPasswordController,
                   textTheme: widget.textTheme,
-                  validator: (val) => validationService.validateConfirmPassword(
-                      val, widget.confirmPasswordController.text)!,
+                  validator: (val) =>
+                      validationService.validateConfirmPassword(
+                        val,
+                        passwordController.text,
+                      ) ??
+                      'Confirm you password',
                   hint: CONFIRM_PASSWORD_AUTH_HINT,
                   suffixIcon: Icons.lock,
                   isPassword: true,
@@ -267,26 +286,37 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                   padding: EdgeInsets.only(right: widget.size.width * 0.05),
                   child: SizedBox(
                     width: 200,
-                    child: RoundedButton(
-                      text: BUTTON_SIGNUP,
-                      onPressed: widget.onPressed,
-                      linearGradient: LinearGradient(
-                        begin: FractionalOffset.bottomLeft,
-                        end: FractionalOffset.topRight,
-                        colors: <Color>[
-                          Color(
-                            getColorHexFromStr(
-                              "#FF7539",
+                    child: loading
+                        ? const Loader()
+                        : RoundedButton(
+                            text: BUTTON_SIGNUP,
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                print(selectedCampus);
+                                print(selectedCourse);
+                                print(selectedSem);
+                                print(
+                                    '${emailController.text.trim()},${passwordController.text}, ${nameController.text.trim()}, ${rollNumberController.text.trim()}');
+                                registerWithEmailAndPassword();
+                              }
+                            },
+                            linearGradient: LinearGradient(
+                              begin: FractionalOffset.bottomLeft,
+                              end: FractionalOffset.topRight,
+                              colors: [
+                                Color(
+                                  getColorHexFromStr(
+                                    "#FF7539",
+                                  ),
+                                ),
+                                Color(
+                                  getColorHexFromStr(
+                                    "#FE6763",
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Color(
-                            getColorHexFromStr(
-                              "#FE6763",
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
               )

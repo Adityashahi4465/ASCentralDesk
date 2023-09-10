@@ -1,5 +1,6 @@
 import 'package:as_central_desk/component/trapezoid_up_cut.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../rounded_circular_button.dart';
 import 'sign_up_form.dart';
 
@@ -16,16 +17,6 @@ class SignUpTab extends StatefulWidget {
 }
 
 class _SignUpTabState extends State<SignUpTab> {
-  final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  final rollNumberController = TextEditingController();
-  final nameController = TextEditingController();
-  String? selectedCampus;
-  String? selectedCourse;
-  String? selectedSem;
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -49,20 +40,8 @@ class _SignUpTabState extends State<SignUpTab> {
                     height: double.infinity,
                     color: Colors.white,
                     child: SignUpForm(
-                      formKey: formKey,
-                      onPressed: () {
-                        formKey.currentState!.validate();
-                      },
                       size: size,
                       textTheme: textTheme,
-                      emailController: emailController,
-                      passwordController: passwordController,
-                      confirmPasswordController: confirmPasswordController,
-                      rollNumberController: rollNumberController,
-                      nameController: nameController,
-                      selectedCampus: selectedCampus,
-                      selectedCourse: selectedCourse,
-                      selectedSem: selectedSem,
                     ),
                   ),
                 ),

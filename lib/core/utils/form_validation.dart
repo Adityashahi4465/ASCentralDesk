@@ -19,7 +19,8 @@ class ValidationService {
   String? validateName(String? value) {
     if (value == null || value.isEmpty) {
       return NAME_AUTH_VALIDATION_EMPTY;
-    } else if (value.isValidName()) {
+    }
+    else if (value.isValidName()) {
       return NAME_AUTH_VALIDATION_INVALID;
     }
     return null;

@@ -4,7 +4,7 @@ import 'package:as_central_desk/constants/app_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/color_utility.dart';
-import '../../../core/utils/snakbar.dart';
+import '../../../core/utils/snackbar.dart';
 import '../animations/auth_animations.dart';
 import '../widgets/social_media_button.dart';
 import '../widgets/top_bubbles.dart';
