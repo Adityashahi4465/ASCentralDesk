@@ -7,36 +7,36 @@ final validationServiceProvider = Provider<ValidationService>((ref) {
 });
 
 class ValidationService {
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
+  String? validateEmail(String value) {
+    if (value.isEmpty) {
       return EMAIL_AUTH_VALIDATION_EMPTY;
-    } else if (value.isValidEmail()) {
+    } else if (!value.isValidEmail()) {
       return EMAIL_AUTH_VALIDATION_INVALID;
     }
     return null;
   }
 
-  String? validateName(String? value) {
-    if (value == null || value.isEmpty) {
+  String? validateName(String value) {
+    if (value.isEmpty) {
       return NAME_AUTH_VALIDATION_EMPTY;
     }
-    else if (value.isValidName()) {
-      return NAME_AUTH_VALIDATION_INVALID;
-    }
+    // else if (!value.isValidName()) {
+    //   return NAME_AUTH_VALIDATION_INVALID;
+    // }
     return null;
   }
 
-  String? validateRollNumber(String? value) {
-    if (value == null || value.isEmpty) {
+  String? validateRollNumber(String value) {
+    if (value.isEmpty) {
       return ROLL_NUMBER_AUTH_VALIDATION_EMPTY;
-    } else if (value.isValidRollNo()) {
+    } else if (!value.isValidRollNo()) {
       return ROLL_NUMBER_AUTH_VALIDATION_INVALID;
     }
     return null;
   }
 
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
+  String? validatePassword(String value) {
+    if (value.isEmpty) {
       return PASSWORD_AUTH_VALIDATION_EMPTY;
     }
     if (value.length < 6) {
@@ -45,8 +45,8 @@ class ValidationService {
     return null;
   }
 
-  String? validateConfirmPassword(String? value, String? password) {
-    if (value == null || value.isEmpty) {
+  String? validateConfirmPassword(String value, String password) {
+    if (value.isEmpty) {
       return CONFIRM_PASSWORD_AUTH_VALIDATION_EMPTY;
     }
     if (value != password) {
@@ -62,15 +62,15 @@ class ValidationService {
     return null;
   }
 
-  String? validateSelectCourse(String? value) {
-    if (value == null || value.isEmpty) {
+  String? validateSelectCourse(String value) {
+    if (value.isEmpty) {
       return SELECT_COURSE_EMPTY;
     }
     return null;
   }
 
-  String? validateSelectSemester(String? value) {
-    if (value == null || value.isEmpty) {
+  String? validateSelectSemester(String value) {
+    if (value.isEmpty) {
       return SELECT_SEMESTER_EMPTY;
     }
     return null;

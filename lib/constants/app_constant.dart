@@ -35,6 +35,15 @@ const SELECT_COURSE_EMPTY = "Please select  your course";
 const SELECT_SEMESTER_HINT = "Select campus";
 const SELECT_SEMESTER_EMPTY = "Please select your semester";
 
+// Errors
+
+const UNKNOWN_ERROR = "Unknown error occurred";
+const TOKEN_NOT_FOUND_ERROR = "Access denied. Please log in first.(TOKEN_NOT_FOUND)";
+
+
+
+
+
 const COLOR_WELCOME = "#FFD201";
 const COLOR_LOGIN = "#2C3949";
 

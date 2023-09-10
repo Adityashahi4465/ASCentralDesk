@@ -1,4 +1,5 @@
 import 'package:as_central_desk/core/common/loader.dart';
+import 'package:as_central_desk/core/utils/extensions/validators.dart';
 import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -102,9 +103,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                 child: CustomFormTextField(
                   controller: emailController,
                   textTheme: widget.textTheme,
-                  validator: (val) =>
-                      validationService.validateEmail(val) ??
-                      'Enter valid email',
+                  validator: (value) => validationService.validateEmail(value!),
                   hint: EMAIL_AUTH_HINT,
                   suffixIcon: Icons.person,
                   isPassword: false,
@@ -120,8 +119,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                 child: CustomFormTextField(
                   controller: nameController,
                   textTheme: widget.textTheme,
-                  validator: (val) =>
-                      validationService.validateName(val) ?? 'enter valid name',
+                  validator: (val) => validationService.validateName(val!),
                   hint: NAME_AUTH_HINT,
                   suffixIcon: Icons.person,
                   isPassword: false,
@@ -138,7 +136,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                   controller: rollNumberController,
                   textTheme: widget.textTheme,
                   validator: (val) =>
-                      validationService.validateRollNumber(val)!,
+                      validationService.validateRollNumber(val!),
                   hint: ROLL_NUMBER_AUTH_HINT,
                   suffixIcon: Icons.person,
                   isPassword: false,
@@ -199,8 +197,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                                 });
                               },
                               hintText: SELECT_COURSE_HINT,
-                              validator: (value) =>
-                                  validationService.validateSelectCourse(value),
+                              validator: (value) => validationService
+                                  .validateSelectCourse(value!),
                             ),
                           ),
                         ),
@@ -230,7 +228,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                                   },
                                   hintText: 'Select Semester',
                                   validator: (value) => validationService
-                                      .validateSelectSemester(value),
+                                      .validateSelectSemester(value!),
                                 ),
                               )
                             : Container(), // If no course is selected, show an empty container
@@ -249,9 +247,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                 child: CustomFormTextField(
                   controller: passwordController,
                   textTheme: widget.textTheme,
-                  validator: (val) =>
-                      validationService.validatePassword(val) ??
-                      'provide a password',
+                  validator: (val) => validationService.validatePassword(val!),
                   hint: PASSWORD_AUTH_HINT,
                   suffixIcon: Icons.lock,
                   isPassword: true,
@@ -266,12 +262,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                 child: CustomFormTextField(
                   controller: confirmPasswordController,
                   textTheme: widget.textTheme,
-                  validator: (val) =>
-                      validationService.validateConfirmPassword(
-                        val,
-                        passwordController.text,
-                      ) ??
-                      'Confirm you password',
+                  validator: (val) => validationService.validateConfirmPassword(
+                    val!,
+                    passwordController.text,
+                  ),
                   hint: CONFIRM_PASSWORD_AUTH_HINT,
                   suffixIcon: Icons.lock,
                   isPassword: true,
@@ -291,12 +285,12 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                         : RoundedButton(
                             text: BUTTON_SIGNUP,
                             onPressed: () {
+                              print(selectedCampus);
+                              print(selectedCourse);
+                              print(selectedSem);
+                              print(
+                                  '${emailController.text.trim()},${passwordController.text}, ${confirmPasswordController.text}, ${nameController.text.trim()}, ${rollNumberController.text.trim()}');
                               if (formKey.currentState!.validate()) {
-                                print(selectedCampus);
-                                print(selectedCourse);
-                                print(selectedSem);
-                                print(
-                                    '${emailController.text.trim()},${passwordController.text}, ${nameController.text.trim()}, ${rollNumberController.text.trim()}');
                                 registerWithEmailAndPassword();
                               }
                             },

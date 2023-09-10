@@ -4,28 +4,30 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class User {
-  final String uid;
-  final String token;
-  final String name;
-  final String email;
-  final String campus;
-  final String rollNo;
-  final String section;
-  final String role;
-  final String semester;
-  final String photoUrl;
-  final String linkedInProfileUrl;
-  final bool isAccountActive;
-  final List<String> bookmarkedComplaints;
-  final List<String> bookmarkedEvents;
-  final List<String> bookmarkedNotifications;
-  User( {
+  final String uid; // Mongoose _id field
+  final String token; // JWT token
+  final String name; // Name field
+  final String email; // Email field
+  final String campus; // Campus field
+  final String course;
+  final String rollNo; // RollNo field
+  final String section; // Section field
+  final String role; // Role field
+  final String semester; // Semester field
+  final String photoUrl; // photoUrl field
+  final String linkedInProfileUrl; // linkedInProfileUrl field
+  final bool isAccountActive; // isAccountActive field
+  final List<String> bookmarkedComplaints; // bookmarkedComplaints field
+  final List<String> bookmarkedEvents; // bookmarkedEvents field
+  final List<String> bookmarkedNotifications; // bookmarkedNotifications field
 
+  User({
     required this.uid,
     required this.token,
     required this.name,
     required this.email,
     required this.campus,
+    required this.course,
     required this.rollNo,
     required this.section,
     required this.role,
@@ -44,6 +46,7 @@ class User {
     String? name,
     String? email,
     String? campus,
+    String? course,
     String? rollNo,
     String? section,
     String? role,
@@ -61,6 +64,7 @@ class User {
       name: name ?? this.name,
       email: email ?? this.email,
       campus: campus ?? this.campus,
+      course: course ?? this.course,
       rollNo: rollNo ?? this.rollNo,
       section: section ?? this.section,
       role: role ?? this.role,
@@ -82,6 +86,7 @@ class User {
       'name': name,
       'email': email,
       'campus': campus,
+      'course': course,
       'rollNo': rollNo,
       'section': section,
       'role': role,
@@ -102,6 +107,7 @@ class User {
       name: map['name'] as String,
       email: map['email'] as String,
       campus: map['campus'] as String,
+      course: map['course'] as String,
       rollNo: map['rollNo'] as String,
       section: map['section'] as String,
       role: map['role'] as String,
@@ -128,7 +134,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(uid: $uid, name: $name, email: $email, campus: $campus, rollNo: $rollNo, section: $section, role: $role, semester: $semester, photoUrl: $photoUrl, linkedInProfileUrl: $linkedInProfileUrl, isAccountActive: $isAccountActive, bookmarkedComplaints: $bookmarkedComplaints, bookmarkedEvents: $bookmarkedEvents, bookmarkedNotifications: $bookmarkedNotifications)';
+    return 'User(uid: $uid, name: $name, email: $email, campus: $campus, course: $course, rollNo: $rollNo, section: $section, role: $role, semester: $semester, photoUrl: $photoUrl, linkedInProfileUrl: $linkedInProfileUrl, isAccountActive: $isAccountActive, bookmarkedComplaints: $bookmarkedComplaints, bookmarkedEvents: $bookmarkedEvents, bookmarkedNotifications: $bookmarkedNotifications)';
   }
 
   @override
@@ -139,6 +145,7 @@ class User {
         other.name == name &&
         other.email == email &&
         other.campus == campus &&
+        other.course == course &&
         other.rollNo == rollNo &&
         other.section == section &&
         other.role == role &&
@@ -157,6 +164,7 @@ class User {
         name.hashCode ^
         email.hashCode ^
         campus.hashCode ^
+        course.hashCode ^
         rollNo.hashCode ^
         section.hashCode ^
         role.hashCode ^

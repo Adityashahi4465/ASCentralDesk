@@ -39,6 +39,7 @@ class AuthController extends StateNotifier<bool> {
       name: name,
       email: email,
       campus: campus,
+      course: course,
       rollNo: rollNo,
       section: '',
       role: 'student',
@@ -57,7 +58,10 @@ class AuthController extends StateNotifier<bool> {
       email: email,
     );
     state = false;
-    res.fold((l) => showCustomSnackbar(context, l.message), (user) {
+    res.fold((l) {
+      showCustomSnackbar(context, l.message);
+      print(l.message);
+    }, (user) {
       _ref.read(userProvider.notifier).update((state) => user);
       Routemaster.of(context).replace('/');
     });

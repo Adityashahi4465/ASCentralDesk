@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import 'app_constant.dart';
+
 class ApiResponse {
   final bool success;
   final int statusCode;
@@ -19,9 +21,12 @@ class ApiResponse {
 ApiResponse handleApiResponse(http.Response response) {
   if (response.statusCode == 200) {
     // Successful response
+    final jsonData = json.decode(response.body);
+
     return ApiResponse(
       success: true,
       statusCode: response.statusCode,
+      data: jsonData,
     );
   } else {
     // Error response
@@ -31,7 +36,8 @@ ApiResponse handleApiResponse(http.Response response) {
     return ApiResponse(
       success: false,
       statusCode: response.statusCode,
-      error: errorMessage,
+      error:
+          errorMessage ?? UNKNOWN_ERROR, // Provide a default message
       data: jsonData,
     );
   }

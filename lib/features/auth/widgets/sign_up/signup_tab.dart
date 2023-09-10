@@ -1,10 +1,9 @@
 import 'package:as_central_desk/component/trapezoid_up_cut.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../rounded_circular_button.dart';
 import 'sign_up_form.dart';
 
-class SignUpTab extends StatefulWidget {
+class SignUpTab extends StatelessWidget {
   final Function() onPageUpButtonPressed;
 
   const SignUpTab({
@@ -12,11 +11,6 @@ class SignUpTab extends StatefulWidget {
     required this.onPageUpButtonPressed,
   });
 
-  @override
-  State<SignUpTab> createState() => _SignUpTabState();
-}
-
-class _SignUpTabState extends State<SignUpTab> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -53,7 +47,7 @@ class _SignUpTabState extends State<SignUpTab> {
             top: 24,
             left: 12,
             child: RoundedCircularButton(
-              onPressed: widget.onPageUpButtonPressed,
+              onPressed: onPageUpButtonPressed,
               color: Colors.pinkAccent,
               icon: Icons.arrow_upward,
             ),

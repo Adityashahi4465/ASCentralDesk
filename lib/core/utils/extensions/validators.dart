@@ -5,7 +5,6 @@ extension UsernameValidator on String {
     ).hasMatch(this);
   }
 }
-
 extension EmailValidator on String {
   bool isValidEmail() {
     return RegExp(
