@@ -17,8 +17,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a password'],
     minlength: 6,
-    select: false  //will not fetch password on normal fetch call from database
-
+    select: false, // will not fetch password on normal fetch call from the database
   },
   role: {
     type: String,
@@ -34,7 +33,6 @@ const UserSchema = new mongoose.Schema({
   course: {
     type: String,
   },
-
   semester: {
     type: String,
   },
@@ -43,11 +41,11 @@ const UserSchema = new mongoose.Schema({
   },
   photoUrl: {
     type: String,
-    default: "",
+    default: '',
   },
   linkedInProfileUrl: {
     type: String,
-    default: "",
+    default: '',
   },
   isAccountActive: {
     type: Boolean,
