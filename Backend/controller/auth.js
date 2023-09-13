@@ -1,6 +1,13 @@
 // Import asyncHandler to handle asynchronous operations
 import asyncHandler from '../middlewares/async.js';
 import User from '../model/user.js'
+import ErrorResponse from '../utils/errorResponse.js';
+
+
+// @desc Register user
+// @route POST /api/v1/auth/register
+// @access Public
+
 // Define the register function, which is an asynchronous function that handles user registration
 export const register = asyncHandler(async (req, res, next) => {
     /*  Steps for registration
@@ -11,7 +18,6 @@ export const register = asyncHandler(async (req, res, next) => {
      5. Throw any server error 
      6. Connect to Client Side
     */
-
     // Destructure data from the request body
     const { name, email, password, role, rollNo, campus, course, semester } = req.body;
 
@@ -31,6 +37,36 @@ export const register = asyncHandler(async (req, res, next) => {
     sendTokenResponse(user, 200, res);
 
 });
+
+// @desc Register user
+// @route POST /api/v1/auth/login
+// @access Public
+
+export const login = asyncHandler(async (req, res, next) => {
+    const { email, password } = req.body;
+
+    //Validate Email and Password
+    if (!email || !password) {
+        return next(new ErrorResponse(`Please provide all details required for login`, 400));
+    }
+
+    //Check for User
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) {
+        return next(new ErrorResponse(`Invalid Credentials !!!`, 401));
+    }
+
+    //Check if password matches:
+    const isMatch = await user.matchPassword(password);
+
+    if (!isMatch) {
+        return next(new ErrorResponse(`Invalid Credentials !!!`, 401));
+    }
+
+    sendTokenResponse(user, 200, res);
+
+});
+
 
 // Get token from model, create cookie and send response
 
