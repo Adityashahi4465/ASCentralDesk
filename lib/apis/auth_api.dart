@@ -25,7 +25,12 @@ abstract class IAuthAPI {
     required String password,
     required String email,
   });
-  FutureEither<User> getUserData();
+  FutureEither<User> getCurrentUserData();
+  FutureEither<User> logIn({
+    required String password,
+    required String email,
+  });
+  void logOut();
 }
 
 class AuthAPI implements IAuthAPI {
@@ -45,7 +50,7 @@ class AuthAPI implements IAuthAPI {
   }) async {
     try {
       final Map<String, dynamic> userData =
-          json.decode(user.toJson()) as Map<String, dynamic>;
+          jsonDecode(user.toJson()) as Map<String, dynamic>;
       userData['password'] = password;
 
       final Map<String, dynamic> requestBody = userData;
@@ -63,7 +68,7 @@ class AuthAPI implements IAuthAPI {
       );
       final apiResponse = handleApiResponse(response);
       if (apiResponse.success) {
-        final userJson = apiResponse.data;
+        final userJson = jsonDecode(response.body);
         final newUser = user.copyWith(
           uid: userJson['user']['_id'],
           token: userJson['token'],
@@ -89,20 +94,23 @@ class AuthAPI implements IAuthAPI {
   }
 
   @override
-  FutureEither<User> getUserData() async {
+  FutureEither<User> getCurrentUserData() async {
     try {
       String? token = await _localStorageApi.getToken();
       if (token != null) {
-        var res = await _client.get(Uri.parse('$hostUrl/'), headers: {
+        var res =
+            await _client.get(Uri.parse('$hostUrl/api/v1/auth/me'), headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'token': token,
         });
 
         final apiResponse = handleApiResponse(res);
-
         if (apiResponse.success) {
-          final newUser =
-              User.fromJson(apiResponse.data).copyWith(token: token);
+          final userJson = jsonDecode(res.body)['user'];
+          // print(userJson);
+          final newUser = User.fromMap(userJson)
+              .copyWith(token: token); // Use fromMap method
+          // print('------------------------- $newUser');
           _localStorageApi.setToken(newUser.token);
 
           return right(newUser);
@@ -127,5 +135,51 @@ class AuthAPI implements IAuthAPI {
         ),
       );
     }
+  }
+
+  @override
+  FutureEither<User> logIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      var response = await _client.post(
+        Uri.parse('$hostUrl/api/v1/auth/login'),
+        body: jsonEncode({'email': email, 'password': password}),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      final apiResponse = handleApiResponse(response);
+
+      if (apiResponse.success) {
+        final userJson = jsonDecode(response.body);
+        // print(userJson);
+        final userData = User.fromMap(userJson['user']).copyWith(
+          token: userJson['token'],
+        ); // Use fromMap method
+
+        _localStorageApi.setToken(userData.token);
+        return right(userData);
+      } else {
+        return left(
+          Failure(
+            apiResponse.error!,
+          ),
+        );
+      }
+    } catch (e) {
+      return left(
+        Failure(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  void logOut() {
+    _localStorageApi.removeToken();
   }
 }

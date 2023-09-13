@@ -1,4 +1,5 @@
 import 'package:as_central_desk/apis/auth_api.dart';
+import 'package:as_central_desk/apis/local_storage_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
@@ -65,5 +66,41 @@ class AuthController extends StateNotifier<bool> {
       _ref.read(userProvider.notifier).update((state) => user);
       Routemaster.of(context).replace('/');
     });
+  }
+
+  Future<User?> getCurrentUserData() async {
+    final res = await _ref.read(authApiProvider).getCurrentUserData();
+    User? user;
+    res.fold((l) {
+      user = null;
+    }, (r) {
+      user = r;
+    });
+
+    return user;
+  }
+
+  void login({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    state = true;
+    final res = await _ref.read(authApiProvider).logIn(
+          email: email,
+          password: password,
+        );
+    state = false;
+    res.fold(
+      (l) => showCustomSnackbar(context, l.message),
+      (user) => _ref.read(userProvider.notifier).update(
+            (state) => user,
+          ),
+    );
+  }
+
+  void logOut() {
+    _ref.read(authApiProvider).logOut();
+    _ref.read(userProvider.notifier).update((state) => null);
   }
 }

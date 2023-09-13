@@ -8,25 +8,14 @@ import '/component/trapezoid_down_cut.dart';
 import '../../../../constants/app_constant.dart';
 import '../../../../core/utils/color_utility.dart';
 
-class SignInTab extends StatefulWidget {
- final Function() onFormSubmit;
+class SignInTab extends StatelessWidget {
   final Function() onPageDownButtonPressed;
 
   const SignInTab({
     super.key,
-    required this.onFormSubmit,
     required this.onPageDownButtonPressed,
   });
 
-
-  @override
-  State<SignInTab> createState() => _SignInTabState();
-}
-
-class _SignInTabState extends State<SignInTab> {
-  final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +39,10 @@ class _SignInTabState extends State<SignInTab> {
                     height: double.infinity,
                     color: Colors.white,
                     child: SignInForm(
-                      formKey: formKey,
-                      onPressed: widget.onFormSubmit,
+            
                       size: size,
                       textTheme: textTheme,
-                      emailController: emailController,
-                      passwordController: passwordController,
+                
                     ),
                   ),
                 ),
@@ -66,7 +53,7 @@ class _SignInTabState extends State<SignInTab> {
             bottom: 24,
             right: 12,
             child: RoundedCircularButton(
-              onPressed: widget.onPageDownButtonPressed,
+              onPressed: onPageDownButtonPressed,
               color: Colors.pinkAccent,
               icon: Icons.arrow_downward,
             ),

@@ -12,6 +12,8 @@ class ValidationService {
       return EMAIL_AUTH_VALIDATION_EMPTY;
     } else if (!value.isValidEmail()) {
       return EMAIL_AUTH_VALIDATION_INVALID;
+    } else if (!value.endsWith('@dseu.ac.in')) {
+      return EMAIL_AUTH_VALIDATION_DOMAIN_ERROR;
     }
     return null;
   }

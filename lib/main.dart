@@ -9,9 +9,7 @@ import 'features/auth/controller/auth_controller.dart';
 import 'features/auth/views/auth_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() => run();
-
-Future<void> run() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -29,40 +27,49 @@ class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
   @override
-  ConsumerState<MyApp> createState() => _MyAppState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  String? token;
+  bool isInitialized = false; // Add a flag to track initialization
 
-  Future<void> getUserData() async {
-    token = await ref.read(localStorageApiProvider).getToken();
-    setState(() {});
-    print(token);
+  void getUserData(WidgetRef ref) async {
+    final user =
+        await ref.watch(authControllerProvider.notifier).getCurrentUserData();
+    print(user);
+    if (user != null) {
+      ref.read(userProvider.notifier).update((state) => user);
+    }
   }
 
   @override
-  void initState() {
-    getUserData();
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!isInitialized) {
+      // Ensure this block runs only once during initialization
+      isInitialized = true;
+      getUserData(ref);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     print('build');
-
+    final user = ref.watch(userProvider);
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
-        final user = ref.watch(userProvider);
-        if ((token != null)) {
-          return loggedInRoute;
-        }
-        return loggedOutRoute;
-      }),
+      routerDelegate: RoutemasterDelegate(
+        routesBuilder: (context) {
+          if (user != null && user.token.isNotEmpty) {
+            return loggedInRoute;
+          }
+          return loggedOutRoute;
+        },
+      ),
       routeInformationParser: const RoutemasterParser(),
     );
   }

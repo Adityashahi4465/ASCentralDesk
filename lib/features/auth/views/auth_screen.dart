@@ -173,12 +173,6 @@ class AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     onPageChanged: (int index) {},
                     children: <Widget>[
                       SignInTab(
-                        onFormSubmit: () {
-                          showCustomSnackbar(
-                            context,
-                            'Please select a campus first',
-                          );
-                        },
                         onPageDownButtonPressed: () {
                           _pageController.animateToPage(
                             1,

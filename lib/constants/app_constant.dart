@@ -5,6 +5,8 @@
 const EMAIL_AUTH_HINT = "Email";
 const EMAIL_AUTH_VALIDATION_EMPTY = "Your email can't be left empty!";
 const EMAIL_AUTH_VALIDATION_INVALID = 'Please enter a valid email!';
+const EMAIL_AUTH_VALIDATION_DOMAIN_ERROR =
+    "Email must belong to the 'dseu.ac.in' domain.";
 
 const PASSWORD_AUTH_HINT = "Password";
 const PASSWORD_AUTH_VALIDATION_EMPTY = "Password is required!";
@@ -38,11 +40,8 @@ const SELECT_SEMESTER_EMPTY = "Please select your semester";
 // Errors
 
 const UNKNOWN_ERROR = "Unknown error occurred";
-const TOKEN_NOT_FOUND_ERROR = "Access denied. Please log in first.(TOKEN_NOT_FOUND)";
-
-
-
-
+const TOKEN_NOT_FOUND_ERROR =
+    "Access denied. Please log in first.(TOKEN_NOT_FOUND)";
 
 const COLOR_WELCOME = "#FFD201";
 const COLOR_LOGIN = "#2C3949";

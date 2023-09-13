@@ -102,35 +102,35 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      uid: map['_id'] as String,
-      token: map['token'] as String,
-      name: map['name'] as String,
-      email: map['email'] as String,
-      campus: map['campus'] as String,
-      course: map['course'] as String,
-      rollNo: map['rollNo'] as String,
-      section: map['section'] as String,
-      role: map['role'] as String,
-      semester: map['semester'] as String,
-      photoUrl: map['photoUrl'] as String,
-      linkedInProfileUrl: map['linkedInProfileUrl'] as String,
-      isAccountActive: map['isAccountActive'] as bool,
-      bookmarkedComplaints: List<String>.from(
-        (map['bookmarkedComplaints'] as List<String>),
-      ),
-      bookmarkedEvents: List<String>.from(
-        (map['bookmarkedEvents'] as List<String>),
-      ),
-      bookmarkedNotifications: List<String>.from(
-        (map['bookmarkedNotifications'] as List<String>),
-      ),
+      uid: map['_id'] as String? ?? '',
+      token: map['token'] as String? ?? '',
+      name: map['name'] as String? ?? '',
+      email: map['email'] as String? ?? '',
+      campus: map['campus'] as String? ?? '',
+      course: map['course'] as String? ?? '',
+      rollNo: map['rollNo'] as String? ?? '',
+      section: map['section'] as String? ?? '',
+      role: map['role'] as String? ?? '',
+      semester: map['semester'] as String? ?? '',
+      photoUrl: map['photoUrl'] as String? ?? '',
+      linkedInProfileUrl: map['linkedInProfileUrl'] as String? ?? '',
+      isAccountActive: map['isAccountActive'] as bool? ??
+          false, // Provide a default value for bool.
+      bookmarkedComplaints: (map['bookmarkedComplaints'] != null)
+          ? List<String>.from(map['bookmarkedComplaints'])
+          : [], // Handle the case when it's null.
+      bookmarkedEvents: (map['bookmarkedEvents'] != null)
+          ? List<String>.from(map['bookmarkedEvents'])
+          : [], // Handle the case when it's null.
+      bookmarkedNotifications: (map['bookmarkedNotifications'] != null)
+          ? List<String>.from(map['bookmarkedNotifications'])
+          : [], // Handle the case when it's null.
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) =>
-      User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory User.fromJson(String source) => User.fromMap(json.decode(source));
 
   @override
   String toString() {

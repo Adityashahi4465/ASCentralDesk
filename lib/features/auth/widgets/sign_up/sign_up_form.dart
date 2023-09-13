@@ -285,12 +285,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                         : RoundedButton(
                             text: BUTTON_SIGNUP,
                             onPressed: () {
-                              print(selectedCampus);
-                              print(selectedCourse);
-                              print(selectedSem);
-                              print(
-                                  '${emailController.text.trim()},${passwordController.text}, ${confirmPasswordController.text}, ${nameController.text.trim()}, ${rollNumberController.text.trim()}');
                               if (formKey.currentState!.validate()) {
+                                FocusScope.of(context).unfocus();
                                 registerWithEmailAndPassword();
                               }
                             },
