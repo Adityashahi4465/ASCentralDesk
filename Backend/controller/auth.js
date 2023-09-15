@@ -1,7 +1,9 @@
 // Import asyncHandler to handle asynchronous operations
 import asyncHandler from '../middlewares/async.js';
-import User from '../model/user.js'
+import User from '../model/User.js'
 import ErrorResponse from '../utils/errorResponse.js';
+import sendEmail from '../utils/sandMail.js';
+import jwt from 'jsonwebtoken';
 
 
 // @desc Register user
@@ -66,6 +68,81 @@ export const login = asyncHandler(async (req, res, next) => {
     sendTokenResponse(user, 200, res);
 
 });
+
+
+// Route to send a verification email
+export const sandEmailVerification = asyncHandler(async (req, res, next) => {
+
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+        return next(new ErrorResponse(`Email not registered !!!`, 401));
+    }
+
+    try {
+        // Generate a unique verification token
+        const email = user.email;
+        const verificationToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '10m' });
+        // Create a verification link
+        const verificationLink = `${req.protocol}://${req.get('host')}/api/v1/auth/verify/${verificationToken}`;
+
+        // Send the email   
+        const info = await sendEmail({
+            name: req.get('host'),
+            email: user.email,
+            subject: `Email Verification`,
+            message: `Click the following link to verify your email: ${verificationLink}`,
+        });
+        res.status(200).json({ success: true, data: `email sent ${info}` })
+    } catch (error) {
+        console.error(error);
+        return next(new ErrorResponse(`Email could not be sent ${error}`, 500));
+    }
+});
+
+
+
+
+// Route to handle email verification from the web page
+export const verifyEmail = asyncHandler(async (req, res) => {
+    // console.log('req.params:', req.params); // Log the URL parameters
+    const token = req.params.verificationToken;
+    console.log(token);
+    if (!token) {
+        return res.status(400).json({ message: 'Missing verification token' });
+    }
+
+    try {
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log(decoded);
+        // Extract the email from the decoded token
+        const { email } = decoded;
+
+        // Check if the email exists in the database
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+
+        // Check if the user's email has already been verified
+        if (user.emailVerified) {
+            return res.status(400).json({ message: 'Email already verified' });
+        }
+
+        // Update the user's email verification status in your MongoDB database
+        user.emailVerified = true;
+        await user.save();
+
+        return res.status(200).json({ message: 'Email verified successfully' });
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({ message: 'Email verification failed' });
+    }
+});
+
+
+
 
 
 // Get token from model, create cookie and send response

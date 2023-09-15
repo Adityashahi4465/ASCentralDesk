@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
     enum: ['admin', 'student', 'moderator'],
     required: true,
   },
+  emailVerified: {
+    type : Boolean,
+    default : false,
+  },
   rollNo: {
     type: String,
   },
@@ -49,7 +53,7 @@ const UserSchema = new mongoose.Schema({
   },
   isAccountActive: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   bookmarkedComplaints: {
     type: [String],
