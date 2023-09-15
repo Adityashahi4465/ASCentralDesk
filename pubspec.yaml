@@ -38,6 +38,7 @@ dependencies:
   http: ^1.1.0
   flutter_dotenv: ^5.1.0
   fpdart: ^1.1.0
+  intl: ^0.18.1
   shared_preferences: ^2.2.1
   routemaster: ^1.0.1
 
@@ -79,10 +80,26 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: SFNDisplay
+      fonts:
+        - asset: assets/fonts/display/SFNDisplay-Black.otf
+        - asset: assets/fonts/display/SFNDisplay-Bold.otf
+        - asset: assets/fonts/display/SFNDisplay-Heavy.otf
+        - asset: assets/fonts/display/SFNDisplay-Light.otf
+        - asset: assets/fonts/display/SFNDisplay-Medium.otf
+        - asset: assets/fonts/display/SFNDisplay-Regular.otf
+        - asset: assets/fonts/display/SFNDisplay-Semibold.otf
+        - asset: assets/fonts/display/SFNDisplay-Thin.otf
+    - family: SFNText
+      fonts:
+        - asset: assets/fonts/text/SFNText-Bold.otf
+        - asset: assets/fonts/text/SFNText-Heavy.otf
+        - asset: assets/fonts/text/SFNText-Light.otf
+        - asset: assets/fonts/text/SFNText-Medium.otf
+        - asset: assets/fonts/text/SFNText-Regular.otf
+        - asset: assets/fonts/text/SFNText-Semibold.otf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

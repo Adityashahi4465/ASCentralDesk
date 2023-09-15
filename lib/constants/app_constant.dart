@@ -36,6 +36,11 @@ const SELECT_COURSE_EMPTY = "Please select  your course";
 
 const SELECT_SEMESTER_HINT = "Select campus";
 const SELECT_SEMESTER_EMPTY = "Please select your semester";
+    
+const TEXT_VERIFY_EMAIL_HEADING =
+    'Verify Your Email';
+const TEXT_VERIFY_EMAIL_MESSAGE =
+    'An email has been sent to your email address with a verification link. Please click the link to verify your email.';
 
 // Errors
 
@@ -53,6 +58,7 @@ const IMAGE_SLIPPER_PATH = "login/slippers.png";
 const TEXT_SIGN_IN_LABEL = "SIGN IN";
 const TEXT_WELCOME_LABEL =
     "Follow the path you like,\nvisit the places you want to go but go with a guide.";
+
 
 const COLOR_FACEBOOK = "#4C76BE";
 const COLOR_TWITTER = "#00C7FF";

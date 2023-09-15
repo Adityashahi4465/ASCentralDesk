@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:as_central_desk/theme/app_colors.dart';
+import 'package:as_central_desk/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/common/rounded_button.dart';
 import '../../../../core/common/trapezoid_up_cut.dart';
@@ -77,66 +78,46 @@ class VerifyEmailTabState extends State<VerifyEmailTab> {
                     height: double.infinity,
                     color: Colors.white,
                     child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Verify Your Email',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              TEXT_VERIFY_EMAIL_HEADING,
+                              style: AppTextStyle.displaySemiBold.copyWith(
+                                fontSize: 24,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          const Text(
-                            'An email has been sent to your email address with a verification link. Please click the link to verify your email.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          // _resendTime != 0
-                          //     ? RichText(
-                          //         text: TextSpan(
-                          //           style: DefaultTextStyle.of(context).style,
-                          //           children: <TextSpan>[
-                          //             const TextSpan(
-                          //               text: 'Resend in ',
-                          //               style: TextStyle(
-                          //                 color: Colors
-                          //                     .black, // Customize the text style as needed
-                          //               ),
-                          //             ),
-                          //             TextSpan(
-                          //               text:
-                          //                   '$_resendTime seconds', // Display the remaining time
-                          //               style: const TextStyle(
-                          //                 color: Colors
-                          //                     .red, // Customize the text style as needed
-                          //                 fontWeight: FontWeight.bold,
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       )
-                          RoundedButton(
-                            text: _resendTime != 0
-                                ? ' Resend in $_resendTime seconds'
-                                : BUTTON_RESEND_EMAIL,
-                            onPressed: _resendTime != 0 ? null : resendEmail,
-                            linearGradient: _resendTime != 0
-                                ? AppColors.roundedButtonDisabledGradient
-                                : AppColors.roundedButtonGradient,
-                          ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            "Haven't received Email yet?",
-                            style: TextStyle(
-                              fontSize: 14,
+                            const SizedBox(height: 20),
+                            Text(
+                              TEXT_VERIFY_EMAIL_MESSAGE,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyle.textRegular.copyWith(
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            RoundedButton(
+                              text: _resendTime != 0
+                                  ? ' Resend in $_resendTime seconds'
+                                  : BUTTON_RESEND_EMAIL,
+                              onPressed: _resendTime != 0 ? null : resendEmail,
+                              linearGradient: _resendTime != 0
+                                  ? AppColors.roundedButtonDisabledGradient
+                                  : AppColors.roundedButtonGradient,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "Haven't received Email yet?",
+                              style: AppTextStyle.textLight.copyWith(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

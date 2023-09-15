@@ -100,8 +100,12 @@ class VerifyEmailScreen extends StatelessWidget {
               begin: FractionalOffset.bottomLeft,
               end: FractionalOffset.topRight,
               colors: <Color>[
-                Color(getColorHexFromStr("#EC5A7A")),
-                Color(getColorHexFromStr("#E17D73")),
+                Color(
+                  getColorHexFromStr("#EC5A7A"),
+                ),
+                Color(
+                  getColorHexFromStr("#E17D73"),
+                ),
               ],
             ),
           ),
