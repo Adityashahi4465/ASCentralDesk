@@ -1,6 +1,7 @@
 import 'package:as_central_desk/features/auth/widgets/sign_in/signin_tab.dart';
 import 'package:as_central_desk/features/auth/widgets/sign_up/signup_tab.dart';
 import 'package:as_central_desk/constants/app_constant.dart';
+import 'package:as_central_desk/features/auth/widgets/varify_email/verify_email_tab.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/color_utility.dart';
@@ -171,7 +172,7 @@ class AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     scrollDirection: Axis.vertical,
                     physics: const NeverScrollableScrollPhysics(),
                     onPageChanged: (int index) {},
-                    children: <Widget>[
+                    children: [
                       SignInTab(
                         onPageDownButtonPressed: () {
                           _pageController.animateToPage(
@@ -183,10 +184,10 @@ class AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       ),
                       SignUpTab(
                         onPageUpButtonPressed: () {
-                          _pageController.animateToPage(
+                          _pageController.jumpToPage(
                             0,
-                            duration: const Duration(milliseconds: 1000),
-                            curve: Curves.fastOutSlowIn,
+                            // duration: const Duration(milliseconds: 1000),
+                            // curve: Curves.fastOutSlowIn,
                           );
                         },
                       ),

@@ -2,9 +2,9 @@ import 'package:as_central_desk/features/auth/widgets/rounded_circular_button.da
 import 'package:flutter/material.dart';
 import '../form_text_field.dart';
 import 'sign_in_form.dart';
-import '/component/logo_text.dart';
-import '/component/rounded_button.dart';
-import '/component/trapezoid_down_cut.dart';
+import '../../../../core/common/logo_text.dart';
+import '../../../../core/common/rounded_button.dart';
+import '../../../../core/common/trapezoid_down_cut.dart';
 import '../../../../constants/app_constant.dart';
 import '../../../../core/utils/color_utility.dart';
 
@@ -16,7 +16,6 @@ class SignInTab extends StatelessWidget {
     required this.onPageDownButtonPressed,
   });
 
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -24,10 +23,11 @@ class SignInTab extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(
-          top: size.height * 0.0,
-          left: size.width * 0.05,
-          right: size.width * 0.05,
-          bottom: size.width * 0.05),
+        top: size.height * 0.0,
+        left: size.width * 0.05,
+        right: size.width * 0.05,
+        bottom: size.width * 0.05,
+      ),
       child: Stack(
         children: [
           TrapezoidDownCut(
@@ -39,10 +39,8 @@ class SignInTab extends StatelessWidget {
                     height: double.infinity,
                     color: Colors.white,
                     child: SignInForm(
-            
                       size: size,
                       textTheme: textTheme,
-                
                     ),
                   ),
                 ),

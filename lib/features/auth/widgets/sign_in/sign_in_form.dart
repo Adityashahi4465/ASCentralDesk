@@ -3,8 +3,8 @@ import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../component/logo_text.dart';
-import '../../../../component/rounded_button.dart';
+import '../../../../core/common/logo_text.dart';
+import '../../../../core/common/rounded_button.dart';
 import '../../../../constants/app_constant.dart';
 import '../../../../core/common/loader.dart';
 import '../../../../core/utils/color_utility.dart';
@@ -49,7 +49,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: widget.size.width * 0.1),

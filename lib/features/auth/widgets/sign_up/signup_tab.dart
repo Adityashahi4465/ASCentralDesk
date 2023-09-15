@@ -1,4 +1,4 @@
-import 'package:as_central_desk/component/trapezoid_up_cut.dart';
+import 'package:as_central_desk/core/common/trapezoid_up_cut.dart';
 import 'package:flutter/material.dart';
 import '../rounded_circular_button.dart';
 import 'sign_up_form.dart';

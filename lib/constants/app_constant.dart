@@ -64,3 +64,4 @@ const IMAGE_PATH_FACEBOOK = 'login/facebook.png';
 
 const BUTTON_LOGIN = "Login";
 const BUTTON_SIGNUP = "Signup";
+const BUTTON_RESEND_EMAIL = "Resend Email";

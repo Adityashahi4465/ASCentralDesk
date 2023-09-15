@@ -1,5 +1,6 @@
 import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
 import 'package:as_central_desk/features/auth/views/auth_screen.dart';
+import 'package:as_central_desk/features/auth/views/verify_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
@@ -8,7 +9,7 @@ import 'features/home/views/home_screen.dart';
 
 final loggedOutRoute = RouteMap(routes: {
   '/': (route) => const MaterialPage(
-        child: AuthScreen(),
+        child: VerifyEmailScreen(),
       ),
 });
 

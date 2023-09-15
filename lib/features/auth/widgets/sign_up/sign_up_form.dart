@@ -4,8 +4,8 @@ import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../component/logo_text.dart';
-import '../../../../component/rounded_button.dart';
+import '../../../../core/common/logo_text.dart';
+import '../../../../core/common/rounded_button.dart';
 import '../../../../constants/app_constant.dart';
 import '../../../../constants/campus_data.dart';
 import '../../../../core/common/dropdown_button.dart';
