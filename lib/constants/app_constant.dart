@@ -36,11 +36,15 @@ const SELECT_COURSE_EMPTY = "Please select  your course";
 
 const SELECT_SEMESTER_HINT = "Select campus";
 const SELECT_SEMESTER_EMPTY = "Please select your semester";
-    
-const TEXT_VERIFY_EMAIL_HEADING =
-    'Verify Your Email';
+
+// Email Verification Texts
+const TEXT_VERIFY_EMAIL_HEADING = 'Verify Your Email!';
 const TEXT_VERIFY_EMAIL_MESSAGE =
     'An email has been sent to your email address with a verification link. Please click the link to verify your email.';
+const TEXT_VERIFY_EMAIL_SENT_SUCCESS_MESSAGE =
+    'Verification Email has been sent to you email';
+const TEXT_VERIFY_EMAIL_VERIFICATION_SUCCESS_MESSAGE =
+    'Your Email Verified Successfully, Start using the app';
 
 // Errors
 
@@ -59,7 +63,6 @@ const TEXT_SIGN_IN_LABEL = "SIGN IN";
 const TEXT_WELCOME_LABEL =
     "Follow the path you like,\nvisit the places you want to go but go with a guide.";
 
-
 const COLOR_FACEBOOK = "#4C76BE";
 const COLOR_TWITTER = "#00C7FF";
 const COLOR_GOOGLE = "#FC5345";
@@ -70,4 +73,4 @@ const IMAGE_PATH_FACEBOOK = 'login/facebook.png';
 
 const BUTTON_LOGIN = "Login";
 const BUTTON_SIGNUP = "Signup";
-const BUTTON_RESEND_EMAIL = "Resend Email";
+const BUTTON_SEND_EMAIL = "Send Email";

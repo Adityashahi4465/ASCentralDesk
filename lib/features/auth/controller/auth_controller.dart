@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 
+import '../../../constants/app_constant.dart';
 import '../../../core/utils/snackbar.dart';
 import '../../../models/user.dart';
 
@@ -48,6 +49,7 @@ class AuthController extends StateNotifier<bool> {
       photoUrl: '',
       linkedInProfileUrl: '',
       isAccountActive: true,
+      emailVerified: false,
       bookmarkedComplaints: [],
       bookmarkedEvents: [],
       bookmarkedNotifications: [],
@@ -63,8 +65,10 @@ class AuthController extends StateNotifier<bool> {
       showCustomSnackbar(context, l.message);
       print(l.message);
     }, (user) {
-      _ref.read(userProvider.notifier).update((state) => user);
-      Routemaster.of(context).replace('/');
+      _ref.read(userProvider.notifier).update(
+            (state) => user,
+          );
+      Routemaster.of(context).push('verify-email');
     });
   }
 
@@ -92,10 +96,39 @@ class AuthController extends StateNotifier<bool> {
         );
     state = false;
     res.fold(
-      (l) => showCustomSnackbar(context, l.message),
-      (user) => _ref.read(userProvider.notifier).update(
-            (state) => user,
-          ),
+      (l) => showCustomSnackbar(
+        context,
+        l.message,
+      ),
+      (user) {
+        if (user.emailVerified) {
+          _ref.read(userProvider.notifier).update((state) => user);
+        } else {
+          _ref.read(userProvider.notifier).update((state) => user);
+          Routemaster.of(context).push('verify-email');
+        }
+      },
+    );
+  }
+
+  void sandVerificationEmail({
+    required String email,
+    required BuildContext context,
+  }) async {
+    state = true;
+    final res = await _ref.read(authApiProvider).sandVerificationEmail(
+          email: email,
+        );
+    state = false;
+    res.fold(
+      (l) => showCustomSnackbar(
+        context,
+        l.message,
+      ),
+      (r) => showCustomSnackbar(
+        context,
+        TEXT_VERIFY_EMAIL_SENT_SUCCESS_MESSAGE,
+      ),
     );
   }
 

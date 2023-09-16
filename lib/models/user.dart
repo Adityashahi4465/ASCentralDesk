@@ -17,6 +17,7 @@ class User {
   final String photoUrl; // photoUrl field
   final String linkedInProfileUrl; // linkedInProfileUrl field
   final bool isAccountActive; // isAccountActive field
+  final bool emailVerified; // isAccountActive field
   final List<String> bookmarkedComplaints; // bookmarkedComplaints field
   final List<String> bookmarkedEvents; // bookmarkedEvents field
   final List<String> bookmarkedNotifications; // bookmarkedNotifications field
@@ -35,6 +36,7 @@ class User {
     required this.photoUrl,
     required this.linkedInProfileUrl,
     required this.isAccountActive,
+    required this.emailVerified,
     required this.bookmarkedComplaints,
     required this.bookmarkedEvents,
     required this.bookmarkedNotifications,
@@ -54,6 +56,7 @@ class User {
     String? photoUrl,
     String? linkedInProfileUrl,
     bool? isAccountActive,
+    bool? emailVerified,
     List<String>? bookmarkedComplaints,
     List<String>? bookmarkedEvents,
     List<String>? bookmarkedNotifications,
@@ -72,6 +75,7 @@ class User {
       photoUrl: photoUrl ?? this.photoUrl,
       linkedInProfileUrl: linkedInProfileUrl ?? this.linkedInProfileUrl,
       isAccountActive: isAccountActive ?? this.isAccountActive,
+      emailVerified: emailVerified ?? this.emailVerified,
       bookmarkedComplaints: bookmarkedComplaints ?? this.bookmarkedComplaints,
       bookmarkedEvents: bookmarkedEvents ?? this.bookmarkedEvents,
       bookmarkedNotifications:
@@ -94,6 +98,7 @@ class User {
       'photoUrl': photoUrl,
       'linkedInProfileUrl': linkedInProfileUrl,
       'isAccountActive': isAccountActive,
+      'emailVerified': emailVerified,
       'bookmarkedComplaints': bookmarkedComplaints,
       'bookmarkedEvents': bookmarkedEvents,
       'bookmarkedNotifications': bookmarkedNotifications,
@@ -116,6 +121,8 @@ class User {
       linkedInProfileUrl: map['linkedInProfileUrl'] as String? ?? '',
       isAccountActive: map['isAccountActive'] as bool? ??
           false, // Provide a default value for bool.
+      emailVerified: map['emailVerified'] as bool? ??
+          false, // Provide a default value for bool.
       bookmarkedComplaints: (map['bookmarkedComplaints'] != null)
           ? List<String>.from(map['bookmarkedComplaints'])
           : [], // Handle the case when it's null.
@@ -134,7 +141,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(uid: $uid, name: $name, email: $email, campus: $campus, course: $course, rollNo: $rollNo, section: $section, role: $role, semester: $semester, photoUrl: $photoUrl, linkedInProfileUrl: $linkedInProfileUrl, isAccountActive: $isAccountActive, bookmarkedComplaints: $bookmarkedComplaints, bookmarkedEvents: $bookmarkedEvents, bookmarkedNotifications: $bookmarkedNotifications)';
+    return 'User(uid: $uid, name: $name, email: $email, campus: $campus, course: $course, rollNo: $rollNo, section: $section, role: $role, semester: $semester, photoUrl: $photoUrl, linkedInProfileUrl: $linkedInProfileUrl, isAccountActive: $isAccountActive, emailVerified: $emailVerified, bookmarkedComplaints: $bookmarkedComplaints, bookmarkedEvents: $bookmarkedEvents, bookmarkedNotifications: $bookmarkedNotifications)';
   }
 
   @override
@@ -153,6 +160,7 @@ class User {
         other.photoUrl == photoUrl &&
         other.linkedInProfileUrl == linkedInProfileUrl &&
         other.isAccountActive == isAccountActive &&
+        other.emailVerified == emailVerified &&
         listEquals(other.bookmarkedComplaints, bookmarkedComplaints) &&
         listEquals(other.bookmarkedEvents, bookmarkedEvents) &&
         listEquals(other.bookmarkedNotifications, bookmarkedNotifications);
@@ -172,6 +180,7 @@ class User {
         photoUrl.hashCode ^
         linkedInProfileUrl.hashCode ^
         isAccountActive.hashCode ^
+        emailVerified.hashCode ^
         bookmarkedComplaints.hashCode ^
         bookmarkedEvents.hashCode ^
         bookmarkedNotifications.hashCode;

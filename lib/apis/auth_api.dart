@@ -31,6 +31,7 @@ abstract class IAuthAPI {
     required String email,
   });
   void logOut();
+  void sandVerificationEmail({required String email});
 }
 
 class AuthAPI implements IAuthAPI {
@@ -182,4 +183,37 @@ class AuthAPI implements IAuthAPI {
   void logOut() {
     _localStorageApi.removeToken();
   }
+
+  @override
+  FutureEitherVoid sandVerificationEmail({
+    required String email,
+  }) async {
+    try {
+      final res = await _client.post(
+        Uri.parse('$hostUrl/api/v1/auth/send-verification-email'),
+        body: jsonEncode({'email': email}),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      final apiResponse = handleApiResponse(res);
+      if (apiResponse.success) {
+        return right(null);
+      } else {
+        return left(
+          Failure(
+            apiResponse.error!,
+          ),
+        );
+      }
+    } catch (e) {
+      return left(
+        Failure(
+          e.toString(),
+        ),
+      );
+    }
+  }
+  
 }

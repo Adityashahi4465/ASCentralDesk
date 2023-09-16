@@ -1,4 +1,5 @@
 import 'package:as_central_desk/core/utils/color_utility.dart';
+import 'package:as_central_desk/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 void showCustomSnackbar(BuildContext context, String message) {
@@ -29,14 +30,12 @@ void showCustomSnackbar(BuildContext context, String message) {
                 ),
               ),
               child: Center(
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                child: Text(message,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyle.displaySemiBold.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                    )),
               ),
             ),
             Positioned(

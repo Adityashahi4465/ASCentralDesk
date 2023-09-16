@@ -1,3 +1,4 @@
+import 'package:as_central_desk/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class LogoText extends StatelessWidget {
@@ -7,8 +8,10 @@ class LogoText extends StatelessWidget {
 
     return Text(
       "ASCentralDesk",
-      style:
-          textTheme.headline4!.copyWith(color: Colors.black.withOpacity(0.6)),
+      style: AppTextStyle.displayBold.copyWith(
+        color: Colors.black.withOpacity(0.6),
+        fontSize: 26,
+      ),
     );
   }
 }

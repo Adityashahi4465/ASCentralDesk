@@ -15,8 +15,8 @@ class AppColors {
     begin: FractionalOffset.bottomLeft,
     end: FractionalOffset.topRight,
     colors: <Color>[
-      Color.fromARGB(249, 144, 118, 118),
-      Color.fromARGB(255, 210, 198, 198),
+      Color.fromARGB(255, 214, 202, 202),
+      Color.fromARGB(255, 158, 145, 145),
     ],
   );
 }
