@@ -29,6 +29,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
   final passwordController = TextEditingController();
 
   void login() {
+    print('login');
     ref.read(authControllerProvider.notifier).login(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),

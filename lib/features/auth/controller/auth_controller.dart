@@ -62,8 +62,8 @@ class AuthController extends StateNotifier<bool> {
     );
     state = false;
     res.fold((l) {
+      print(l);
       showCustomSnackbar(context, l.message);
-      print(l.message);
     }, (user) {
       _ref.read(userProvider.notifier).update(
             (state) => user,
@@ -90,16 +90,18 @@ class AuthController extends StateNotifier<bool> {
     required BuildContext context,
   }) async {
     state = true;
+          print('login');
+
     final res = await _ref.read(authApiProvider).logIn(
           email: email,
           password: password,
         );
     state = false;
     res.fold(
-      (l) => showCustomSnackbar(
-        context,
-        l.message,
-      ),
+      (l) {
+        print(l.message);
+        showCustomSnackbar(context, l.message);
+      },
       (user) {
         if (user.emailVerified) {
           _ref.read(userProvider.notifier).update((state) => user);
