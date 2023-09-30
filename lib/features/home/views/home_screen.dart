@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/color_utility.dart';
+import '../widgets/overall_details_card.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -24,18 +25,18 @@ class HomeScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
+                  // color: Colors.white,
+                  ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Row(
                     children: [
                       const CircleAvatar(
-                        radius: 32.0,
-                        backgroundImage: AssetImage('images/temp.jpg'),
+                        radius: 28.0,
+                        backgroundImage: AssetImage('assets/images/temp.jpg'),
                       ),
-                      const SizedBox(width: 20.0),
+                      const SizedBox(width: 10.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -43,7 +44,7 @@ class HomeScreen extends ConsumerWidget {
                             'Your Name',
                             style: AppTextStyle.displayHeavy.copyWith(
                               color: Colors.black,
-                              fontSize: 32.0,
+                              fontSize: 24.0,
                             ),
                           ),
                           Text(
@@ -57,25 +58,25 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.black26,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: IconButton(
-                        iconSize: 28,
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.notifications_active,
-                          color: Colors.black54,
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: IconButton(
+                      iconSize: 28,
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.notifications_active,
+                        color: Color.fromARGB(255, 252, 0, 134),
                       ),
                     ),
                   ),
                 ],
               ),
+            ),
+            OverallDetailsCard(
+              cardGradient: AppColors.roundedButtonGradient,
+            ),
+            OverallDetailsCard(
+              cardGradient: AppColors.orangeGradient,
             ),
           ],
         ),

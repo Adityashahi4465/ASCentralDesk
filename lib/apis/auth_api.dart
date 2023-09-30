@@ -144,6 +144,7 @@ class AuthAPI implements IAuthAPI {
     required String password,
   }) async {
     try {
+      print('login');
       var response = await _client.post(
         Uri.parse('$hostUrl/api/v1/auth/login'),
         body: jsonEncode({'email': email, 'password': password}),
@@ -171,6 +172,7 @@ class AuthAPI implements IAuthAPI {
         );
       }
     } catch (e) {
+      print(e);
       return left(
         Failure(
           e.toString(),
@@ -215,5 +217,4 @@ class AuthAPI implements IAuthAPI {
       );
     }
   }
-  
 }
