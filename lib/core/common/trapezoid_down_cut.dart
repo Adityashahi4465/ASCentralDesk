@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 class TrapezoidDownCut extends StatelessWidget {
-  TrapezoidDownCut({required this.child});
+ const TrapezoidDownCut({super.key, required this.child});
 
   final Widget child;
 

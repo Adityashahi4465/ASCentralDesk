@@ -1,5 +1,8 @@
-
 // Convert Hex code to colors
+
+import 'dart:math';
+
+import 'package:flutter/material.dart';
 
 int getColorHexFromStr(String colorStr) {
   colorStr = "FF$colorStr";
@@ -21,4 +24,14 @@ int getColorHexFromStr(String colorStr) {
     }
   }
   return val;
+}
+
+Color getRandomColor() {
+  Random random = Random();
+  return Color.fromARGB(
+    255,
+    random.nextInt(256),
+    random.nextInt(256),
+    random.nextInt(256),
+  );
 }
