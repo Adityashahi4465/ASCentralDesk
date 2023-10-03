@@ -71,6 +71,13 @@ class AppColors {
   static const Color pinkAccent = Colors.pinkAccent;
 
   /// **************   Specific Colors   *******************
+
+  static const Color primary = Colors.pinkAccent;
+  static const Color primaryDark = Color.fromARGB(255, 238, 72, 50);
+
+  // Disabled Color
+  static const Color mDisabledColor = Color.fromARGB(175, 162, 162, 162);
+
   static const Color scaffoldBackgroundColor =
       Color.fromARGB(255, 245, 250, 255);
   static const Color subTitleColor = Color.fromARGB(255, 170, 168, 168);
