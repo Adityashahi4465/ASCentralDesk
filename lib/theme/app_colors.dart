@@ -74,6 +74,7 @@ class AppColors {
 
   static const Color primary = Colors.pinkAccent;
   static const Color primaryDark = Color.fromARGB(255, 238, 72, 50);
+  static const Color splashColor = Color.fromARGB(255, 253, 107, 156);
 
   // Disabled Color
   static const Color mDisabledColor = Color.fromARGB(175, 162, 162, 162);

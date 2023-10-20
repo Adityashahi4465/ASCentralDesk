@@ -70,6 +70,13 @@ const COLOR_GOOGLE = "#FC5345";
 const IMAGE_PATH_GOOGLE = 'login/google.png';
 const IMAGE_PATH_TWITTER = 'login/twitter.png';
 const IMAGE_PATH_FACEBOOK = 'login/facebook.png';
+const IMAGE_PATH_NOTICE = 'assets/icons/notice.png';
+const IMAGE_PATH_ADD_NOTICE = 'assets/icons/new_notice.png';
+const IMAGE_PATH_COMPLAINT = 'assets/icons/complain.png';
+const IMAGE_PATH_ADD_COMPLAINT = 'assets/icons/add_complaint.png';
+const IMAGE_PATH_EVENT = 'assets/icons/event.png';
+const IMAGE_PATH_ADD_EVENT = 'assets/icons/add_event.png';
+const IMAGE_PATH_ADD_SPORTS = 'assets/icons/add_sports.png';
 
 const BUTTON_LOGIN = "Login";
 const BUTTON_SIGNUP = "Signup";
