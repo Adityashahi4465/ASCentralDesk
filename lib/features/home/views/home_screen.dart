@@ -2,9 +2,11 @@ import 'package:as_central_desk/constants/app_constant.dart';
 import 'package:as_central_desk/constants/ui_constants.dart';
 import 'package:as_central_desk/core/common/circular_fab_menu.dart';
 import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
+import 'package:as_central_desk/routes/route_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:routemaster/routemaster.dart';
 import '../../../theme/theme.dart';
 import '../delegates/flow_delegate.dart';
 
@@ -165,33 +167,38 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       ),
       floatingActionButton: CircularFabMenu(
         fabItems: [
-          ...UiConstants.adminFABIconsList,
-          {
-            'icon': Icons.add,
-            'onPressed': () {
-              if (controller.status == AnimationStatus.completed) {
-                controller.reverse();
-              } else {
-                controller.forward();
-              }
-            }
-          },
+          ...UiConstants.adminFABIconsList.map((iconPath) => FabMenuItem(
+                icon: iconPath,
+                onPressed: (context) {
+                  // Handle onPressed for each button
+                  int index = UiConstants.adminFABIconsList.indexOf(iconPath);
+                  switch (index) {
+                    case 0:
+                      Navigation.navigateToNewComplaintScreen(context);
+                      break;
+                    case 1:
+                      Navigation.navigateToNewEventScreen(context);
+                      break;
+                    case 2:
+                      Navigation.navigateToNewNoticeScreen(context);
+                      break;
+                    case 3:
+                      Navigation.navigateToNewEquipmentScreen(context);
+                      break;
+                    case 4:
+                      if (controller.status == AnimationStatus.completed) {
+                        controller.reverse();
+                      } else {
+                        controller.forward();
+                      }
+                      break;
+                  }
+                },
+              )),
         ],
         buttonSize: 60.0,
         controller: controller,
       ),
-
-      // floatingActionButton: Container(
-      //   decoration: const BoxDecoration(
-      //       shape: BoxShape.circle, color: AppColors.primary),
-      //   height: 56,
-      //   width: 56,
-      //   child: const Icon(
-      //     Icons.add,
-      //     color: Colors.white,
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

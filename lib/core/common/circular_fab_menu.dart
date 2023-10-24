@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 import '../../features/home/delegates/flow_delegate.dart';
 import '../../theme/app_colors.dart';
 
+class FabMenuItem {
+  final dynamic icon; // IconData or String for image path
+  final void Function(BuildContext context) onPressed;
+
+  FabMenuItem({required this.icon, required this.onPressed});
+}
+
 class CircularFabMenu extends StatelessWidget {
-  final List<Map<String, dynamic>> fabItems;
+  final List<FabMenuItem> fabItems;
   final double buttonSize;
   final AnimationController controller;
 
@@ -30,18 +37,19 @@ class CircularFabMenu extends StatelessWidget {
               height: 60,
               width: 60,
               child: FloatingActionButton(
+                heroTag: entry.key,
                 backgroundColor: AppColors.primary,
                 splashColor: AppColors.splashColor,
                 elevation: 0,
-                onPressed: () => entry.value['onPressed'](),
-                child: _isIconData(entry.value['image'] ?? entry.value['icon'])
+                onPressed: () => entry.value.onPressed(context),
+                child: _isIconData(entry.value.icon)
                     ? Icon(
-                        entry.value['image'] ?? entry.value['icon'],
+                        entry.value.icon,
                         size: 30,
                         color: AppColors.white,
                       )
                     : Image.asset(
-                        entry.value['image'] ?? entry.value['icon'],
+                        entry.value.icon,
                         width: 30,
                         height: 30,
                         color: AppColors.white,
@@ -57,3 +65,5 @@ class CircularFabMenu extends StatelessWidget {
     return item is IconData;
   }
 }
+
+// Usage

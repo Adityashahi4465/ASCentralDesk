@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 // Form Validations
+const FIELD_VALIDATION_EMPTY = 'This field can\'t be left empty!';
 
 const EMAIL_AUTH_HINT = "Email";
 const EMAIL_AUTH_VALIDATION_EMPTY = "Your email can't be left empty!";

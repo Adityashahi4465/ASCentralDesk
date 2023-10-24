@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart';
 
-import '../constants/error_hendling.dart';
+import '../core/utils/error_hendling.dart';
 import '../core/core.dart';
 import '../models/user.dart';
 

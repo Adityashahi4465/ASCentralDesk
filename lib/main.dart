@@ -1,5 +1,5 @@
 import 'package:as_central_desk/apis/local_storage_api.dart';
-import 'package:as_central_desk/routes.dart';
+import 'package:as_central_desk/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,9 +59,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     final user = ref.watch(userProvider);
     return MaterialApp.router(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.light(),
       routerDelegate: RoutemasterDelegate(
         routesBuilder: (context) {
           if (user != null && user.token.isNotEmpty && user.emailVerified) {}

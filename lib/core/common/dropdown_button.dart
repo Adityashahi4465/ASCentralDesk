@@ -1,4 +1,5 @@
 import 'package:as_central_desk/core/utils/color_utility.dart';
+import 'package:as_central_desk/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropdown<T> extends StatelessWidget {
@@ -7,7 +8,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final List<T> items;
   final T? value;
   final ValueChanged<T?> onChanged;
-  final   String? Function(T?)? validator;
+  final String? Function(T?)? validator;
 
   const CustomDropdown({
     super.key,
@@ -27,12 +28,23 @@ class CustomDropdown<T> extends StatelessWidget {
       iconSize: 40,
       iconEnabledColor: Colors.grey,
       iconDisabledColor: Colors.grey,
+      focusColor: AppColors.primary,
       validator: validator,
       menuMaxHeight: 400,
-      // underline: Container(
-      //   height: 1,
-      //   color: Colors.grey,
-      // ),
+      decoration: InputDecoration(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.primary, // Customize the color as needed
+            width: 1.5, // Adjust the width of the bottom border
+          ),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.grey, // Customize the color as needed
+            width: 1.0, // Adjust the width of the bottom border
+          ),
+        ),
+      ),
       value: value,
       hint: Text(
         hintText,

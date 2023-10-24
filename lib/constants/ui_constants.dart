@@ -22,34 +22,24 @@ class UiConstants {
     Icons.toys_outlined,
   ];
 
-  static  List<Map<String, dynamic>> adminFABIconsList = [
-    {
-      'image': IMAGE_PATH_ADD_COMPLAINT,
-      'onPressed': () {
-        // onPressed action for add complaint
-        print('Add Complaint pressed!');
-      },
-    },
-    {
-      'image': IMAGE_PATH_ADD_EVENT,
-      'onPressed': () {
-        // onPressed action for add event
-        print('Add Event pressed!');
-      },
-    },
-    {
-      'image': IMAGE_PATH_ADD_NOTICE,
-      'onPressed': () {
-        // onPressed action for add notice
-        print('Add Notice pressed!');
-      },
-    },
-    {
-      'image': IMAGE_PATH_ADD_SPORTS,
-      'onPressed': () {
-        // onPressed action for add sports
-        print('Add Sports pressed!');
-      },
-    },
+  static List adminFABIconsList = [
+    IMAGE_PATH_ADD_COMPLAINT,
+    IMAGE_PATH_ADD_EVENT,
+    IMAGE_PATH_ADD_NOTICE,
+    IMAGE_PATH_ADD_SPORTS,
+    Icons.add,
+  ];
+
+  static const List<String> complaintCategories = [
+    'Academic Issues',
+    'Administrative Issues',
+    'Infrastructure Issues',
+    'IT and Technical Issues',
+    'Social and Campus Life',
+    'Security Concerns',
+    'Health and Wellness',
+    'Transportation Issues',
+    'Diversity and Inclusion',
+    'Miscellaneous',
   ];
 }
