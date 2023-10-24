@@ -47,6 +47,7 @@ const TEXT_VERIFY_EMAIL_SENT_SUCCESS_MESSAGE =
 const TEXT_VERIFY_EMAIL_VERIFICATION_SUCCESS_MESSAGE =
     'Your Email Verified Successfully, Start using the app';
 
+const SELECT_CATEGORY_EMPTY = "Please select a category";
 // Errors
 
 const UNKNOWN_ERROR = "Unknown error occurred";

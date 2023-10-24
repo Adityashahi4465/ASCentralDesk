@@ -31,7 +31,7 @@ class CustomDropdown<T> extends StatelessWidget {
       focusColor: AppColors.primary,
       validator: validator,
       menuMaxHeight: 400,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: AppColors.primary, // Customize the color as needed
