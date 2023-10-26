@@ -3,3 +3,10 @@ enum UserRole {
   student,
   moderator,
 }
+
+enum  ComplaintStatus {
+    pending,
+    inProgress,
+    solved,
+    rejected,
+}

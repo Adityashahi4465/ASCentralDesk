@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:as_central_desk/apis/complaint_api.dart';
 import 'package:as_central_desk/constants/app_constant.dart';
 import 'package:as_central_desk/constants/campus_data.dart';
 import 'package:as_central_desk/constants/ui_constants.dart';
 import 'package:as_central_desk/core/common/dropdown_button.dart';
+import 'package:as_central_desk/core/common/loader.dart';
 import 'package:as_central_desk/core/common/rounded_button.dart';
 import 'package:as_central_desk/core/common/text_input_field.dart';
-import 'package:as_central_desk/core/utils/upload_iamges.dart';
 import 'package:as_central_desk/routes/route_utils.dart';
 import 'package:as_central_desk/theme/app_colors.dart';
 import 'package:as_central_desk/theme/app_text_style.dart';
@@ -15,6 +16,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dotted_border/dotted_border.dart';
+
+import '../compliant_controller.dart';
 
 class NewComplaintFormScreen extends ConsumerStatefulWidget {
   const NewComplaintFormScreen({super.key});
@@ -51,6 +54,16 @@ class _NewComplaintFormScreenState
     _descriptionController.dispose();
   }
 
+  void saveComplaintToDatabase() {
+    ref.read(controllerProvider.notifier).saveComplaintToDatabase(
+          title: _titleController.text,
+          description: _descriptionController.text,
+          imageBytesList: _imageBytesList,
+          category: selectedCategory!,
+          context: context,
+        );
+  }
+
   Future<void> pickImages() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -72,6 +85,7 @@ class _NewComplaintFormScreenState
 
   @override
   Widget build(BuildContext context) {
+    final loading = ref.watch(controllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -194,11 +208,13 @@ class _NewComplaintFormScreenState
                     return null;
                   },
                 ),
-                RoundedButton(
-                  onPressed: () {},
-                  text: 'Submit',
-                  linearGradient: AppColors.orangeGradient,
-                )
+                loading
+                    ? const Loader()
+                    : RoundedButton(
+                        onPressed: saveComplaintToDatabase,
+                        text: 'Submit',
+                        linearGradient: AppColors.orangeGradient,
+                      )
               ],
             ),
           ),

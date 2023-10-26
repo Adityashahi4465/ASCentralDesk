@@ -62,9 +62,11 @@ class _MyAppState extends ConsumerState<MyApp> {
       theme: ThemeData.light(),
       routerDelegate: RoutemasterDelegate(
         routesBuilder: (context) {
-          if (user != null && user.token.isNotEmpty && user.emailVerified) {}
-          return loggedInRoute;
-          // return loggedOutRoute;
+          if (user != null && user.token.isNotEmpty && user.emailVerified) {
+            return loggedInRoute;
+          }
+
+          return loggedOutRoute;
         },
       ),
       routeInformationParser: const RoutemasterParser(),

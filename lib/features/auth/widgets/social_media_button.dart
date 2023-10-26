@@ -40,7 +40,7 @@ class SocialMediaAppButton extends StatelessWidget {
               getColorHexFromStr(color),
             ),
           ),
-          child: Text('Google'),
+          child: Text(''),
         ),
       ),
     );

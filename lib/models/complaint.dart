@@ -7,13 +7,13 @@ class Complaint {
   final String id; // Assuming you have an identifier for the complaint
   final String title;
   final String description;
-  final List<int> images; // Represented as a list of bytes
+  final List<String> images; // Represented as a list of bytes
   final String category;
   final String consults;
   final DateTime filingTime;
   final int fund;
   final String status;
-  final int upvotes;
+  final List<String> upvotes;
   final String createdBy;
   Complaint({
     required this.id,
@@ -33,13 +33,13 @@ class Complaint {
     String? id,
     String? title,
     String? description,
-    List<int>? images,
+    List<String>? images,
     String? category,
     String? consults,
     DateTime? filingTime,
     int? fund,
     String? status,
-    int? upvotes,
+    List<String>? upvotes,
     String? createdBy,
   }) {
     return Complaint(
@@ -78,13 +78,13 @@ class Complaint {
       id: map['_id'] as String? ?? '', // Handle null case if _id is not present
       title: map['title'] as String,
       description: map['description'] as String,
-      images: List<int>.from(map['images'] as List<int>),
+      images: List<String>.from(map['images'] as List<String>),
       category: map['category'] as String,
       consults: map['consults'] as String,
       filingTime: DateTime.fromMillisecondsSinceEpoch(map['filingTime'] as int),
       fund: map['fund'] as int,
       status: map['status'] as String,
-      upvotes: map['upvotes'] as int,
+      upvotes: List<String>.from(map['upvotes'] as List<String>),
       createdBy: map['createdBy'] as String,
     );
   }
