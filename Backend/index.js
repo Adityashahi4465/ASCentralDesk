@@ -6,7 +6,7 @@ import errorHandler from './middlewares/error.js'
 
 //Route Files, **add file extension
 import authRouter from './routes/auth.js'
-
+import complaintRouter from './routes/complaint.js'
 //configure environment variable
 dotenv.config()
 
@@ -23,7 +23,7 @@ const app = express();
 //Middlewares--------------------- a function that has access to req, res life-cycle
 //app.use() - It is used to mount middleware functions 
 
-//Enable Cors
+//Enable Cors 
 app.use(cors());
 
 //Body Parser Middleware
@@ -31,6 +31,7 @@ app.use(express.json());
 
 //Mount Routers------------------
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/auth/complaint', complaintRouter);
 
 
 //Error handler middleware, must be after Routers Mount,so that errors returned from routes can be handled
