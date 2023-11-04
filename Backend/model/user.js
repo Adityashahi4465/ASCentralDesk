@@ -25,8 +25,8 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   emailVerified: {
-    type : Boolean,
-    default : false,
+    type: Boolean,
+    default: false,
   },
   rollNo: {
     type: String,

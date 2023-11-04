@@ -14,7 +14,7 @@ dotenv.config()
 connectDB();
 
 // PORT
-const PORT = process.env.PORT || 5000; // Set the port (3000 by default)
+const PORT = process.env.PORT || 5000; // Set the port (5000 by default)
 //Initialize the app
 const app = express();
 
@@ -31,7 +31,7 @@ app.use(express.json());
 
 //Mount Routers------------------
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/auth/complaint', complaintRouter);
+// app.use('/api/v1/auth/complaint', complaintRouter);
 
 
 //Error handler middleware, must be after Routers Mount,so that errors returned from routes can be handled

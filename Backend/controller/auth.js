@@ -22,7 +22,7 @@ export const register = asyncHandler(async (req, res, next) => {
     */
     // Destructure data from the request body
     const { name, email, password, role, rollNo, campus, course, semester } = req.body;
-
+    console.log("fseref");
     // Create a new user in the database with all validations such as duplicate users.
     const user = await User.create({
         name,
