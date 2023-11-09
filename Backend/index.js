@@ -31,7 +31,7 @@ app.use(express.json());
 
 //Mount Routers------------------
 app.use('/api/v1/auth', authRouter);
-// app.use('/api/v1/auth/complaint', complaintRouter);
+app.use('/api/v1/auth/complaint', complaintRouter);
 
 
 //Error handler middleware, must be after Routers Mount,so that errors returned from routes can be handled
