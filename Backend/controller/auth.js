@@ -1,6 +1,6 @@
 // Import asyncHandler to handle asynchronous operations
 import asyncHandler from '../middlewares/async.js';
-import User from '../model/User.js'
+import User from '../model/user.js'
 import ErrorResponse from '../utils/errorResponse.js';
 import sendEmail from '../utils/sandMail.js';
 import jwt from 'jsonwebtoken';
@@ -46,6 +46,7 @@ export const register = asyncHandler(async (req, res, next) => {
 
 export const login = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
+    console.log("login");
 
     //Validate Email and Password
     if (!email || !password) {
