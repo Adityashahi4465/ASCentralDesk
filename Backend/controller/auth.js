@@ -14,7 +14,7 @@ import jwt from 'jsonwebtoken';
 export const register = asyncHandler(async (req, res, next) => {
     /*  Steps for registration
      1. Extract User Input
-     2. Look for any existing user
+        2. Look for any existing user
      3. Hash/Encrypt password
      4. Create User Model
      5. Throw any server error 

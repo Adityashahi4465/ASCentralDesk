@@ -21,7 +21,7 @@ export const addNewComplaint = asyncHandler(async (req, res, next) => {
         // Save the new Complaint to the database
         const savedComplaint = await newComplaint.save();
 
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             data: savedComplaint,
         });
