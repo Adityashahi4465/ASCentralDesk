@@ -60,11 +60,11 @@ class AuthAPI implements IAuthAPI {
       //     user.toJson() as Map<String, dynamic>; // Convert user data to a map
       // userMap['password'] = password; // Add the 'password' field
 
-      final Response response = await _client.post(
+      final response = await _client.post(
         Uri.parse('$hostUrl/api/v1/auth/register'),
         body: json.encode(requestBody),
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
         },
       );
       final apiResponse = handleApiResponse(response);
@@ -85,7 +85,7 @@ class AuthAPI implements IAuthAPI {
         );
       }
     } catch (e) {
-      print(e);
+      // print(e);
       return left(
         Failure(
           e.toString(),

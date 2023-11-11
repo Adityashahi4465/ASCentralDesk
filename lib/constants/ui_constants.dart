@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../features/complaint/view/complaints_feed_screen.dart';
 import '../features/profile/roles/student_profile_screen.dart';
+import '../features/profile/view/profile_screen.dart';
 
 class UiConstants {
   static List<Widget> homeTabWidgets = [

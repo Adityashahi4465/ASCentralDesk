@@ -62,7 +62,7 @@ class AuthController extends StateNotifier<bool> {
     );
     state = false;
     res.fold((l) {
-      print(l);
+      print(l.message);
       showCustomSnackbar(context, l.message);
     }, (user) {
       _ref.read(userProvider.notifier).update(
@@ -90,7 +90,7 @@ class AuthController extends StateNotifier<bool> {
     required BuildContext context,
   }) async {
     state = true;
-          print('login');
+    print('login');
 
     final res = await _ref.read(authApiProvider).logIn(
           email: email,
