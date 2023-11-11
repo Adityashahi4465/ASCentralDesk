@@ -4,7 +4,7 @@ import ErrorResponse from '../utils/errorResponse.js';
 
 export const addNewComplaint = asyncHandler(async (req, res, next) => {
     // Assuming you have a Complaint schema with fields like title, description, images, etc.
-    const { title, description, images, filingTime, status } = req.body;
+    const { title, description, images, filingTime, status, createdBy, category } = req.body;
 
     try {
         // Create a new Complaint instance
@@ -13,8 +13,9 @@ export const addNewComplaint = asyncHandler(async (req, res, next) => {
             description,
             filingTime,
             status,
-            images, // Assuming images is an array of image bytes
-            // Add other fields as needed
+            images,
+            createdBy,
+            category,
         });
 
         // Save the new Complaint to the database
