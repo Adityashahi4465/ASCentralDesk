@@ -62,9 +62,12 @@ class _MyAppState extends ConsumerState<MyApp> {
       theme: ThemeData.light(),
       routerDelegate: RoutemasterDelegate(
         routesBuilder: (context) {
+          print('Navigating to loggedInRoute');
+
           if (user != null && user.token.isNotEmpty && user.emailVerified) {
             return loggedInRoute;
           }
+          print('Navigating to loggedOutRoute');
 
           return loggedOutRoute;
         },

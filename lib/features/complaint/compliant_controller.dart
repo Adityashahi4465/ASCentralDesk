@@ -4,6 +4,7 @@ import 'package:as_central_desk/core/enums/enums.dart';
 import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
 import 'package:as_central_desk/models/complaint.dart';
 import 'package:as_central_desk/routes/route_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,7 +28,7 @@ class ComplaintController extends StateNotifier<bool> {
   void saveComplaintToDatabase({
     required String title,
     required String description,
-    required List<List<int>> imageBytesList,
+    required List<dynamic> imagesData,
     required String category,
     required BuildContext context,
   }) async {
@@ -35,11 +36,24 @@ class ComplaintController extends StateNotifier<bool> {
 
     List<String> images = [];
 
-    _ref.read(cloudinaryApiProvider).uploadMultipleImages(
-          images: imageBytesList,
-          folder: "complaint_images",
-        );
-
+    // Check the platform and handle image data accordingly
+    if (kIsWeb) {
+      // For web, use image bytes
+      final res = await _ref.read(cloudinaryApiProvider).uploadMultipleImages(
+            images: imagesData.cast<List<int>>(),
+            folder: "complaint_images",
+          );
+      res.fold(
+          (l) => showCustomSnackbar(context, l.message), (r) => images = r);
+    } else {
+      // For other platforms (Android, iOS), use file paths
+      final res = await _ref.read(cloudinaryApiProvider).uploadMultipleImages(
+            images: imagesData.cast<String>(),
+            folder: "complaint_images",
+          );
+      res.fold(
+          (l) => showCustomSnackbar(context, l.message), (r) => images = r);
+    }
     final complaint = Complaint(
       id: "",
       title: title,
@@ -54,8 +68,8 @@ class ComplaintController extends StateNotifier<bool> {
       createdBy: _ref.read(userProvider)!.uid,
     );
     final res = await _complaintAPI.saveComplaintToDatabase(
-          complaint: complaint,
-        );
+      complaint: complaint,
+    );
     state = false;
     res.fold(
       (l) {

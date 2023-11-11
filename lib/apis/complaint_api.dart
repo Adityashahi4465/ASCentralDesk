@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:as_central_desk/apis/local_storage_api.dart';
 import 'package:as_central_desk/core/core.dart';
 import 'package:as_central_desk/core/providers.dart';
@@ -8,7 +10,6 @@ import 'package:http/http.dart';
 
 import '../core/api_config.dart';
 import '../core/utils/error_hendling.dart';
-import '../models/user.dart';
 
 final complaintApiProvider = Provider<ComplaintApi>((ref) {
   return ComplaintApi(
@@ -34,22 +35,36 @@ class ComplaintApi implements IComplaintAPI {
   FutureEither saveComplaintToDatabase({
     required Complaint complaint,
   }) async {
-    String? token = await _localStorageApi.getToken();
-    final response = await _client.post(
-      Uri.parse('$hostUrl/api/v1/auth/complaint/add-new-complaint'),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token!,
-      },
-    );
+    try {
+      String? token = await _localStorageApi.getToken();
 
-    final apiResponse = handleApiResponse(response);
-    if (apiResponse.success) {
-      return right(null);
-    } else {
+      final encodedJson = complaint.toJson();
+      print('Encoded JSON: $encodedJson');
+      final response = await _client.post(
+        Uri.parse('$hostUrl/api/v1/auth/complaint/add-new-complaint'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': token!,
+        },
+        body: complaint.toJson(),
+      );
+
+      final apiResponse = handleApiResponse(response);
+      if (apiResponse.success) {
+        return right(null);
+      } else {
+        print('khhhhhhhhhhhhhhhhhhh ${apiResponse.error}!');
+        return left(
+          Failure(
+            apiResponse.error!,
+          ),
+        );
+      }
+    } catch (e) {
+      print("Chached " + e.toString());
       return left(
         Failure(
-          apiResponse.error!,
+          e.toString(),
         ),
       );
     }

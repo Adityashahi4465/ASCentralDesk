@@ -5,7 +5,6 @@ import 'package:as_central_desk/features/notice/view/notice_feed_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../features/complaint/view/complaints_feed_screen.dart';
-import '../features/profile/roles/student_profile_screen.dart';
 import '../features/profile/view/profile_screen.dart';
 
 class UiConstants {

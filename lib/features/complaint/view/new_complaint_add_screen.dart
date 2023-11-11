@@ -8,6 +8,7 @@ import 'package:as_central_desk/core/common/dropdown_button.dart';
 import 'package:as_central_desk/core/common/loader.dart';
 import 'package:as_central_desk/core/common/rounded_button.dart';
 import 'package:as_central_desk/core/common/text_input_field.dart';
+import 'package:as_central_desk/core/utils/snackbar.dart';
 import 'package:as_central_desk/routes/route_utils.dart';
 import 'package:as_central_desk/theme/app_colors.dart';
 import 'package:as_central_desk/theme/app_text_style.dart';
@@ -39,7 +40,9 @@ class _NewComplaintFormScreenState
   String? selectedCategory;
   String? selectedCampus;
   List<List<int>> _imageBytesList = [];
+  List<String> filePaths = [];
 
+// TODO:  sand camus data
   @override
   void initState() {
     super.initState();
@@ -58,7 +61,7 @@ class _NewComplaintFormScreenState
     ref.read(controllerProvider.notifier).saveComplaintToDatabase(
           title: _titleController.text,
           description: _descriptionController.text,
-          imageBytesList: _imageBytesList,
+          imagesData: _imageBytesList.isEmpty ? filePaths : _imageBytesList,
           category: selectedCategory!,
           context: context,
         );
@@ -68,14 +71,29 @@ class _NewComplaintFormScreenState
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
-        type: FileType.image,
+        type: FileType.custom,
+        allowedExtensions: ['png', 'jpg', 'jpeg', 'svg', 'tiff'],
       );
+
       if (result != null) {
-        setState(() {
-          _imageBytesList = result.files.map((file) => file.bytes!).toList();
-        });
+        if (result.files.any((file) => file.bytes != null)) {
+          // If any file has bytes, it means we are on the web
+          setState(() {
+            _imageBytesList = result.files.map((file) => file.bytes!).toList();
+          });
+          // Now you can do something with these bytes
+          print('Image Bytes List: $_imageBytesList');
+        } else {
+          // If no file has bytes, it means we are on Android or iOS
+          setState(() {
+            filePaths = result.files.map((file) => file.path!).toList();
+          });
+          // Now you can do something with these file paths
+          print('File Paths: $filePaths');
+        }
       } else {
-        // User canceled the picker
+        // ignore: use_build_context_synchronously
+        showCustomSnackbar(context, 'Process Canceled by User');
       }
     } catch (e) {
       // Handle the error
@@ -124,7 +142,7 @@ class _NewComplaintFormScreenState
                       dashPattern: const [10, 4],
                       strokeCap: StrokeCap.round,
                       color: Colors.black,
-                      child: _imageBytesList.isEmpty
+                      child: _imageBytesList.isEmpty && filePaths.isEmpty
                           ? const Center(
                               child: Icon(
                                 Icons.camera_alt_outlined,
@@ -132,12 +150,22 @@ class _NewComplaintFormScreenState
                               ),
                             )
                           : PageView.builder(
-                              itemCount: _imageBytesList.length,
+                              itemCount: filePaths.isEmpty
+                                  ? _imageBytesList.length
+                                  : filePaths.length,
                               itemBuilder: (context, index) {
-                                return Image.memory(
-                                  fit: BoxFit.cover,
-                                  Uint8List.fromList(_imageBytesList[index]),
-                                );
+                                return filePaths.isEmpty
+                                    ? Image.memory(
+                                        fit: BoxFit.cover,
+                                        Uint8List.fromList(
+                                            _imageBytesList[index]),
+                                      )
+                                    : Image.file(
+                                        File(filePaths[index]),
+                                        scale: 0.1,
+                                        filterQuality: FilterQuality.medium,
+                                        fit: BoxFit.contain,
+                                      );
                               },
                             ),
                     ),

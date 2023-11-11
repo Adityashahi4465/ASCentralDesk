@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:as_central_desk/core/utils/snackbar.dart';
 import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
 import 'package:as_central_desk/features/auth/widgets/rounded_circular_button.dart';
+import 'package:as_central_desk/routes/route_utils.dart';
 import 'package:as_central_desk/theme/app_colors.dart';
 import 'package:as_central_desk/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routemaster/routemaster.dart';
 import '../../../../core/common/rounded_button.dart';
 import '../../../../core/common/trapezoid_up_cut.dart';
 import '../../../../constants/app_constant.dart';
@@ -74,12 +76,13 @@ class _VerifyEmailTabState extends ConsumerState<VerifyEmailTab>
         await ref.read(authControllerProvider.notifier).getCurrentUserData();
     print(user!.emailVerified);
     if (user!.emailVerified) {
-      // ignore: use_build_context_synchronously
-      showCustomSnackbar(
-        context,
-        TEXT_VERIFY_EMAIL_VERIFICATION_SUCCESS_MESSAGE,
-      );
+      // // ignore: use_build_context_synchronously
+      // showCustomSnackbar(
+      //   context,
+      //   TEXT_VERIFY_EMAIL_VERIFICATION_SUCCESS_MESSAGE,
+      // );
       ref.read(userProvider.notifier).update((state) => user);
+      Routemaster.of(context).replace('/');
     }
   }
 
