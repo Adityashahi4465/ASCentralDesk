@@ -19,7 +19,7 @@ const complaintSchema = new mongoose.Schema({
     consults: {
         type: String,
         required: false,
-        default : "",
+        default: "",
     },
     filingTime: {
         type: Date,
@@ -28,7 +28,7 @@ const complaintSchema = new mongoose.Schema({
     fund: {
         type: Number,
         required: false,
-        default : 0
+        default: 0
     },
     status: {
         type: String,
