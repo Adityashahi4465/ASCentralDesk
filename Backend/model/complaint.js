@@ -10,7 +10,7 @@ const complaintSchema = new mongoose.Schema({
         required: true,
     },
     images: [{
-        type: Buffer, // Assuming you're storing image bytes as Buffer
+        type: String, // Assuming you're storing image bytes as Buffer
     }],
     category: {
         type: String,
