@@ -34,3 +34,12 @@ export const addNewComplaint = asyncHandler(async (req, res, next) => {
         });
     }
 });
+
+
+export const getAllComplaints = asyncHandler(async (req, res, next) => {
+    const complaints = await Complaint.find(); // Fetch all complaints from MongoDB
+    res.status(200).json({
+        success: true,
+        complaints: complaints
+    });
+});

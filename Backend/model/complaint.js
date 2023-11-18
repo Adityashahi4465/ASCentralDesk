@@ -35,10 +35,12 @@ const complaintSchema = new mongoose.Schema({
         required: true,
         default: "pending",
     },
-    upvotes: {
-        type: Number,
-        default: 0, // Default value for upvotes
-    },
+    upvotes: [
+        {
+            type: String,
+
+        }
+    ],
     // Add other fields as needed
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
