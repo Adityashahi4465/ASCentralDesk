@@ -174,15 +174,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   int index = UiConstants.adminFABIconsList.indexOf(iconPath);
                   switch (index) {
                     case 0:
+                      if (controller.status == AnimationStatus.completed) {
+                        controller.reverse();
+                      } else {
+                        controller.forward();
+                      }
                       Navigation.navigateToNewComplaintScreen(context);
                       break;
                     case 1:
+                      if (controller.status == AnimationStatus.completed) {
+                        controller.reverse();
+                      } else {
+                        controller.forward();
+                      }
                       Navigation.navigateToNewEventScreen(context);
                       break;
                     case 2:
+                      if (controller.status == AnimationStatus.completed) {
+                        controller.reverse();
+                      } else {
+                        controller.forward();
+                      }
                       Navigation.navigateToNewNoticeScreen(context);
                       break;
                     case 3:
+                      if (controller.status == AnimationStatus.completed) {
+                        controller.reverse();
+                      } else {
+                        controller.forward();
+                      }
                       Navigation.navigateToNewEquipmentScreen(context);
                       break;
                     case 4:

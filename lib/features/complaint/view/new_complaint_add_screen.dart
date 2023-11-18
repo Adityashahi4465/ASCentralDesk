@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dotted_border/dotted_border.dart';
 
-import '../compliant_controller.dart';
+import '../controller/compliant_controller.dart';
 
 class NewComplaintFormScreen extends ConsumerStatefulWidget {
   const NewComplaintFormScreen({super.key});
@@ -42,7 +42,7 @@ class _NewComplaintFormScreenState
   List<List<int>> _imageBytesList = [];
   List<String> filePaths = [];
 
-// TODO:  sand camus data
+// TODO:sand camus data
   @override
   void initState() {
     super.initState();
@@ -81,8 +81,6 @@ class _NewComplaintFormScreenState
           setState(() {
             _imageBytesList = result.files.map((file) => file.bytes!).toList();
           });
-          // Now you can do something with these bytes
-          print('Image Bytes List: $_imageBytesList');
         } else {
           // If no file has bytes, it means we are on Android or iOS
           setState(() {

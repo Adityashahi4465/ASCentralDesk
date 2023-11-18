@@ -78,13 +78,17 @@ class Complaint {
       id: map['_id'] as String? ?? '', // Handle null case if _id is not present
       title: map['title'] as String,
       description: map['description'] as String,
-      images: List<String>.from(map['images'] as List<String>),
+      images: (map['images'] as List<dynamic>).cast<String>(),
       category: map['category'] as String,
       consults: map['consults'] as String,
-      filingTime: DateTime.fromMillisecondsSinceEpoch(map['filingTime'] as int),
-      fund: map['fund'] as int,
+      filingTime:
+          DateTime.parse(map['filingTime'] as String), // Parse as String
+      fund: (map['fund'] is String)
+          ? int.parse(map['fund'] as String)
+          : map['fund'] as int,
       status: map['status'] as String,
-      upvotes: List<String>.from(map['upvotes'] as List<String>),
+      upvotes:
+          (map['upvotes'] as List<dynamic>).map((v) => v.toString()).toList(),
       createdBy: map['createdBy'] as String,
     );
   }

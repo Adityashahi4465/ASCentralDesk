@@ -1,4 +1,6 @@
 import 'package:as_central_desk/constants/app_constant.dart';
+import 'package:as_central_desk/features/complaint/view/feeds/all_complaints_feed.dart';
+import 'package:as_central_desk/features/complaint/view/feeds/my_complaints_feed.dart';
 import 'package:as_central_desk/features/dashboard/view/dashboard_screen.dart';
 import 'package:as_central_desk/features/event/view/events_feed_screen.dart';
 import 'package:as_central_desk/features/notice/view/notice_feed_screen.dart';
@@ -14,6 +16,10 @@ class UiConstants {
     const EventsFeedScreen(),
     const NoticeFeedScreen(),
     const ProfileScreen(),
+  ];
+  static List<Widget> complaintFeeds = [
+    const AllComplaintsFeed(),
+    const MyComplaintsFeed(),
   ];
 
   static const List<IconData> studentsFABIconsList = [

@@ -16,6 +16,17 @@ class AppColors {
       ),
     ],
   );
+  static LinearGradient lightPinkGradient = LinearGradient(
+    begin: FractionalOffset.topLeft,
+    end: FractionalOffset.bottomRight,
+    colors: <Color>[
+      // Color.fromARGB(255, 245, 83, 24),
+      Color.fromARGB(255, 245, 83, 24).withOpacity(1),
+      Color.fromARGB(255, 245, 83, 24).withOpacity(0.8),
+      Color.fromARGB(255, 245, 83, 24).withOpacity(0.6),
+      Color.fromARGB(255, 245, 83, 24).withOpacity(0.4),
+    ],
+  );
   static LinearGradient orangeGradient = LinearGradient(
     begin: FractionalOffset.topLeft,
     end: FractionalOffset.topRight,
