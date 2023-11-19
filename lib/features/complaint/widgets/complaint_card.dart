@@ -1,4 +1,4 @@
-
+import 'package:as_central_desk/routes/route_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -156,9 +156,10 @@ class ComplaintCard extends StatelessWidget {
               InkWell(
                 splashColor: AppColors.splashColor,
                 hoverColor: AppColors.greyColor,
-                onTap: () {
-                  print('fsdf');
-                },
+                onTap: () => Navigation.navigateToComplaintDetailsScreen(
+                  context,
+                  complaint.id,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

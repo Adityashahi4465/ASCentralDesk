@@ -1,5 +1,6 @@
 import 'package:as_central_desk/features/auth/views/auth_screen.dart';
 import 'package:as_central_desk/features/auth/views/verify_email_screen.dart';
+import 'package:as_central_desk/features/complaint/view/complaint_details_screen.dart';
 import 'package:as_central_desk/features/equipments/view/new_equipment_form_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
@@ -33,4 +34,9 @@ final loggedInRoute = RouteMap(routes: {
   '/new-equipment': (route) => const MaterialPage(
         child: NewEquipmentFormScreen(),
       ),
+  '/complaint/:complaintId': (routeData) {
+    final complaintId = routeData.pathParameters['complaintId']!;
+    return MaterialPage(
+        child: ComplaintDetailsScreen(complaintId: complaintId));
+  },
 });

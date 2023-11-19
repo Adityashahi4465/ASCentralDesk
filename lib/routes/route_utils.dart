@@ -5,6 +5,7 @@ class Navigation {
   static void navigateToBack(BuildContext context) {
     Routemaster.of(context).pop();
   }
+
   static void navigateToHome(BuildContext context) {
     Routemaster.of(context).push('/');
   }
@@ -23,5 +24,12 @@ class Navigation {
 
   static void navigateToNewEquipmentScreen(BuildContext context) {
     Routemaster.of(context).push('/new-equipment');
+  }
+
+  static void navigateToComplaintDetailsScreen(
+      BuildContext context, String complaintId) {
+    Routemaster.of(context).push(
+      '/complaint/$complaintId',
+    );
   }
 }
