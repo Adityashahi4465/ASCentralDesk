@@ -87,6 +87,10 @@ class AppColors {
   static const Color secondary = Color(0xFFE67319);
   static const Color primaryDark = Color.fromARGB(255, 238, 72, 50);
   static const Color splashColor = Color.fromARGB(255, 253, 107, 156);
+  static const Color greyColor = Colors.grey;
+  static const Color lightPurpleColor = Color.fromARGB(39, 164, 29, 248);
+
+  static const Color purpleColor = Color.fromARGB(255, 164, 29, 248);
 
   // Disabled Color
   static const Color mDisabledColor = Color.fromARGB(175, 162, 162, 162);

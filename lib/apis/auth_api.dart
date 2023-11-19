@@ -30,6 +30,9 @@ abstract class IAuthAPI {
     required String password,
     required String email,
   });
+  FutureEither<User> getUserDataById({
+    required String id,
+  });
   void logOut();
   void sandVerificationEmail({required String email});
 }
@@ -206,6 +209,52 @@ class AuthAPI implements IAuthAPI {
         return left(
           Failure(
             apiResponse.error!,
+          ),
+        );
+      }
+    } catch (e) {
+      return left(
+        Failure(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  FutureEither<User> getUserDataById({required String id}) async {
+    try {
+      print(id);
+      String? token = await _localStorageApi.getToken();
+      if (token != null) {
+        var res = await _client
+            .get(Uri.parse('$hostUrl/api/v1/auth/user/$id'), headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': token,
+        });
+
+        print(res.body);
+        final apiResponse = handleApiResponse(res);
+        if (apiResponse.success) {
+          final userJson = jsonDecode(res.body)['data'];
+          // print(userJson);
+          final newUser = User.fromMap(userJson)
+              .copyWith(token: token); // Use fromMap method
+          // print('------------------------- $newUser');
+          _localStorageApi.setToken(newUser.token);
+
+          return right(newUser);
+        } else {
+          return left(
+            Failure(
+              apiResponse.error!,
+            ),
+          );
+        }
+      } else {
+        return left(
+          const Failure(
+            TOKEN_NOT_FOUND_ERROR,
           ),
         );
       }

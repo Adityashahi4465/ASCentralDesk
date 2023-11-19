@@ -56,7 +56,7 @@ class AppTextStyle {
 
   static const TextStyle textLight = TextStyle(
     fontFamily: _FONT_FAMILY_TEXT,
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w200,
   );
 
   static const TextStyle textMedium = TextStyle(

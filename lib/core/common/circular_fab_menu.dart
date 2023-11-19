@@ -39,6 +39,7 @@ class CircularFabMenu extends StatelessWidget {
               child: FloatingActionButton(
                 heroTag: entry.key,
                 backgroundColor: AppColors.primary,
+                shape: const CircleBorder(),
                 splashColor: AppColors.splashColor,
                 elevation: 0,
                 onPressed: () => entry.value.onPressed(context),

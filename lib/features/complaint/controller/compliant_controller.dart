@@ -10,7 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/snackbar.dart';
 
-final controllerProvider = StateNotifierProvider<ComplaintController, bool>(
+final complaintControllerProvider =
+    StateNotifierProvider<ComplaintController, bool>(
   (ref) => ComplaintController(
     complaintAPI: ref.watch(complaintApiProvider),
     ref: ref,
@@ -96,6 +97,21 @@ class ComplaintController extends StateNotifier<bool> {
         showCustomSnackbar(context, "Complaint Filed Successfully");
         Navigation.navigateToBack(context);
       },
+    );
+  }
+
+  Future<void> updateComplaint({
+    required Complaint complaint,
+    required String uid,
+    required BuildContext context,
+  }) async {
+    final res = await _complaintAPI.updateComplaint(
+      complaint: complaint,
+      uid: uid,
+    );
+    res.fold(
+      (l) => showCustomSnackbar(context, l.message),
+      (r) => _ref.refresh(getAllComplaintsProvider),
     );
   }
 

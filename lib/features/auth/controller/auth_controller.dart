@@ -17,6 +17,11 @@ final authControllerProvider = StateNotifierProvider<AuthController, bool>(
   ),
 );
 
+final getUserDataByIdProvider = FutureProvider.family((ref, String id) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserDataById(id: id);
+});
+
 class AuthController extends StateNotifier<bool> {
   final AuthAPI _authAPI;
   final Ref _ref;
@@ -72,18 +77,6 @@ class AuthController extends StateNotifier<bool> {
     });
   }
 
-  Future<User?> getCurrentUserData() async {
-    final res = await _ref.read(authApiProvider).getCurrentUserData();
-    User? user;
-    res.fold((l) {
-      user = null;
-    }, (r) {
-      user = r;
-    });
-
-    return user;
-  }
-
   void login({
     required String email,
     required String password,
@@ -117,11 +110,9 @@ class AuthController extends StateNotifier<bool> {
     required String email,
     required BuildContext context,
   }) async {
-    state = true;
     final res = await _ref.read(authApiProvider).sandVerificationEmail(
           email: email,
         );
-    state = false;
     res.fold(
       (l) => showCustomSnackbar(
         context,
@@ -132,6 +123,30 @@ class AuthController extends StateNotifier<bool> {
         TEXT_VERIFY_EMAIL_SENT_SUCCESS_MESSAGE,
       ),
     );
+  }
+
+  Future<User?> getCurrentUserData() async {
+    final res = await _ref.read(authApiProvider).getCurrentUserData();
+    User? user;
+    res.fold((l) {
+      user = null;
+    }, (r) {
+      user = r;
+    });
+
+    return user;
+  }
+
+  Future<User?> getUserDataById({required String id}) async {
+    final res = await _ref.read(authApiProvider).getUserDataById(id: id);
+    User? user;
+    res.fold((l) {
+      user = null;
+    }, (r) {
+      user = r;
+    });
+
+    return user;
   }
 
   void logOut() {

@@ -22,6 +22,10 @@ abstract class IComplaintAPI {
   FutureVoid saveComplaintToDatabase({
     required Complaint complaint,
   });
+  FutureEither updateComplaint({
+    required Complaint complaint,
+    required String uid,
+  });
   FutureEither<List<Complaint>> getAllComplaints();
 }
 
@@ -41,7 +45,6 @@ class ComplaintApi implements IComplaintAPI {
       String? token = await _localStorageApi.getToken();
 
       final encodedJson = complaint.toJson();
-      print('Encoded JSON: $encodedJson');
       final response = await _client.post(
         Uri.parse('$hostUrl/api/v1/auth/complaint/add-new-complaint'),
         headers: {
@@ -50,13 +53,10 @@ class ComplaintApi implements IComplaintAPI {
         },
         body: complaint.toJson(),
       );
-
       final apiResponse = handleApiResponse(response);
       if (apiResponse.success) {
-        print(apiResponse.statusCode);
         return right(null);
       } else {
-        print('khhhhhhhhhhhhhhhhhhh ${apiResponse.error}!');
         return left(
           Failure(
             apiResponse.error!,
@@ -64,7 +64,48 @@ class ComplaintApi implements IComplaintAPI {
         );
       }
     } catch (e) {
-      print("Chached " + e.toString());
+      return left(
+        Failure(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  FutureEither updateComplaint({
+    required Complaint complaint,
+    required String uid,
+  }) async {
+    try {
+      String? token = await _localStorageApi.getToken();
+
+      final encodedJson = complaint.toJson();
+      print('Encoded JSON: $encodedJson');
+      final response = await _client.put(
+        Uri.parse(
+            '$hostUrl/api/v1/auth/complaint/update-complaint/${complaint.id}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': token!,
+        },
+        body: encodedJson,
+      );
+
+      final apiResponse = handleApiResponse(response);
+      if (apiResponse.success) {
+        print(apiResponse.statusCode);
+        return right(null);
+      } else {
+        print('Error: ${apiResponse.error}!');
+        return left(
+          Failure(
+            apiResponse.error!,
+          ),
+        );
+      }
+    } catch (e) {
+      print("Caught exception: " + e.toString());
       return left(
         Failure(
           e.toString(),
@@ -92,19 +133,14 @@ class ComplaintApi implements IComplaintAPI {
           List<Complaint> complaints = [];
 
           for (var complaintMap in complaintsJson) {
-            print('\n\nProcessing complaintMap: $complaintMap\n');
             try {
               Complaint complaint =
                   Complaint.fromMap(complaintMap as Map<String, dynamic>);
-              print('Adding complaint to list: $complaint');
               complaints.add(complaint);
             } catch (e) {
               print('Error processing complaintMap: $e');
             }
           }
-
-          print('List of complaints: $complaints');
-
           return right(complaints);
         } else {
           return left(

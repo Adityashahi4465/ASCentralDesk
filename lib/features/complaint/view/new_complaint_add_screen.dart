@@ -58,7 +58,7 @@ class _NewComplaintFormScreenState
   }
 
   void saveComplaintToDatabase() {
-    ref.read(controllerProvider.notifier).saveComplaintToDatabase(
+    ref.read(complaintControllerProvider.notifier).saveComplaintToDatabase(
           title: _titleController.text,
           description: _descriptionController.text,
           imagesData: _imageBytesList.isEmpty ? filePaths : _imageBytesList,
@@ -101,7 +101,7 @@ class _NewComplaintFormScreenState
 
   @override
   Widget build(BuildContext context) {
-    final loading = ref.watch(controllerProvider);
+    final loading = ref.watch(complaintControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -194,7 +194,8 @@ class _NewComplaintFormScreenState
                   validator: (value) {
                     return null;
                   },
-                  maxLines: 2,
+                  maxLines: 4,
+                  maxLength: 1000,
                   keyboardType: TextInputType.text,
                 ),
                 CustomDropdown(
