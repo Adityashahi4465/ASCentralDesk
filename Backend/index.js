@@ -7,6 +7,7 @@ import errorHandler from './middlewares/error.js'
 //Route Files, **add file extension
 import authRouter from './routes/auth.js'
 import complaintRouter from './routes/complaint.js'
+import userRouter from './routes/users.js'
 //configure environment variable
 dotenv.config()
 
@@ -32,6 +33,7 @@ app.use(express.json());
 //Mount Routers------------------
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/auth/complaint', complaintRouter);
+app.use('/api/v1/auth/user', userRouter);
 
 
 //Error handler middleware, must be after Routers Mount,so that errors returned from routes can be handled

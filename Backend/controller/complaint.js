@@ -43,3 +43,29 @@ export const getAllComplaints = asyncHandler(async (req, res, next) => {
         complaints: complaints
     });
 });
+
+
+// @desc Update a Courses
+// @route PUT /api/v1/courses/:id
+// @access Private
+
+export const updateComplaint = asyncHandler(async (req, res, next) => {
+    let complaint = await Complaint.findById(req.params.id);
+    if (!complaint) {
+        return next(new ErrorResponse(`No complaint with id of ${req.params.id}`, 404))
+    }
+
+
+    // //bootcamp can updated by only owner
+    // if (course?.user !== req.user.id && req.user.role !== 'admin') {
+    //     return next(new ErrorResponse(`User ${req.user.id} is not authorized to update complaint ${course._id}`, 401));
+    // }
+    complaint = await Complaint.updateOne({ _id: req.params.id }, req.body, {
+        new: true,
+        runValidators: true
+    })
+    res.status(200).json({
+        success: true,
+        data: complaint
+    })
+});
