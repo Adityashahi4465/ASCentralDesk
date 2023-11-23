@@ -45,7 +45,7 @@ export const getAllComplaints = asyncHandler(async (req, res, next) => {
 });
 
 
-// @desc Update a Courses
+// @desc Get Bookmarks
 // @route GET/api/v1/complaint/get-bookmarked-complaints:id
 // @access Private
 export const getBookmarkedComplaints = asyncHandler(async (req, res, next) => {
@@ -67,6 +67,26 @@ export const getBookmarkedComplaints = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         success: true,
         complaints: bookmarkedComplaints
+    });
+});
+
+// @desc Get A Complaint By It's Id
+// @route GET/api/v1/complaint/get-complaint-by-id:complaintId
+// @access Private
+export const getComplaintById = asyncHandler(async (req, res, next) => {
+    const complaintId = req.params.complaintId;
+
+    const complaint = await Complaint.findById(complaintId);
+
+    if (!complaint) {
+        return next(new ErrorResponse(`Complaint with id ${complaintId} not found`, 404));
+    }
+
+
+    console.log(complaint);
+    res.status(200).json({
+        success: true,
+        complaint: complaint
     });
 });
 
