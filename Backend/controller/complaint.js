@@ -1,7 +1,7 @@
 import Complaint from '../model/complaint.js';
 import asyncHandler from '../middlewares/async.js';
 import ErrorResponse from '../utils/errorResponse.js';
-
+import User from '../model/user.js'
 export const addNewComplaint = asyncHandler(async (req, res, next) => {
     // Assuming you have a Complaint schema with fields like title, description, images, etc.
     const { title, description, images, filingTime, status, createdBy, category } = req.body;
@@ -46,7 +46,34 @@ export const getAllComplaints = asyncHandler(async (req, res, next) => {
 
 
 // @desc Update a Courses
-// @route PUT /api/v1/courses/:id
+// @route GET/api/v1/complaint/get-bookmarked-complaints:id
+// @access Private
+export const getBookmarkedComplaints = asyncHandler(async (req, res, next) => {
+    const userId = req.params.userId; // Get userId from the route parameter
+    // Populate the 'bookmarkedComplaints' field with actual Complaint documents.
+    // This allows us to retrieve the complete Complaint details associated with the user.
+    const user = await User.findById(userId).populate({
+        path: 'bookmarkedComplaints',
+        model: Complaint
+    });
+
+    if (!user) {
+        return next(new ErrorResponse(`User with id ${userId} not found`, 404));
+    }
+
+    const bookmarkedComplaints = user.bookmarkedComplaints.map(complaint => complaint.toObject());
+
+    console.log(bookmarkedComplaints);
+    res.status(200).json({
+        success: true,
+        complaints: bookmarkedComplaints
+    });
+});
+
+
+
+// @desc Update a Compliant
+// @route PUT /api/v1/complaint/:id
 // @access Private
 
 export const updateComplaint = asyncHandler(async (req, res, next) => {
