@@ -17,10 +17,7 @@ final authControllerProvider = StateNotifierProvider<AuthController, bool>(
   ),
 );
 
-final getUserDataByIdProvider = FutureProvider.family((ref, String id) {
-  final authController = ref.watch(authControllerProvider.notifier);
-  return authController.getUserDataById(id: id);
-});
+
 
 class AuthController extends StateNotifier<bool> {
   final AuthAPI _authAPI;
@@ -136,19 +133,6 @@ class AuthController extends StateNotifier<bool> {
 
     return user;
   }
-
-  Future<User?> getUserDataById({required String id}) async {
-    final res = await _ref.read(authApiProvider).getUserDataById(id: id);
-    User? user;
-    res.fold((l) {
-      user = null;
-    }, (r) {
-      user = r;
-    });
-
-    return user;
-  }
-
   void logOut() {
     _ref.read(authApiProvider).logOut();
     _ref.read(userProvider.notifier).update((state) => null);

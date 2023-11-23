@@ -27,6 +27,16 @@ final getAllComplaintsProvider = FutureProvider<List<Complaint>>((ref) async {
   return controller.getAllComplaints();
 });
 
+final getBookmarkedComplaintsProvider =
+    FutureProvider<List<Complaint>>((ref) async {
+  // Assuming you have a function named getAllComplaints in your controller
+  final controller = ComplaintController(
+    complaintAPI: ref.read(complaintApiProvider),
+    ref: ref,
+  );
+  return controller.getBookmarkedComplaints();
+});
+
 class ComplaintController extends StateNotifier<bool> {
   final ComplaintApi _complaintAPI;
   final Ref _ref;
@@ -111,12 +121,30 @@ class ComplaintController extends StateNotifier<bool> {
     );
     res.fold(
       (l) => showCustomSnackbar(context, l.message),
-      (r) => _ref.refresh(getAllComplaintsProvider),
+    (r) => _ref.refresh(getAllComplaintsProvider),
     );
   }
 
   Future<List<Complaint>> getAllComplaints() async {
     final res = await _ref.read(complaintApiProvider).getAllComplaints();
+    List<Complaint> complaints = [];
+
+    res.fold(
+      (failure) {
+        complaints = [];
+      },
+      (complaintList) {
+        complaints = complaintList;
+      },
+    );
+
+    return complaints;
+  }
+
+  Future<List<Complaint>> getBookmarkedComplaints() async {
+    final uid = _ref.read(userProvider)!.uid;
+    final res =
+        await _ref.read(complaintApiProvider).getBookmarkedComplaints(uid: uid);
     List<Complaint> complaints = [];
 
     res.fold(

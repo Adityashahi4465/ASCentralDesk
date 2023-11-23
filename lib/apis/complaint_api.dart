@@ -27,6 +27,7 @@ abstract class IComplaintAPI {
     required String uid,
   });
   FutureEither<List<Complaint>> getAllComplaints();
+  FutureEither<List<Complaint>> getBookmarkedComplaints({required String uid});
 }
 
 class ComplaintApi implements IComplaintAPI {
@@ -141,6 +142,64 @@ class ComplaintApi implements IComplaintAPI {
               print('Error processing complaintMap: $e');
             }
           }
+          return right(complaints);
+        } else {
+          return left(
+            Failure(
+              apiResponse.error!,
+            ),
+          );
+        }
+      } else {
+        return left(
+          const Failure(
+            TOKEN_NOT_FOUND_ERROR,
+          ),
+        );
+      }
+    } catch (e) {
+      return left(
+        Failure(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  FutureEither<List<Complaint>> getBookmarkedComplaints(
+      {required String uid}) async {
+    try {
+      String? token = await _localStorageApi.getToken();
+      if (token != null) {
+        var res = await _client.get(
+            Uri.parse(
+              '$hostUrl/api/v1/auth/complaint/get-bookmarked-complaints/$uid',
+            ),
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+              'token': token,
+            });
+
+        final apiResponse = handleApiResponse(res);
+        print("resssssssssssssssssss :  ${apiResponse.error}");
+        if (apiResponse.success) {
+          final complaintsJson = jsonDecode(res.body)['complaints'];
+          print("resssssssssssssssssss :  $complaintsJson");
+
+          List<Complaint> complaints = [];
+
+          for (var complaintMap in complaintsJson) {
+            try {
+              Complaint complaint = Complaint.fromMap(
+                complaintMap as Map<String, dynamic>,
+              );
+              complaints.add(complaint);
+            } catch (e) {
+              print('Error processing complaintMap: $e');
+            }
+          }
+          print(complaints);
           return right(complaints);
         } else {
           return left(

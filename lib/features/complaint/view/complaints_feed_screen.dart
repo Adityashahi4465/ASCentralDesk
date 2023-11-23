@@ -2,9 +2,7 @@ import 'package:as_central_desk/constants/ui_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../routes/route_utils.dart';
 import '../../../theme/app_colors.dart';
-import '../../../theme/app_text_style.dart';
 
 class ComplaintsFeedScreen extends ConsumerStatefulWidget {
   const ComplaintsFeedScreen({super.key});
@@ -34,7 +32,7 @@ class _ComplaintsFeedScreenState extends ConsumerState<ComplaintsFeedScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding:const EdgeInsets.only(top: 12, left: 8, right: 8),
+        padding: const EdgeInsets.only(top: 12, left: 8, right: 8),
         child: Column(
           children: [
             Center(

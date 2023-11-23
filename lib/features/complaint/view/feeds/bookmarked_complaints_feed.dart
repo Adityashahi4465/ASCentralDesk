@@ -11,8 +11,8 @@ import '../../../../models/user.dart';
 import '../../../user/controller/user_controller.dart';
 import '../../widgets/complaint_card.dart';
 
-class AllComplaintsFeed extends ConsumerWidget {
-  const AllComplaintsFeed({super.key});
+class BookmarkedComplaintsFeed extends ConsumerWidget {
+  const BookmarkedComplaintsFeed({super.key});
 
   void updateVotes(WidgetRef ref, BuildContext context, Complaint complaint) {
     final currentUserUid = ref.read(userProvider)!.uid;
@@ -42,7 +42,7 @@ class AllComplaintsFeed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(getAllComplaintsProvider).when(
+    return ref.watch(getBookmarkedComplaintsProvider).when(
           data: (complaints) {
             return ListView.builder(
               itemCount: complaints.length,

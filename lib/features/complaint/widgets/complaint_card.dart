@@ -11,11 +11,13 @@ class ComplaintCard extends StatelessWidget {
   final User user;
   final Complaint complaint;
   final VoidCallback onUpvote;
+  final VoidCallback onBookmark;
   const ComplaintCard({
     super.key,
     required this.user,
     required this.complaint,
     required this.onUpvote,
+    required this.onBookmark,
   });
 
   Color getStatusColor(String status) {
@@ -89,23 +91,40 @@ class ComplaintCard extends StatelessWidget {
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      IconButton(
-                        onPressed: onUpvote,
-                        icon: Icon(
-                          complaint.upvotes.contains(user.uid)
-                              ? Icons.thumb_up_alt_sharp
-                              : Icons.thumb_up_alt_outlined,
-                          color: complaint.upvotes.contains(user.uid)
-                              ? AppColors.primary
-                              : AppColors.mDisabledColor,
-                        ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: onUpvote,
+                            icon: Icon(
+                              complaint.upvotes.contains(user.uid)
+                                  ? Icons.thumb_up_alt_sharp
+                                  : Icons.thumb_up_alt_outlined,
+                              color: complaint.upvotes.contains(user.uid)
+                                  ? AppColors.primary
+                                  : AppColors.mDisabledColor,
+                            ),
+                          ),
+                          Text(
+                            complaint.upvotes.length.toString(),
+                            style: AppTextStyle.displayBold.copyWith(
+                              color: AppColors.primary,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        complaint.upvotes.length.toString(),
-                        style: AppTextStyle.displayBold.copyWith(
-                          color: AppColors.primary,
-                          fontSize: 14,
+                      IconButton(
+                        onPressed: onBookmark,
+                        icon: Icon(
+                          user.bookmarkedComplaints.contains(complaint.id)
+                              ? Icons.bookmark_added
+                              : Icons.bookmark_add_outlined,
+                          color:
+                              user.bookmarkedComplaints.contains(complaint.id)
+                                  ? AppColors.primary
+                                  : AppColors.mDisabledColor,
                         ),
                       ),
                     ],
