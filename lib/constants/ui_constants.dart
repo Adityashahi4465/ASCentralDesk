@@ -49,4 +49,15 @@ class UiConstants {
     'Diversity and Inclusion',
     'Miscellaneous',
   ];
+  static const List<String> userRoles = [
+    'admin',
+    'student',
+    'moderator',
+  ];
+  static const List<String> complaintStatus = [
+    'pending',
+    'inProgress',
+    'solved',
+    'rejected',
+  ];
 }

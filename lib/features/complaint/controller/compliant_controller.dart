@@ -1,5 +1,6 @@
 import 'package:as_central_desk/apis/cloudinary_api.dart';
 import 'package:as_central_desk/apis/complaint_api.dart';
+import 'package:as_central_desk/constants/ui_constants.dart';
 import 'package:as_central_desk/core/enums/enums.dart';
 import 'package:as_central_desk/features/auth/controller/auth_controller.dart';
 import 'package:as_central_desk/models/complaint.dart';
@@ -96,7 +97,7 @@ class ComplaintController extends StateNotifier<bool> {
       consults: "",
       filingTime: DateTime.now(),
       fund: 0,
-      status: ComplaintStatus.pending.toString(),
+      status: UiConstants.complaintStatus[0],
       upvotes: [],
       createdBy: _ref.read(userProvider)!.uid,
     );
@@ -118,12 +119,10 @@ class ComplaintController extends StateNotifier<bool> {
 
   Future<void> updateComplaint({
     required Complaint complaint,
-    required String uid,
     required BuildContext context,
   }) async {
     final res = await _complaintAPI.updateComplaint(
       complaint: complaint,
-      uid: uid,
     );
     res.fold((l) => showCustomSnackbar(context, l.message), (r) {
       _ref.invalidate(getAllComplaintsProvider);

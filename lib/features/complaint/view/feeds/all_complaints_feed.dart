@@ -21,7 +21,6 @@ class AllComplaintsFeed extends ConsumerWidget {
 
     ref.read(complaintControllerProvider.notifier).updateComplaint(
           complaint: complaint,
-          uid: complaint.createdBy,
           context: context,
         );
   }

@@ -24,7 +24,6 @@ abstract class IComplaintAPI {
   });
   FutureEither updateComplaint({
     required Complaint complaint,
-    required String uid,
   });
   FutureEither<List<Complaint>> getAllComplaints();
   FutureEither<List<Complaint>> getBookmarkedComplaints({required String uid});
@@ -77,7 +76,6 @@ class ComplaintApi implements IComplaintAPI {
   @override
   FutureEither updateComplaint({
     required Complaint complaint,
-    required String uid,
   }) async {
     try {
       String? token = await _localStorageApi.getToken();

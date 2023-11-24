@@ -18,7 +18,7 @@ import '../../../core/common/loader.dart';
 import '../../../models/complaint.dart';
 import '../../../models/user.dart';
 import '../../auth/controller/auth_controller.dart';
-import '../widgets/reject_complaint_dialoge_box.dart';
+import '../widgets/reject_complaint_bottom_sheet.dart';
 
 class ComplaintDetailsScreen extends ConsumerWidget {
   final String complaintId;
@@ -47,7 +47,6 @@ class ComplaintDetailsScreen extends ConsumerWidget {
 
     ref.read(complaintControllerProvider.notifier).updateComplaint(
           complaint: complaint,
-          uid: complaint.createdBy,
           context: context,
         );
   }
@@ -476,7 +475,9 @@ class ComplaintDetailsScreen extends ConsumerWidget {
                                                 showModalBottomSheet(
                                                   context: context,
                                                   builder: (context) =>
-                                                      Container(),
+                                                      RejectComplaintBottomSheet(
+                                                    complaint: complaint,
+                                                  ),
                                                 );
                                               },
                                               child: Container(

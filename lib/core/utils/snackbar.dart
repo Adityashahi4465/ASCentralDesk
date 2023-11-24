@@ -3,7 +3,6 @@ import 'package:as_central_desk/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 void showCustomSnackbar(BuildContext context, String message) {
-  final Size size = MediaQuery.of(context).size;
 
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
@@ -19,7 +18,7 @@ void showCustomSnackbar(BuildContext context, String message) {
                 // border:
                 // Border.all(color: Colors.white.withOpacity(0.5), width: 1),
                 borderRadius: BorderRadius.circular(
-                    18), // Adjust the border radius as needed
+                    18,), // Adjust the border radius as needed
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
