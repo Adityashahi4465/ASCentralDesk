@@ -1,5 +1,6 @@
 import 'package:as_central_desk/apis/user_api.dart';
 import 'package:as_central_desk/features/complaint/controller/compliant_controller.dart';
+import 'package:as_central_desk/models/complaint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,7 +31,7 @@ class UserController extends StateNotifier<bool> {
     final res = await _userAPI.getUserDataById(id: id);
     User? user;
     res.fold((l) {
-      user = null;
+  user = null;
     }, (r) {
       user = r;
     });
@@ -51,4 +52,5 @@ class UserController extends StateNotifier<bool> {
     },
     );
   }
+ 
 }

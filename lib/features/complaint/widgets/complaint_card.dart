@@ -128,7 +128,7 @@ class ComplaintCard extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
               const SizedBox(
@@ -155,16 +155,19 @@ class ComplaintCard extends StatelessWidget {
                         complaint.status.toUpperCase(),
                       ),
                       icon: null,
+                      backgroundColor: null,
                     ),
                     LabelChip(
                       label: complaint.category.toString(),
                       color: AppColors.purpleColor,
                       icon: null,
+                      backgroundColor: null,
                     ),
                     LabelChip(
                       label: complaint.fund.toString(),
                       color: AppColors.green,
                       icon: Icons.money,
+                      backgroundColor: null,
                     ),
                   ],
                 ),

@@ -28,6 +28,7 @@ abstract class IComplaintAPI {
   });
   FutureEither<List<Complaint>> getAllComplaints();
   FutureEither<List<Complaint>> getBookmarkedComplaints({required String uid});
+  FutureEither<Complaint> getComplaintById({required String complaintId});
 }
 
 class ComplaintApi implements IComplaintAPI {
@@ -223,4 +224,55 @@ class ComplaintApi implements IComplaintAPI {
       );
     }
   }
+
+  @override
+  FutureEither<Complaint> getComplaintById(
+      {required String complaintId}) async {
+    try {
+      String? token = await _localStorageApi.getToken();
+      if (token != null) {
+        var res = await _client.get(
+            Uri.parse(
+              '$hostUrl/api/v1/auth/complaint/get-complaint-by-id/$complaintId',
+            ),
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+              'token': token,
+            });
+
+        final apiResponse = handleApiResponse(res);
+        print("resssssssssssssssssss :  ${apiResponse.error}");
+        if (apiResponse.success) {
+          final complaintsJson = jsonDecode(res.body)['complaint'];
+          print("resssssssssssssssssss :  $complaintsJson");
+
+          Complaint complaint = Complaint.fromMap(
+            complaintsJson as Map<String, dynamic>,
+          );
+
+          print(complaint);
+          return right(complaint);
+        } else {
+          return left(
+            Failure(
+              apiResponse.error!,
+            ),
+          );
+        }
+      } else {
+        return left(
+          const Failure(
+            TOKEN_NOT_FOUND_ERROR,
+          ),
+        );
+      }
+    } catch (e) {
+      return left(
+        Failure(
+          e.toString(),
+        ),
+      );
+    }
+  }
+  
 }

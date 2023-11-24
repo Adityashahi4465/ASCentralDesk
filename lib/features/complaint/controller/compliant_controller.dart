@@ -18,6 +18,12 @@ final complaintControllerProvider =
   ),
 );
 
+final getComplaintByIdProvider =
+    FutureProvider.family((ref, String complaintId) {
+  final complaintController = ref.watch(complaintControllerProvider.notifier);
+  return complaintController.getComplaintById(complaintId: complaintId);
+});
+
 final getAllComplaintsProvider = FutureProvider<List<Complaint>>((ref) async {
   // Assuming you have a function named getAllComplaints in your controller
   final controller = ComplaintController(
@@ -119,10 +125,10 @@ class ComplaintController extends StateNotifier<bool> {
       complaint: complaint,
       uid: uid,
     );
-    res.fold(
-      (l) => showCustomSnackbar(context, l.message),
-    (r) => _ref.refresh(getAllComplaintsProvider),
-    );
+    res.fold((l) => showCustomSnackbar(context, l.message), (r) {
+      _ref.invalidate(getAllComplaintsProvider);
+      _ref.invalidate(getComplaintByIdProvider);
+    });
   }
 
   Future<List<Complaint>> getAllComplaints() async {
@@ -157,5 +163,10 @@ class ComplaintController extends StateNotifier<bool> {
     );
 
     return complaints;
+  }
+
+  Future<Complaint?> getComplaintById({required String complaintId}) async {
+    final res = await _complaintAPI.getComplaintById(complaintId: complaintId);
+    return res.fold((l) => null, (r) => r);
   }
 }
