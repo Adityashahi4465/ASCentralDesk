@@ -39,6 +39,18 @@ class AppColors {
       ),
     ],
   );
+  static LinearGradient redGradient = LinearGradient(
+    begin: FractionalOffset.topLeft,
+    end: FractionalOffset.topRight,
+    colors: <Color>[
+      Color(
+        getColorHexFromStr("#ED213A"),
+      ),
+      Color(
+        getColorHexFromStr("#93291E"),
+      ),
+    ],
+  );
   static LinearGradient blueGradient = const LinearGradient(
     begin: FractionalOffset.bottomLeft,
     end: FractionalOffset.topRight,

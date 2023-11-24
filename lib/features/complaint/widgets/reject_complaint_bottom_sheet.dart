@@ -4,7 +4,9 @@ import 'package:as_central_desk/models/complaint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/common/rounded_button.dart';
 import '../../../core/utils/snackbar.dart';
+import '../../../theme/app_colors.dart';
 import '../controller/local_complaint_providers.dart';
 
 // ignore: must_be_immutable
@@ -118,12 +120,17 @@ class RejectComplaintBottomSheet extends ConsumerWidget {
               },
             ),
           const SizedBox(height: 16),
-          ElevatedButton(
+          RoundedButton(
             onPressed: () {
-              handleReject(rejectionReason, ref, context);
+              handleReject(
+                rejectionReason,
+                ref,
+                context,
+              );
               Navigator.pop(context);
             },
-            child: const Text("Submit"),
+            text: "Submit",
+            linearGradient: AppColors.redGradient,
           ),
         ],
       ),
