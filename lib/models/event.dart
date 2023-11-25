@@ -9,13 +9,14 @@ class Event {
   final String subtitle;
   final String description;
   final String campus;
+  final String criteria;
+  final int prize;
   final DateTime postedAt;
   final String venueType;
   final DateTime startDate;
   final DateTime endDate;
   final List<String> tags;
 
-  // Additional fields (customize based on your needs)
   final int capacity;
   final List<String> eventImages;
   final String organizerInfo;
@@ -31,6 +32,8 @@ class Event {
     required this.subtitle,
     required this.description,
     required this.campus,
+    required this.criteria,
+    required this.prize,
     required this.postedAt,
     required this.venueType,
     required this.startDate,
@@ -53,12 +56,14 @@ class Event {
     String? subtitle,
     String? description,
     String? campus,
+    String? criteria,
     DateTime? postedAt,
     String? venueType,
     DateTime? startDate,
     DateTime? endDate,
     List<String>? tags,
     int? capacity,
+    int? prize,
     List<String>? eventImages,
     String? organizerInfo,
     List<String>? attendees,
@@ -74,12 +79,14 @@ class Event {
       subtitle: subtitle ?? this.subtitle,
       description: description ?? this.description,
       campus: campus ?? this.campus,
+      criteria: criteria ?? this.criteria,
       postedAt: postedAt ?? this.postedAt,
       venueType: venueType ?? this.venueType,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       tags: tags ?? this.tags,
       capacity: capacity ?? this.capacity,
+      prize: prize ?? this.prize,
       eventImages: eventImages ?? this.eventImages,
       organizerInfo: organizerInfo ?? this.organizerInfo,
       attendees: attendees ?? this.attendees,
@@ -93,17 +100,19 @@ class Event {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      '_id': id,
       'title': title,
       'subtitle': subtitle,
       'description': description,
       'campus': campus,
+      'criteria': criteria,
       'postedAt': postedAt.millisecondsSinceEpoch,
       'venueType': venueType,
       'startDate': startDate.millisecondsSinceEpoch,
       'endDate': endDate.millisecondsSinceEpoch,
       'tags': tags,
       'capacity': capacity,
+      'prize': prize,
       'eventImages': eventImages,
       'organizerInfo': organizerInfo,
       'attendees': attendees,
@@ -117,17 +126,19 @@ class Event {
 
   factory Event.fromMap(Map<String, dynamic> map) {
     return Event(
-      id: map['id'] as String,
+      id: map['_id'] as String,
       title: map['title'] as String,
       subtitle: map['subtitle'] as String,
       description: map['description'] as String,
       campus: map['campus'] as String,
+      criteria: map['criteria'] as String,
       postedAt: DateTime.parse(map['postedAt'] as String),
       venueType: map['venueType'] as String,
       startDate: DateTime.parse(map['startDate'] as String),
       endDate: DateTime.parse(map['endDate'] as String),
       tags: List<String>.from((map['tags'] as List<String>)),
       capacity: map['capacity'] as int,
+      prize: map['prize'] as int,
       eventImages: List<String>.from((map['eventImages'] as List<String>)),
       organizerInfo: map['organizerInfo'] as String,
       attendees: List<String>.from((map['attendees'] as List<String>)),

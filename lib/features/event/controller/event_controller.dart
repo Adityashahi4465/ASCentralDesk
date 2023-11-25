@@ -53,60 +53,76 @@ class EventController extends StateNotifier<bool> {
 
   void saveEventToDatabase({
     required String title,
+    required String subtitle,
     required String description,
-    required List<dynamic> imagesData,
-    required String category,
+    required String criteria,
+    required String campus,
+    required String venueType,
+    required DateTime startDate,
+    required DateTime endDate,
+    required int capacity,
+    required List<dynamic> eventImages,
+    required String organizerInfo,
+    required String registrationLink,
+    required String contactInfo,
+    required String eventType,
+    required String location,
+    required int prize,
     required BuildContext context,
   }) async {
     state = true;
 
-    // List<String> images = [];
+    // Upload Images
 
-    // // Check the platform and handle image data accordingly
-    // if (kIsWeb) {
-    //   // For web, use image bytes
-    //   final res = await _ref.read(cloudinaryApiProvider).uploadMultipleImages(
-    //         images: imagesData.cast<List<int>>(),
-    //         folder: "event_images",
-    //       );
-    //   res.fold((l) {
-    //     showCustomSnackbar(context, l.message);
-    //     state = false;
-    //   }, (r) => images = r);
-    // } else {
-    //   // For other platforms (Android, iOS), use file paths
-    //   final res = await _ref.read(cloudinaryApiProvider).uploadMultipleImages(
-    //         images: imagesData.cast<String>(),
-    //         folder: "event_images",
-    //       );
-    //   res.fold(
-    //     (l) {
-    //       showCustomSnackbar(context, l.message);
-    //       state = false;
-    //     },
-    //     (r) => images = r,
-    //   );
-    // }
+    List<String> images = [];
+
+    // Check the platform and handle image data accordingly
+    if (kIsWeb) {
+      // For web, use image bytes
+      final res = await _ref.read(cloudinaryApiProvider).uploadMultipleImages(
+            images: eventImages.cast<List<int>>(),
+            folder: "event_images",
+          );
+      res.fold((l) {
+        showCustomSnackbar(context, l.message);
+        state = false;
+      }, (r) => images = r);
+    } else {
+      // For other platforms (Android, iOS), use file paths
+      final res = await _ref.read(cloudinaryApiProvider).uploadMultipleImages(
+            images: eventImages.cast<String>(),
+            folder: "event_images",
+          );
+      res.fold(
+        (l) {
+          showCustomSnackbar(context, l.message);
+          state = false;
+        },
+        (r) => images = r,
+      );
+    }
     final event = Event(
       id: '',
       title: title,
-      subtitle: 'subtitle',
+      subtitle: subtitle,
       description: description,
-      campus: 'campus',
+      campus: campus,
       postedAt: DateTime.now(),
-      venueType: 'venueType',
-      startDate: DateTime.now(),
-      endDate: DateTime.now(),
+      venueType: venueType,
+      startDate: startDate,
+      endDate: endDate,
       tags: [],
-      capacity: 100,
-      eventImages: [],
-      organizerInfo: 'organizerInfo',
+      capacity: capacity,
+      eventImages: images,
+      organizerInfo: organizerInfo,
       attendees: [],
-      registrationLink: 'registrationLink',
-      contactInfo: 'contactInfo',
-      eventType: 'eventType',
-      location: 'location',
+      registrationLink: registrationLink,
+      contactInfo: contactInfo,
+      eventType: eventType,
+      location: location,
       feedback: [],
+      criteria: criteria,
+      prize: prize,
     );
     final res = await _eventAPI.saveEventToDatabase(
       event: event,

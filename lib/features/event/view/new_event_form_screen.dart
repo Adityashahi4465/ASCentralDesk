@@ -1,14 +1,21 @@
+import 'dart:io';
+
 import 'package:as_central_desk/constants/campus_data.dart';
 import 'package:as_central_desk/core/common/rounded_button.dart';
 import 'package:as_central_desk/core/common/text_input_field.dart';
 import 'package:as_central_desk/features/event/controller/event_controller.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../constants/app_constant.dart';
 import '../../../core/common/dropdown_button.dart';
 import '../../../core/common/form_input_heading.dart';
+import '../../../core/common/loader.dart';
 import '../../../core/utils/form_validation.dart';
+import '../../../core/utils/snackbar.dart';
 import '../../../routes/route_utils.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_style.dart';
@@ -35,15 +42,38 @@ class _NewEventFormScreenState extends ConsumerState<NewEventFormScreen> {
   final TextEditingController contactInfoController = TextEditingController();
   final TextEditingController eventTypeController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
+  final TextEditingController prizeController = TextEditingController();
   static const List<String> venueTypesList = ['Online', 'Offline', 'Hybrid'];
   String? campusName;
   String? venueType;
-
+  List<List<int>> _imageBytesList = [];
+  List<String> filePaths = [];
   // picking dateTime Range
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime.now(),
     end: DateTime.now().add(const Duration(days: 5)),
   );
+  void saveEventToDatabase() {
+    ref.read(eventControllerProvider.notifier).saveEventToDatabase(
+          title: titleController.text.trim(),
+          description: desController.text.trim(),
+          criteria: criteriaController.text,
+          campus: campusName ?? "", // Make sure to handle null if needed
+          venueType: venueType ?? "", // Make sure to handle null if needed
+          startDate: dateRange.start,
+          endDate: dateRange.end,
+          capacity: int.tryParse(capacityController.text) ?? 0,
+          eventImages: _imageBytesList.isEmpty ? filePaths : _imageBytesList,
+          organizerInfo: organizerInfoController.text.trim(),
+          registrationLink: registrationLinkController.text.trim(),
+          contactInfo: contactInfoController.text.trim(),
+          eventType: eventTypeController.text.trim(),
+          location: locationController.text.trim(),
+          context: context,
+          prize: int.tryParse(prizeController.text.trim()) ?? 0,
+          subtitle: subtitleController.text.trim(),
+        );
+  }
 
   Future pickDateRange() async {
     DateTimeRange? newDateRange = await showDateRangePicker(
@@ -69,6 +99,38 @@ class _NewEventFormScreenState extends ConsumerState<NewEventFormScreen> {
     setState(() => dateRange = newDateRange);
   }
 
+  Future<void> pickImages() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['png', 'jpg', 'jpeg', 'svg', 'tiff'],
+      );
+
+      if (result != null) {
+        if (result.files.any((file) => file.bytes != null)) {
+          // If any file has bytes, it means we are on the web
+          setState(() {
+            _imageBytesList = result.files.map((file) => file.bytes!).toList();
+          });
+        } else {
+          // If no file has bytes, it means we are on Android or iOS
+          setState(() {
+            filePaths = result.files.map((file) => file.path!).toList();
+          });
+          // Now you can do something with these file paths
+          print('File Paths: $filePaths');
+        }
+      } else {
+        // ignore: use_build_context_synchronously
+        showCustomSnackbar(context, 'Process Canceled by User');
+      }
+    } catch (e) {
+      // Handle the error
+      print('Error picking images: $e');
+    }
+  }
+
   void dispose() {
     titleController.dispose();
     subtitleController.dispose();
@@ -91,6 +153,7 @@ class _NewEventFormScreenState extends ConsumerState<NewEventFormScreen> {
     final start = dateRange.start;
     final end = dateRange.end;
     final validationService = ref.watch(validationServiceProvider);
+    final loading = ref.watch(eventControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -167,19 +230,14 @@ class _NewEventFormScreenState extends ConsumerState<NewEventFormScreen> {
                   controller: capacityController,
                   toolTipMessage: 'Enter the capacity for the event',
                   tipText: 'Capacity',
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: false,
+                    signed: false,
+                  ),
                   hintText: 'Enter Capacity',
                   validator: (value) => value == null || value.isEmpty
                       ? 'Please enter the capacity of event'
                       : null,
-                  maxLines: 1,
-                ),
-                const SizedBox(height: 16.0),
-                TextInputFieldWithToolTip(
-                  controller: eventImagesController,
-                  toolTipMessage: 'Enter the event images URL',
-                  tipText: 'Event Images',
-                  hintText: 'Enter Event Images URL',
-                  validator: (value) => null,
                   maxLines: 1,
                 ),
                 const SizedBox(height: 16.0),
@@ -211,6 +269,21 @@ class _NewEventFormScreenState extends ConsumerState<NewEventFormScreen> {
                   validator: (value) =>
                       validationService.validateContactInfo(value!),
                   maxLines: 2,
+                ),
+                const SizedBox(height: 16.0),
+                TextInputFieldWithToolTip(
+                  controller: prizeController,
+                  toolTipMessage: 'Enter Prize of event',
+                  tipText: 'Prize',
+                  hintText: 'Enter Prize in numbers',
+                  maxLength: 6,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: false,
+                    signed: false,
+                  ),
+                  validator: (value) =>
+                      validationService.validateContactInfo(value!),
+                  maxLines: 1,
                 ),
                 const SizedBox(height: 16.0),
                 TextInputFieldWithToolTip(
@@ -338,7 +411,7 @@ class _NewEventFormScreenState extends ConsumerState<NewEventFormScreen> {
                           const FormInputHeading(
                             tipMessage:
                                 'Please choose the end date for this event',
-                            heading: 'Start Date',
+                            heading: 'End Date',
                           ),
                           const SizedBox(
                             height: 8,
@@ -370,23 +443,63 @@ class _NewEventFormScreenState extends ConsumerState<NewEventFormScreen> {
                   ],
                 ),
                 const SizedBox(height: 16.0),
-                RoundedButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      ref
-                          .read(eventControllerProvider.notifier)
-                          .saveEventToDatabase(
-                            title: titleController.text.trim(),
-                            description: desController.text.trim(),
-                            imagesData: [],
-                            category: eventImagesController.text,
-                            context: context,
-                          );
-                    }
-                  },
-                  text: 'Submit',
-                  linearGradient: AppColors.roundedButtonGradient,
+                const FormInputHeading(
+                  tipMessage: 'Pick the images of event',
+                  heading: 'Pick images of event',
                 ),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  height: 200,
+                  child: GestureDetector(
+                    onTap: pickImages,
+                    child: DottedBorder(
+                      borderType: BorderType.RRect,
+                      radius: const Radius.circular(10),
+                      dashPattern: const [10, 4],
+                      strokeCap: StrokeCap.round,
+                      color: Colors.black,
+                      child: _imageBytesList.isEmpty && filePaths.isEmpty
+                          ? const Center(
+                              child: Icon(
+                                Icons.camera_alt_outlined,
+                                size: 40,
+                              ),
+                            )
+                          : PageView.builder(
+                              itemCount: filePaths.isEmpty
+                                  ? _imageBytesList.length
+                                  : filePaths.length,
+                              itemBuilder: (context, index) {
+                                return filePaths.isEmpty
+                                    ? Image.memory(
+                                        fit: BoxFit.contain,
+                                        Uint8List.fromList(
+                                          _imageBytesList[index],
+                                        ),
+                                      )
+                                    : Image.file(
+                                        File(filePaths[index]),
+                                        scale: 0.1,
+                                        filterQuality: FilterQuality.medium,
+                                        fit: BoxFit.contain,
+                                      );
+                              },
+                            ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                loading
+                    ? const Loader()
+                    : RoundedButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            saveEventToDatabase();
+                          }
+                        },
+                        text: 'Submit',
+                        linearGradient: AppColors.roundedButtonGradient,
+                      ),
               ],
             ),
           ),
