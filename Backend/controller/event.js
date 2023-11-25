@@ -24,13 +24,14 @@ export const addNewEvent = asyncHandler(async (req, res, next) => {
             registrationLink,
             contactInfo,
             eventType,
+            criteria,
+            prize,
             location,
             feedback,
         } = req.body;
 
         // Create a new Event instance
         const newEvent = new Event({
-
             title,
             subtitle,
             description,
@@ -47,6 +48,8 @@ export const addNewEvent = asyncHandler(async (req, res, next) => {
             registrationLink,
             contactInfo,
             eventType,
+            criteria,
+            prize,
             location,
             feedback,
         });
@@ -65,4 +68,13 @@ export const addNewEvent = asyncHandler(async (req, res, next) => {
             error: 'Internal Server Error',
         });
     }
+});
+
+
+export const getAllEvents = asyncHandler(async (req, res, next) => {
+    const events = Event.find();
+    res.status(200).json({
+        success: true,
+        events: events,
+    });
 });

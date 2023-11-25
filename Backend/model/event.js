@@ -39,7 +39,15 @@ const eventSchema = new Schema({
     registrationLink: String,
     contactInfo: String,
     eventType: String,
-    location: String,
+    criteria: String,
+    prize: {
+        type: Number,
+        required: true,
+    },
+    location: {
+        type: String,
+        required: true,
+    },
     feedback: [Number],
 });
 
