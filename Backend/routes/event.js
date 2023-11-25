@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.post('/add-new-event', protect, addNewEvent);
-router.post('/get-all-events', protect, getAllEvents);
+router.get('/get-all-events', protect, getAllEvents);
 
 
 export default router;
