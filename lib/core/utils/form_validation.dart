@@ -77,4 +77,60 @@ class ValidationService {
     }
     return null;
   }
+
+  String? validateSelectVenue(String? value) {
+    if (value == null || value.isEmpty) {
+      return SELECT_VENUE_EMPTY;
+    }
+    return null;
+  }
+
+  String? validateCapacity(int value) {
+    if (value <= 0) {
+      return 'Capacity must be greater than 0';
+    }
+    return null;
+  }
+
+  String? validateOrganizerInfo(String value) {
+    if (value.isEmpty) {
+      return 'Please provide organizer information';
+    }
+    return null;
+  }
+
+  String? validateAttendees(List<String> value) {
+    if (value.isEmpty) {
+      return 'Please specify attendees';
+    }
+    return null;
+  }
+
+  String? validateRegistrationLink(String value) {
+    if (value.isEmpty) {
+      return 'Please provide a registration link';
+    }
+    return null;
+  }
+
+  String? validateContactInfo(String value) {
+    if (value.isEmpty) {
+      return 'Please provide contact information';
+    }
+    return null;
+  }
+
+  String? validateEventType(String value) {
+    if (value.isEmpty) {
+      return 'Please specify the event type';
+    }
+    return null;
+  }
+
+  String? validateLocation(String value) {
+    if (value.isEmpty) {
+      return 'Please specify the location';
+    }
+    return null;
+  }
 }

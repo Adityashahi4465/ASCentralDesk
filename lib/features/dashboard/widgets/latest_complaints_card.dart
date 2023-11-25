@@ -1,19 +1,40 @@
+import 'package:as_central_desk/core/common/label_chip.dart';
+import 'package:as_central_desk/core/common/like_button.dart';
+import 'package:as_central_desk/features/user/controller/user_controller.dart';
+import 'package:as_central_desk/models/complaint.dart';
+import 'package:as_central_desk/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-import '../../../core/utils/color_utility.dart';
-
+import '../../../core/common/error_text.dart';
+import '../../../core/common/loader.dart';
 import '../../../theme/theme.dart';
 
-class LatestComplaintsCard extends StatelessWidget {
+class LatestComplaintsCard extends ConsumerWidget {
+  final Complaint complaint;
+  final User user;
   const LatestComplaintsCard({
     super.key,
-    required this.chipLabels,
+    required this.complaint,
+    required this.user,
   });
 
-  final List<String> chipLabels;
+  Color getStatusColor(String status) {
+    switch (status.toUpperCase()) {
+      case 'REJECTED':
+        return Colors.red;
+      case 'SOLVED':
+        return Colors.green;
+      case 'IN PROGRESS':
+        return Colors.blue;
+      default:
+        return Colors.deepOrange;
+    }
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.all(18),
       width: double.infinity,
@@ -23,7 +44,7 @@ class LatestComplaintsCard extends StatelessWidget {
         // boxShadow: AppColors.carouselSliderShadow,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
@@ -33,23 +54,16 @@ class LatestComplaintsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'A/C Not Available',
+                    complaint.title,
                     style: AppTextStyle.textSemiBold.copyWith(
                       fontSize: 16,
                     ),
                   ),
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.thumb_up,
-                        color: AppColors.red,
-                        size: 24,
-                      ),
-                      Text(
-                        '  5 votes',
-                        style: AppTextStyle.textSemiBold,
-                      ),
-                    ],
+                  LikeButton(
+                    color: complaint.upvotes.contains(user.uid)
+                        ? AppColors.primary
+                        : AppColors.mDisabledColor,
+                    likes: complaint.upvotes.length.toString(),
                   )
                 ],
               ),
@@ -57,7 +71,11 @@ class LatestComplaintsCard extends StatelessWidget {
                 height: 6,
               ),
               Text(
-                'Nov 20, 2020 - Dec 4, 2020',
+                DateFormat(
+                  'd MMM yyyy hh:mm a',
+                ).format(
+                  complaint.filingTime,
+                ),
                 style: AppTextStyle.textMedium.copyWith(
                   color: AppColors.subTitleColor,
                   fontSize: 12,
@@ -65,21 +83,49 @@ class LatestComplaintsCard extends StatelessWidget {
               ),
             ],
           ),
-          Wrap(
-            spacing: 6,
-            children: chipLabels.map((label) {
-              Color randomColor = getRandomColor();
-              return Chip(
-                backgroundColor: randomColor,
-                label: Text(
-                  label,
-                  style: AppTextStyle.textRegular.copyWith(
-                    color: AppColors.white,
-                  ),
+          const SizedBox(
+            height: 18,
+          ),
+          ref.watch(getUserDataByIdProvider(complaint.createdBy)).when(
+                data: (data) {
+                  return Wrap(
+                    spacing: 10,
+                    runSpacing: 8,
+                    children: [
+                      LabelChip(
+                        label: data!.campus,
+                        color: AppColors.primary,
+                        icon: Icons.assured_workload_outlined,
+                        backgroundColor: null,
+                      ),
+                      LabelChip(
+                        label: complaint.status.toString(),
+                        color: getStatusColor(
+                          complaint.status.toUpperCase(),
+                        ),
+                        icon: Icons.approval,
+                        backgroundColor: null,
+                      ),
+                      LabelChip(
+                        label: complaint.category.toString(),
+                        color: AppColors.purpleColor,
+                        icon: Icons.category_sharp,
+                        backgroundColor: null,
+                      ),
+                      LabelChip(
+                        label: complaint.fund.toString(),
+                        color: AppColors.green,
+                        icon: Icons.money,
+                        backgroundColor: null,
+                      ),
+                    ],
+                  );
+                },
+                error: (error, stackTrace) => ErrorText(
+                  error: error.toString(),
                 ),
-              );
-            }).toList(),
-          )
+                loading: () => const Loader(),
+              ),
         ],
       ),
     );

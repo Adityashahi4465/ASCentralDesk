@@ -28,6 +28,7 @@ const ROLL_NUMBER_AUTH_VALIDATION_EMPTY = "Your roll no. can't be left empty!";
 const ROLL_NUMBER_AUTH_VALIDATION_INVALID = 'Please enter a valid roll no.!';
 
 const SELECT_CAMPUS_HINT = "Select campus";
+const SELECT_CAMPUS_TIP_MESSAGE = "Please select organizing campus for this event";
 const SELECT_CAMPUS_ERROR = 'Select campus first';
 const SELECT_CAMPUS_EMPTY = "Please select your campus";
 
@@ -53,6 +54,11 @@ const SELECT_CATEGORY_EMPTY = "Please select a category";
 const UNKNOWN_ERROR = "Unknown error occurred";
 const TOKEN_NOT_FOUND_ERROR =
     "Access denied. Please log in first.(TOKEN_NOT_FOUND)";
+
+const SELECT_VENUE_EMPTY = "Please select the venue";
+const SELECT_VENUE_TYPE_HINT = "Select venue type";
+const SELECT_VENUE_TYPE_HEADING = "Select venue type";
+const SELECT_VENUE_TYPE_TIP_MESSAGE = "Please choose the venue for this event";
 
 const COLOR_WELCOME = "#FFD201";
 const COLOR_LOGIN = "#2C3949";
@@ -83,5 +89,3 @@ const IMAGE_PATH_ADD_SPORTS = 'assets/icons/add_sports.png';
 const BUTTON_LOGIN = "Login";
 const BUTTON_SIGNUP = "Signup";
 const BUTTON_SEND_EMAIL = "Send Email";
-
-

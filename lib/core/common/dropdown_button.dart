@@ -28,7 +28,6 @@ class CustomDropdown<T> extends StatelessWidget {
       iconSize: 40,
       iconEnabledColor: Colors.grey,
       iconDisabledColor: Colors.grey,
-      focusColor: AppColors.primary,
       validator: validator,
       menuMaxHeight: 400,
       decoration: const InputDecoration(

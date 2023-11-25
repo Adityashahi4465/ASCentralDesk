@@ -6,10 +6,16 @@ import '../../../theme/app_text_style.dart';
 class OverallDetailsCard extends StatelessWidget {
   final Color? cardColor;
   final LinearGradient? cardGradient;
+  final String title;
+  final String data;
+  final IconData icon;
   const OverallDetailsCard({
     super.key,
     this.cardColor,
     this.cardGradient,
+    required this.title,
+    required this.data,
+    required this.icon,
   });
 
   @override
@@ -25,25 +31,30 @@ class OverallDetailsCard extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'Total Complaints',
-                  style: AppTextStyle.textRegular.copyWith(
-                    color: AppColors.lightWhite,
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyle.textRegular.copyWith(
+                      color: AppColors.lightWhite,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  '100',
-                  style: AppTextStyle.displayHeavy
-                      .copyWith(fontSize: 26, color: AppColors.white),
-                ),
-              ],
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    data,
+                    style: AppTextStyle.displayHeavy
+                        .copyWith(fontSize: 26, color: AppColors.white),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -60,8 +71,8 @@ class OverallDetailsCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(
-                            Icons.stacked_line_chart_sharp,
+                          Icon(
+                            icon,
                             color: AppColors.green,
                           ),
                           Text(

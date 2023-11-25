@@ -58,7 +58,8 @@ class _MyAppState extends ConsumerState<MyApp> {
     print('build');
     final user = ref.watch(userProvider);
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'ASCentralDesk - Campus Management System',
       theme: ThemeData.light(),
       routerDelegate: RoutemasterDelegate(
         routesBuilder: (context) {
