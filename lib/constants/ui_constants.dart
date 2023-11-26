@@ -14,7 +14,9 @@ class UiConstants {
   static List<Widget> homeTabWidgets = [
     DashboardScreen(),
     const ComplaintsFeedScreen(),
-    const EventsFeedScreen(),
+    const EventsFeedScreen(
+      backNavigationAllowed: false,
+    ),
     const NoticeFeedScreen(),
     const UserProfileScreen(),
   ];
@@ -23,10 +25,11 @@ class UiConstants {
     const BookmarkedComplaintsFeed(),
   ];
 
-  static const List<IconData> studentsFABIconsList = [
-    Icons.add_chart_outlined,
+  static const List studentsFABIconsList = [
+    IMAGE_PATH_ADD_COMPLAINT,
     Icons.forward_to_inbox_outlined,
-    Icons.toys_outlined,
+    IMAGE_PATH_ADD_SPORTS,
+    Icons.add,
   ];
 
   static List adminFABIconsList = [

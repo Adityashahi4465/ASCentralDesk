@@ -26,29 +26,33 @@ class Event {
   final String eventType;
   final String location;
   final List<double> feedback;
-  Event({
-    required this.id,
-    required this.title,
-    required this.subtitle,
-    required this.description,
-    required this.campus,
-    required this.criteria,
-    required this.prize,
-    required this.postedAt,
-    required this.venueType,
-    required this.startDate,
-    required this.endDate,
-    required this.tags,
-    required this.capacity,
-    required this.eventImages,
-    required this.organizerInfo,
-    required this.attendees,
-    required this.registrationLink,
-    required this.contactInfo,
-    required this.eventType,
-    required this.location,
-    required this.feedback,
-  });
+  final List<String> admins;
+  final String createdBy;
+
+  Event(
+      {required this.id,
+      required this.title,
+      required this.subtitle,
+      required this.description,
+      required this.campus,
+      required this.criteria,
+      required this.prize,
+      required this.postedAt,
+      required this.venueType,
+      required this.startDate,
+      required this.endDate,
+      required this.tags,
+      required this.capacity,
+      required this.eventImages,
+      required this.organizerInfo,
+      required this.attendees,
+      required this.registrationLink,
+      required this.contactInfo,
+      required this.eventType,
+      required this.location,
+      required this.feedback,
+      required this.admins,
+      required this.createdBy});
 
   Event copyWith({
     String? id,
@@ -72,6 +76,8 @@ class Event {
     String? eventType,
     String? location,
     List<double>? feedback,
+    List<String>? admins,
+    String? createdBy,
   }) {
     return Event(
       id: id ?? this.id,
@@ -95,6 +101,8 @@ class Event {
       eventType: eventType ?? this.eventType,
       location: location ?? this.location,
       feedback: feedback ?? this.feedback,
+      admins: admins ?? this.admins,
+      createdBy: createdBy ?? this.createdBy,
     );
   }
 
@@ -121,6 +129,7 @@ class Event {
       'eventType': eventType,
       'location': location,
       'feedback': feedback,
+      'createdBy': createdBy,
     };
   }
 
@@ -136,17 +145,19 @@ class Event {
       venueType: map['venueType'] as String,
       startDate: DateTime.parse(map['startDate'] as String),
       endDate: DateTime.parse(map['endDate'] as String),
-      tags: List<String>.from((map['tags'] as List<String>)),
+      tags: List<String>.from((map['tags'])),
       capacity: map['capacity'] as int,
       prize: map['prize'] as int,
-      eventImages: List<String>.from((map['eventImages'] as List<String>)),
+      eventImages: List<String>.from((map['eventImages'])),
       organizerInfo: map['organizerInfo'] as String,
-      attendees: List<String>.from((map['attendees'] as List<String>)),
+      attendees: List<String>.from((map['attendees'])),
       registrationLink: map['registrationLink'] as String,
       contactInfo: map['contactInfo'] as String,
       eventType: map['eventType'] as String,
       location: map['location'] as String,
-      feedback: List<double>.from((map['feedback'] as List<int>)),
+      createdBy: map['createdBy'] as String,
+      feedback: List<double>.from((map['feedback'])),
+      admins: List<String>.from((map['admins'])),
     );
   }
 

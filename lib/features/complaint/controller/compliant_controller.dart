@@ -111,8 +111,9 @@ class ComplaintController extends StateNotifier<bool> {
         showCustomSnackbar(context, l.message);
       },
       (user) {
-        showCustomSnackbar(context, "Complaint Filed Successfully");
+        _ref.invalidate(getAllComplaintsProvider);
         Navigation.navigateToBack(context);
+        showCustomSnackbar(context, "Complaint Filed Successfully");
       },
     );
   }

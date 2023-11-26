@@ -53,10 +53,14 @@ class LatestComplaintsCard extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    complaint.title,
-                    style: AppTextStyle.textSemiBold.copyWith(
-                      fontSize: 16,
+                  Flexible(
+                    child: Text(
+                      complaint.title,
+                      style: AppTextStyle.textSemiBold.copyWith(
+                        fontSize: 16,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   LikeButton(
@@ -93,12 +97,6 @@ class LatestComplaintsCard extends ConsumerWidget {
                     runSpacing: 8,
                     children: [
                       LabelChip(
-                        label: data!.campus,
-                        color: AppColors.primary,
-                        icon: Icons.assured_workload_outlined,
-                        backgroundColor: null,
-                      ),
-                      LabelChip(
                         label: complaint.status.toString(),
                         color: getStatusColor(
                           complaint.status.toUpperCase(),
@@ -107,15 +105,21 @@ class LatestComplaintsCard extends ConsumerWidget {
                         backgroundColor: null,
                       ),
                       LabelChip(
-                        label: complaint.category.toString(),
-                        color: AppColors.purpleColor,
-                        icon: Icons.category_sharp,
-                        backgroundColor: null,
-                      ),
-                      LabelChip(
                         label: complaint.fund.toString(),
                         color: AppColors.green,
                         icon: Icons.money,
+                        backgroundColor: null,
+                      ),
+                      LabelChip(
+                        label: data!.campus,
+                        color: AppColors.primary,
+                        icon: Icons.assured_workload_outlined,
+                        backgroundColor: null,
+                      ),
+                      LabelChip(
+                        label: complaint.category.toString(),
+                        color: AppColors.purpleColor,
+                        icon: Icons.category_sharp,
                         backgroundColor: null,
                       ),
                     ],

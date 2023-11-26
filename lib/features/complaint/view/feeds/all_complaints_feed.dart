@@ -47,6 +47,12 @@ class AllComplaintsFeed extends ConsumerWidget {
               itemCount: complaints.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
+                complaints.sort(
+                  (a, b) => b.filingTime.compareTo(
+                    a.filingTime,
+                  ),
+                ); // Sort by postedAt in descending order
+
                 final complaint = complaints[index];
                 // Build your UI based on each complaint
                 return ref

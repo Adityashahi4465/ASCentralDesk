@@ -2,6 +2,8 @@ import 'package:as_central_desk/features/auth/views/auth_screen.dart';
 import 'package:as_central_desk/features/auth/views/verify_email_screen.dart';
 import 'package:as_central_desk/features/complaint/view/complaint_details_screen.dart';
 import 'package:as_central_desk/features/equipments/view/new_equipment_form_screen.dart';
+import 'package:as_central_desk/features/event/view/event_details_screen.dart';
+import 'package:as_central_desk/features/event/view/event_registerations.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -38,5 +40,21 @@ final loggedInRoute = RouteMap(routes: {
     final complaintId = routeData.pathParameters['complaintId']!;
     return MaterialPage(
         child: ComplaintDetailsScreen(complaintId: complaintId));
+  },
+  '/event/:eventId': (routeData) {
+    final eventId = routeData.pathParameters['eventId']!;
+    return MaterialPage(
+      child: EventDetailsScreen(
+        eventId: eventId,
+      ),
+    );
+  },
+  '/event-registrations/:eventId': (routeData) {
+    final eventId = routeData.pathParameters['eventId']!;
+    return MaterialPage(
+      child: EventRegistrationsScreen(
+        eventId: eventId,
+      ),
+    );
   },
 });

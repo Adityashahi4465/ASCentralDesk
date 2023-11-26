@@ -2,6 +2,7 @@ import 'package:as_central_desk/routes/route_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../constants/app_constant.dart';
 import '../../../core/common/label_chip.dart';
 import '../../../models/complaint.dart';
 import '../../../models/user.dart';
@@ -58,9 +59,11 @@ class ComplaintCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          user!.photoUrl,
-                        ),
+                        backgroundImage: (user.photoUrl != "")
+                            ? NetworkImage(user.photoUrl)
+                            : const AssetImage(
+                                IMAGE_PATH_DEFAULT_USER_PROFILE_IMAGE,
+                              ) as ImageProvider<Object>?,
                       ),
                       const SizedBox(
                         width: 8,

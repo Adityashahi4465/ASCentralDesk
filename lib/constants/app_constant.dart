@@ -28,7 +28,8 @@ const ROLL_NUMBER_AUTH_VALIDATION_EMPTY = "Your roll no. can't be left empty!";
 const ROLL_NUMBER_AUTH_VALIDATION_INVALID = 'Please enter a valid roll no.!';
 
 const SELECT_CAMPUS_HINT = "Select campus";
-const SELECT_CAMPUS_TIP_MESSAGE = "Please select organizing campus for this event";
+const SELECT_CAMPUS_TIP_MESSAGE =
+    "Please select organizing campus for this event";
 const SELECT_CAMPUS_ERROR = 'Select campus first';
 const SELECT_CAMPUS_EMPTY = "Please select your campus";
 
@@ -85,6 +86,10 @@ const IMAGE_PATH_ADD_COMPLAINT = 'assets/icons/add_complaint.png';
 const IMAGE_PATH_EVENT = 'assets/icons/event.png';
 const IMAGE_PATH_ADD_EVENT = 'assets/icons/add_event.png';
 const IMAGE_PATH_ADD_SPORTS = 'assets/icons/add_sports.png';
+const IMAGE_PATH_DEFAULT_EVENT_THUMBNAIL =
+    'assets/images/default_event_thumbnail.jpg';
+const IMAGE_PATH_DEFAULT_USER_PROFILE_IMAGE =
+    'assets/images/default_user_profile_image.png';
 
 const BUTTON_LOGIN = "Login";
 const BUTTON_SIGNUP = "Signup";

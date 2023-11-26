@@ -19,8 +19,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
-  int _page = 0;
-  final PageController _pageController = PageController(initialPage: 0);
+  int _page = 2;
+  final PageController _pageController = PageController(initialPage: 2);
   late AnimationController controller;
 
   void onPageChange(int index) {
@@ -171,56 +171,113 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           ),
         ),
         floatingActionButton: CircularFabMenu(
-          fabItems: [
-            ...UiConstants.adminFABIconsList.map((iconPath) => FabMenuItem(
-                  icon: iconPath,
-                  onPressed: (context) {
-                    // Handle onPressed for each button
-                    int index = UiConstants.adminFABIconsList.indexOf(iconPath);
-                    switch (index) {
-                      case 0:
-                        if (controller.status == AnimationStatus.completed) {
-                          controller.reverse();
-                        } else {
-                          controller.forward();
+          fabItems: (ref.watch(userProvider)!.role == UiConstants.userRoles[0])
+              ? [
+                  ...UiConstants.adminFABIconsList.map(
+                    (iconPath) => FabMenuItem(
+                      icon: iconPath,
+                      onPressed: (context) {
+                        // Handle onPressed for each button
+                        int index =
+                            UiConstants.adminFABIconsList.indexOf(iconPath);
+                        switch (index) {
+                          case 0:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            Navigation.navigateToNewComplaintScreen(context);
+                            break;
+                          case 1:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            Navigation.navigateToNewEventScreen(context);
+                            break;
+                          case 2:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            Navigation.navigateToNewNoticeScreen(context);
+                            break;
+                          case 3:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            Navigation.navigateToNewEquipmentScreen(context);
+                            break;
+                          case 4:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            break;
                         }
-                        Navigation.navigateToNewComplaintScreen(context);
-                        break;
-                      case 1:
-                        if (controller.status == AnimationStatus.completed) {
-                          controller.reverse();
-                        } else {
-                          controller.forward();
+                      },
+                    ),
+                  ),
+                ]
+              : [
+                  ...UiConstants.studentsFABIconsList.map(
+                    (iconPath) => FabMenuItem(
+                      icon: iconPath,
+                      onPressed: (context) {
+                        int index =
+                            UiConstants.studentsFABIconsList.indexOf(iconPath);
+                        switch (index) {
+                          case 0:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            Navigation.navigateToNewComplaintScreen(context);
+                            break;
+                          case 1:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            Navigation.navigateToNewEventScreen(context);
+                            break;
+                          case 2:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            Navigation.navigateToNewNoticeScreen(context);
+                            break;
+                          case 3:
+                            if (controller.status ==
+                                AnimationStatus.completed) {
+                              controller.reverse();
+                            } else {
+                              controller.forward();
+                            }
+                            break;
                         }
-                        Navigation.navigateToNewEventScreen(context);
-                        break;
-                      case 2:
-                        if (controller.status == AnimationStatus.completed) {
-                          controller.reverse();
-                        } else {
-                          controller.forward();
-                        }
-                        Navigation.navigateToNewNoticeScreen(context);
-                        break;
-                      case 3:
-                        if (controller.status == AnimationStatus.completed) {
-                          controller.reverse();
-                        } else {
-                          controller.forward();
-                        }
-                        Navigation.navigateToNewEquipmentScreen(context);
-                        break;
-                      case 4:
-                        if (controller.status == AnimationStatus.completed) {
-                          controller.reverse();
-                        } else {
-                          controller.forward();
-                        }
-                        break;
-                    }
-                  },
-                )),
-          ],
+                      },
+                    ),
+                  ),
+                ],
           buttonSize: 60.0,
           controller: controller,
         ),

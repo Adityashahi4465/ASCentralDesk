@@ -18,20 +18,19 @@ final eventControllerProvider = StateNotifierProvider<EventController, bool>(
   ),
 );
 
-// final getEventByIdProvider =
-//     FutureProvider.family((ref, String eventId) {
-//   final eventController = ref.watch(eventControllerProvider.notifier);
-//   return eventController.getEventById(eventId: eventId);
-// });
+final getEventByIdProvider = FutureProvider.family((ref, String eventId) {
+  final eventController = ref.watch(eventControllerProvider.notifier);
+  return eventController.getEventById(eventId: eventId);
+});
 
-// final getAllEventsProvider = FutureProvider<List<event>>((ref) async {
-//   // Assuming you have a function named getAllEvents in your controller
-//   final controller = eventController(
-//     eventAPI: ref.read(eventApiProvider),
-//     ref: ref,
-//   );
-//   return controller.getAllEvents();
-// });
+final getAllEventsProvider = FutureProvider<List<Event>>((ref) async {
+  // Assuming you have a function named getAllEvents in your controller
+  final controller = EventController(
+    eventAPI: ref.read(eventApiProvider),
+    ref: ref,
+  );
+  return controller.getAllEvents();
+});
 
 // final getBookmarkedEventsProvider =
 //     FutureProvider<List<event>>((ref) async {
@@ -101,6 +100,7 @@ class EventController extends StateNotifier<bool> {
         (r) => images = r,
       );
     }
+    print(images);
     final event = Event(
       id: '',
       title: title,
@@ -123,6 +123,8 @@ class EventController extends StateNotifier<bool> {
       feedback: [],
       criteria: criteria,
       prize: prize,
+      createdBy: _ref.read(userProvider)!.uid,
+      admins: [_ref.read(userProvider)!.uid],
     );
     final res = await _eventAPI.saveEventToDatabase(
       event: event,
@@ -140,34 +142,37 @@ class EventController extends StateNotifier<bool> {
     );
   }
 
-  // Future<void> updateevent({
-  //   required Event event,
-  //   required BuildContext context,
-  // }) async {
-  //   final res = await _eventAPI.updateevent(
-  //     event: event,
-  //   );
-  //   res.fold((l) => showCustomSnackbar(context, l.message), (r) {
-  //     _ref.invalidate(getAlleventsProvider);
-  //     _ref.invalidate(geteventByIdProvider);
-  //   });
-  // }
+  Future<void> updateEvent({
+    required Event event,
+    required BuildContext context,
+  }) async {
+    final res = await _eventAPI.updateEvent(
+      event: event,
+    );
+    res.fold((l) => showCustomSnackbar(context, l.message), (r) {
+      _ref.invalidate(getAllEventsProvider);
+      _ref.invalidate(getEventByIdProvider);
+      showCustomSnackbar(context, 'Registered!');
+    });
+  }
 
-  // Future<List<event>> getAllevents() async {
-  //   final res = await _ref.read(eventApiProvider).getAllevents();
-  //   List<event> events = [];
+  Future<List<Event>> getAllEvents() async {
+    final res = await _ref.read(eventApiProvider).getAllEvents();
+    List<Event> events = [];
 
-  //   res.fold(
-  //     (failure) {
-  //       events = [];
-  //     },
-  //     (eventList) {
-  //       events = eventList;
-  //     },
-  //   );
+    res.fold(
+      (failure) {
+        events = [];
+        print(failure.message);
+      },
+      (eventList) {
+        print(eventList);
+        events = eventList;
+      },
+    );
 
-  //   return events;
-  // }
+    return events;
+  }
 
   // Future<List<event>> getBookmarkedevents() async {
   //   final uid = _ref.read(userProvider)!.uid;
@@ -186,8 +191,8 @@ class EventController extends StateNotifier<bool> {
   //   return events;
   // }
 
-  // Future<event?> geteventById({required String eventId}) async {
-  //   final res = await _eventAPI.geteventById(eventId: eventId);
-  //   return res.fold((l) => null, (r) => r);
-  // }
+  Future<Event?> getEventById({required String eventId}) async {
+    final res = await _eventAPI.getEventById(eventId: eventId);
+    return res.fold((l) => null, (r) => r);
+  }
 }

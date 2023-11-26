@@ -14,3 +14,5 @@ const homeIcon =
     '<a href="https://www.flaticon.com/free-icons/user-interface" title="user interface icons">User interface icons created by Indra Maulana Yusuf - Flaticon</a>';
 const addSportsIcon =
     '<a href="https://www.flaticon.com/free-icons/user-interface" title="user interface icons">User interface icons created by Lagot Design - Flaticon</a>';
+const defaultProfileImage =
+    '<a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Becris - Flaticon</a>';

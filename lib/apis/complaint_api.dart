@@ -239,16 +239,12 @@ class ComplaintApi implements IComplaintAPI {
             });
 
         final apiResponse = handleApiResponse(res);
-        print("resssssssssssssssssss :  ${apiResponse.error}");
         if (apiResponse.success) {
           final complaintsJson = jsonDecode(res.body)['complaint'];
-          print("resssssssssssssssssss :  $complaintsJson");
 
           Complaint complaint = Complaint.fromMap(
             complaintsJson as Map<String, dynamic>,
           );
-
-          print(complaint);
           return right(complaint);
         } else {
           return left(
@@ -272,5 +268,4 @@ class ComplaintApi implements IComplaintAPI {
       );
     }
   }
-  
 }

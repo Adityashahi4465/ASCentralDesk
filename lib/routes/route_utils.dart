@@ -32,4 +32,18 @@ class Navigation {
       '/complaint/$complaintId',
     );
   }
+
+  static void navigateToEventDetailsScreen(
+      BuildContext context, String eventId) {
+    Routemaster.of(context).push(
+      '/event/$eventId',
+    );
+  }
+
+  static void navigateToEventRegistrationsScreen(
+      BuildContext context, String eventId) {
+    Routemaster.of(context).push(
+      '/event-registrations/$eventId',
+    );
+  }
 }

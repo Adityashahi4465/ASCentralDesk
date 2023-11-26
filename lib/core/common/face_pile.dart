@@ -1,6 +1,8 @@
 import 'package:as_central_desk/theme/theme.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/app_constant.dart';
+
 class FacePile extends StatelessWidget {
   final List<String> profileImages;
 
@@ -11,16 +13,20 @@ class FacePile extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: List.generate(
-            profileImages.length,
+            3,
             (index) {
               return Align(
                 widthFactor: 0.7,
                 child: CircleAvatar(
-                  radius: 18,
-                  backgroundColor: AppColors.lightShadowColor,
+                  radius: 14,
+                  backgroundColor: AppColors.primary,
                   child: CircleAvatar(
-                    radius: 16.0,
-                    backgroundImage: NetworkImage(profileImages[index]),
+                    radius: 12.0,
+                    backgroundImage: (index < profileImages.length)
+                        ? NetworkImage(profileImages[index])
+                        : const AssetImage(
+                            IMAGE_PATH_DEFAULT_USER_PROFILE_IMAGE,
+                          ) as ImageProvider<Object>?,
                   ),
                 ),
               );
@@ -30,10 +36,10 @@ class FacePile extends StatelessWidget {
             Align(
               widthFactor: 0.8,
               child: CircleAvatar(
-                radius: 18,
+                radius: 16,
                 backgroundColor: AppColors.lightWhite,
                 child: Text(
-                  '50+',
+                  profileImages.length.toString(),
                   style: AppTextStyle.textMedium.copyWith(
                     color: AppColors.black,
                     fontSize: 12,

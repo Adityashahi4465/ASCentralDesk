@@ -92,6 +92,7 @@ class AppColors {
   static const Color green = Color.fromARGB(255, 78, 193, 82);
   static const Color red = Colors.red;
   static const Color pinkAccent = Colors.pinkAccent;
+  static const Color yellow = Colors.yellow;
 
   /// **************   Specific Colors   *******************
 
@@ -101,6 +102,7 @@ class AppColors {
   static const Color splashColor = Color.fromARGB(255, 253, 107, 156);
   static const Color greyColor = Colors.grey;
   static const Color lightPurpleColor = Color.fromARGB(39, 164, 29, 248);
+  static const Color shadowColor = Color.fromARGB(246, 195, 195, 195);
 
   static const Color purpleColor = Color.fromARGB(255, 164, 29, 248);
 
@@ -110,5 +112,5 @@ class AppColors {
   static const Color scaffoldBackgroundColor =
       Color.fromARGB(255, 245, 250, 255);
   static const Color subTitleColor = Color.fromARGB(255, 170, 168, 168);
-  static const Color lightShadowColor = Color.fromARGB(255, 215, 215, 215);
+  static const Color lightShadowColor = Color.fromARGB(224, 226, 226, 226);
 }
