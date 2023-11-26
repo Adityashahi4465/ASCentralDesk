@@ -3,7 +3,7 @@ import ErrorResponse from '../utils/errorResponse.js';
 import User from '../model/user.js'
 import Event from '../model/event.js'
 export const addNewEvent = asyncHandler(async (req, res, next) => {
-    // Assuming you have a Complaint schema with fields like title, description, images, etc.
+    // Assuming you have a event schema with fields like title, description, images, etc.
     try {
         // Extract event details from the request body
         const {
@@ -72,9 +72,31 @@ export const addNewEvent = asyncHandler(async (req, res, next) => {
 
 
 export const getAllEvents = asyncHandler(async (req, res, next) => {
-    const events = Event.find();
+    const events = await Event.find();
+    console.log(events);
     res.status(200).json({
         success: true,
         events: events,
+    });
+});
+
+
+// @desc Get A EVent By It's Id
+// @route GET/api/v1/auth/event/get-event-by-id:eventId
+// @access Private
+export const getEventById = asyncHandler(async (req, res, next) => {
+    const eventId = req.params.eventId;
+
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+        return next(new ErrorResponse(`event with id ${eventId} not found`, 404));
+    }
+
+
+    console.log(event);
+    res.status(200).json({
+        success: true,
+        event: event
     });
 });
