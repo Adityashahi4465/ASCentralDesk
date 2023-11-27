@@ -4,6 +4,7 @@ import 'package:as_central_desk/features/complaint/view/complaint_details_screen
 import 'package:as_central_desk/features/equipments/view/new_equipment_form_screen.dart';
 import 'package:as_central_desk/features/event/view/event_details_screen.dart';
 import 'package:as_central_desk/features/event/view/event_registerations.dart';
+import 'package:as_central_desk/features/notice/view/notice_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -54,6 +55,14 @@ final loggedInRoute = RouteMap(routes: {
     return MaterialPage(
       child: EventRegistrationsScreen(
         eventId: eventId,
+      ),
+    );
+  },
+  '/notice/:noticeId': (routeData) {
+    final noticeId = routeData.pathParameters['noticeId']!;
+    return MaterialPage(
+      child: NoticeDetailsScreen(
+        noticeId: noticeId,
       ),
     );
   },

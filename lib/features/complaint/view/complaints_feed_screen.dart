@@ -41,6 +41,7 @@ class _ComplaintsFeedScreenState extends ConsumerState<ComplaintsFeedScreen>
                   width: 300.0,
                   height: 70,
                   child: TabBar(
+                    
                     controller: _tabController,
                     indicatorSize: TabBarIndicatorSize.label,
                     indicator: BoxDecoration(

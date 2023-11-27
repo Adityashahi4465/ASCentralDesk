@@ -19,8 +19,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
-  int _page = 2;
-  final PageController _pageController = PageController(initialPage: 2);
+  int _page = 3;
+  final PageController _pageController = PageController(initialPage: 3);
   late AnimationController controller;
 
   void onPageChange(int index) {

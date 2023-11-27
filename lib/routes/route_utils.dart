@@ -46,4 +46,11 @@ class Navigation {
       '/event-registrations/$eventId',
     );
   }
+
+  static void navigateToNoticeDetailsScreen(
+      BuildContext context, String noticeId) {
+    Routemaster.of(context).push(
+      '/notice/$noticeId',
+    );
+  }
 }

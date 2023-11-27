@@ -226,7 +226,7 @@ class NoticeApi implements INoticeAPI {
       if (token != null) {
         var res = await _client.get(
             Uri.parse(
-              '$hostUrl/api/v1/auth/Notice/get-Notice-by-id/$noticeId',
+              '$hostUrl/api/v1/auth/Notice/get-notice-by-id/$noticeId',
             ),
             headers: {
               'Content-Type': 'application/json; charset=UTF-8',
@@ -235,7 +235,7 @@ class NoticeApi implements INoticeAPI {
 
         final apiResponse = handleApiResponse(res);
         if (apiResponse.success) {
-          final noticesJson = jsonDecode(res.body)['Notice'];
+          final noticesJson = jsonDecode(res.body)['notice'];
 
           Notice notice = Notice.fromMap(
             noticesJson as Map<String, dynamic>,

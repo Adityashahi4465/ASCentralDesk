@@ -99,19 +99,19 @@ class NoticeController extends StateNotifier<bool> {
     );
   }
 
-  // Future<void> updateNotice({
-  //   required Notice notice,
-  //   required BuildContext context,
-  // }) async {
-  //   final res = await _noticeAPI.updateNotice(
-  //     notice: notice,
-  //   );
-  //   res.fold((l) => showCustomSnackbar(context, l.message), (r) {
-  //     _ref.invalidate(getAllnoticesProvider);
-  //     _ref.invalidate(getnoticeByIdProvider);
-  //     showCustomSnackbar(context, 'Registered!');
-  //   });
-  // }
+  Future<void> updateNotice({
+    required Notice notice,
+    required BuildContext context,
+  }) async {
+    final res = await _noticeAPI.updateNotice(
+      notice: notice,
+    );
+    res.fold((l) => showCustomSnackbar(context, l.message), (r) {
+      _ref.invalidate(getAllNoticesProvider);
+      _ref.invalidate(getNoticeByIdProvider);
+      showCustomSnackbar(context, 'Updated!');
+    });
+  }
 
   Future<List<Notice>> getAllNotices() async {
     final res = await _ref.read(noticeApiProvider).getAllNotices();

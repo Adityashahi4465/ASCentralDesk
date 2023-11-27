@@ -12,7 +12,12 @@ import '../../../user/controller/user_controller.dart';
 import '../../widgets/complaint_card.dart';
 
 class AllComplaintsFeed extends ConsumerWidget {
-  const AllComplaintsFeed({super.key});
+  final bool backNavigationAllowed;
+
+  const AllComplaintsFeed({
+    super.key,
+    required this.backNavigationAllowed,
+  });
 
   void updateVotes(WidgetRef ref, BuildContext context, Complaint complaint) {
     final currentUserUid = ref.read(userProvider)!.uid;
