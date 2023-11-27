@@ -62,7 +62,7 @@ export const getBookmarkedNotices = asyncHandler(async (req, res, next) => {
     // Populate the 'bookmarkedNotices' field with actual Notice documents.
     // This allows us to retrieve the complete Notice details associated with the user.
     const user = await User.findById(userId).populate({
-        path: 'bookmarkedNotices',
+        path: 'bookmarkedNotifications',
         model: Notice
     });
 
@@ -70,12 +70,12 @@ export const getBookmarkedNotices = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse(`User with id ${userId} not found`, 404));
     }
 
-    const bookmarkedNotices = user.bookmarkedNotices.map(Notice => Notice.toObject());
+    const bookmarkedNotices = user.bookmarkedNotifications.map(Notice => Notice.toObject());
 
     console.log(bookmarkedNotices);
     res.status(200).json({
         success: true,
-        Notices: bookmarkedNotices
+        notices: bookmarkedNotices
     });
 });
 
