@@ -52,6 +52,8 @@ export const addNewEvent = asyncHandler(async (req, res, next) => {
             prize,
             location,
             feedback,
+            admins,
+            createdBy,
         });
 
         // Save the event to the database
@@ -99,4 +101,33 @@ export const getEventById = asyncHandler(async (req, res, next) => {
         success: true,
         event: event
     });
+});
+
+
+// @desc Update a Event
+// @route PUT /api/v1/event/:id
+// @access Private
+
+export const updateEvent = asyncHandler(async (req, res, next) => {
+    try {
+        let event = await Event.findById(req.params.eventId);
+        if (!event) {
+            return next(new ErrorResponse(`No event with id of ${req.params.eventId}`, 404))
+        }
+
+        event = await Event.updateOne({ _id: req.params.eventId }, req.body, {
+            new: true,
+            runValidators: true
+        })
+        res.status(200).json({
+            success: true,
+            data: event
+        })
+    } catch (e) {
+        console.log(e);
+        res.status(400).json({
+            success: false,
+            error: e,
+        })
+    }
 });

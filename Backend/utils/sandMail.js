@@ -31,7 +31,7 @@ const sendEmail = async (options) => {
             tls: {
                 rejectUnauthorized: false
             }
-        }); 
+        });
 
         // send mail with defined transport object
         let message = {

@@ -48,7 +48,12 @@ const eventSchema = new Schema({
         type: String,
         required: true,
     },
+    createdBy: {
+        type: String,
+        required: true,
+    },
     feedback: [Number],
+    admins: [String],
 });
 
 const Event = mongoose.model('Event', eventSchema);
