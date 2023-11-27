@@ -49,7 +49,7 @@ export const getAllNotices = asyncHandler(async (req, res, next) => {
     const Notices = await Notice.find(); // Fetch all Notices from MongoDB
     res.status(200).json({
         success: true,
-        Notices: Notices
+        notices: Notices
     });
 });
 
@@ -88,14 +88,14 @@ export const getNoticeById = asyncHandler(async (req, res, next) => {
     const notice = await Notice.findById(noticeId);
 
     if (!notice) {
-        return next(new ErrorResponse(`Notice with id ${NoticeId} not found`, 404));
+        return next(new ErrorResponse(`Notice with id ${noticeId} not found`, 404));
     }
 
 
-    console.log(Notice);
+    console.log(notice);
     res.status(200).json({
         success: true,
-        Notice: Notice
+        notice: notice
     });
 });
 
