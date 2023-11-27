@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:as_central_desk/models/event_questions.dart';
 
 class Event {
   final String id;
