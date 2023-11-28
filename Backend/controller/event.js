@@ -27,7 +27,9 @@ export const addNewEvent = asyncHandler(async (req, res, next) => {
             criteria,
             prize,
             location,
+            admins,
             feedback,
+            createdBy
         } = req.body;
 
         // Create a new Event instance
